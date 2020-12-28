@@ -1,0 +1,132 @@
+
+
+
+<h4>Registrar Usuario</h4>
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+    <div class="col">
+        <button class="btn btn-danger" routerLink="/dashboard/usuarios">
+            <i class="fas fa-arrow-left mr-2"></i>Regresar
+        </button>
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+<!-- =====================
+== FORMULARIO USUARIO
+======================= --> 
+<div class="row animated fadeIn faster m-3">
+    <div class="col-md-7">
+
+        <h5>Información del Usuario</h5>
+
+        <form [formGroup]="registerForm"
+              (submit)="guardar()"
+              autocomplete="off">
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('nombre') }"
+                    placeholder="Nombre"
+                    formControlName="nombre">
+                <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
+                    {{ mensajesError('nombre') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text"
+                    class="form-control"
+                    placeholder="Username"
+                    [ngClass]="{'is-invalid': campoNoValido('username') }"
+                    formControlName="username">
+                <div *ngIf="campoNoValido('username')" class="invalid-feedback">
+                    {{ mensajesError('username') }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Role</label>
+                <select class="custom-select mr-sm-2"
+                    formControlName="role"
+                    [ngClass]="{'is-invalid': campoNoValido('role') }">
+                    <option value="">SELECCIONAR ROLE</option>
+                    <option value="ADMIN_ROLE">ADMIN</option>
+                    <option value="USER_ROLE">USER</option>
+                </select>
+                <div *ngIf="campoNoValido('role')" class="invalid-feedback">
+                    {{ mensajesError('role') }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Gestión</label>
+                <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('gestion') }"
+                    formControlName="gestion">
+                    <option value="">SELECCIONAR CARRERA</option>
+                    <option *ngFor="let carrera of carreras"
+                        [value]="carrera._id">
+                        {{ carrera.nombre }} 
+                    </option>
+                </select>
+                <div *ngIf="campoNoValido('gestion')" class="invalid-feedback">
+                    {{ mensajesError('gestion') }}
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('password') }"
+                    placeholder="Contraseña"
+                    formControlName="password">
+                <div *ngIf="campoNoValido('password')" class="invalid-feedback">
+                    {{ mensajesError('password') }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Confirmar contraseña</label>
+                <input type="password"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('confirm_password')}"
+                    placeholder="Confirmar contraseña"
+                    formControlName="confirm_password">
+                <div *ngIf="campoNoValido('confirm_password')" class="invalid-feedback">
+                    {{ mensajesError('confirm_password') }}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="form-group text-center">
+                <button type="submit"
+                        class="btn btn-primary btn-block">
+                Registrar    
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<!-- =====================
+== FIN FORMULARIO USUARIO
+======================= --> 

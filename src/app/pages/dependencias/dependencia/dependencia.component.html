@@ -1,0 +1,101 @@
+
+
+
+<h4>Dependencia <small *ngIf="dependenciaSeleccionada">{{ dependenciaSeleccionada.nombre }}</small></h4>
+
+
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+    <div class="row text-right">
+        <div class="col">
+            <button class="btn btn-danger"
+                routerLink="/dashboard/dependencias">
+                <i class="fas fa-arrow-left mr-2"></i>Regresar
+            </button>
+        </div>
+    </div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+    
+
+<!-- =====================
+== FORMULARIO DEPENDENCIA
+======================= --> 
+    <div class="row animated fadeIn faster m-3">
+        <div class="col-md-7">
+
+            <h5>Información de la Dependencia</h5>
+    
+            <form [formGroup]="dependenciaForm"
+                  (submit)="guardar()"
+                  autocomplete="off"> 
+    
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('nombre') }"
+                        placeholder="Nombre"
+                        formControlName="nombre">
+                    <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
+                        {{ mensajesError('nombre') }}
+                    </div>
+                </div>
+    
+                <div class="form-group"> 
+                    <label>Representante legal</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('representante_legal') }"
+                        placeholder="Representante legal"
+                        formControlName="representante_legal">
+                    <div *ngIf="campoNoValido('representante_legal')" class="invalid-feedback">
+                        {{ mensajesError('representante_legal') }}
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label>Domicilio</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('domicilio') }"
+                        placeholder="Domicilio"
+                        formControlName="domicilio">
+                    <div *ngIf="campoNoValido('domicilio')" class="invalid-feedback">
+                        {{ mensajesError('domicilio') }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Correo electrónico</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('email') }"
+                        placeholder="Ejemplo@ejemplo.com"
+                        formControlName="email">
+                    <div *ngIf="campoNoValido('email')" class="invalid-feedback">
+                        {{ mensajesError('email') }}
+                    </div>
+                </div>
+    
+                <hr>
+    
+                <div class="form-group text-center">
+                    <button type="submit"
+                            class="btn btn-primary btn-block">
+                    <i class="fas fa-save mr-2"></i>Guardar    
+                    </button>
+                </div>
+    
+            </form>
+    
+        </div>
+    </div>
+<!-- =====================
+== FIN FORMULARIO DEPENDENCIA
+======================= --> 

@@ -1,0 +1,74 @@
+
+    <div class="row m-0 justify-content-center align-items-center vh-100">
+        <div class="col-lg-3 col-md-5 col-sm-8 bg-white shadow p-3 rounded-lg">
+  
+                  <div class="p-1 text-center">
+                      <h3 class="card-title">Iniciar sesión</h3>
+                  </div>
+                  
+                  <div class="text-center">
+                    <img style="width: 100px;" src="../../../assets/images/logo-tucan.png" alt="SASS">
+                  </div>
+
+                
+                  <div class="card-body text-left">
+  
+                      <form (ngSubmit)="login()"
+                            autocomplete="off"
+                            [formGroup]="loginForm">
+  
+  
+                          <div class="form-group">
+                            <label>Nombre de usuario</label>
+                            <input type="text" 
+                                class="form-control" 
+                                [ngClass]="{'is-invalid': campoNoValido('username') }"
+                                placeholder="Nombre de usuario"
+                                formControlName="username">
+                            <div *ngIf="campoNoValido('username')" class="invalid-feedback">
+                              {{ mensajesError('username') }}
+                            </div>
+                          </div>
+  
+  
+                          <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" 
+                                class="form-control"
+                                [ngClass]="{'is-invalid': campoNoValido('password') }"
+                                placeholder="Contraseña"
+                                formControlName="password">
+                            <div *ngIf="campoNoValido('password')" class="invalid-feedback">
+                              {{ mensajesError('password') }}
+                            </div>
+                          </div>
+  
+  
+                          <div class="form-group form-check">
+                            <input type="checkbox" 
+                                class="form-check-input" 
+                                id="check"
+                                formControlName="recuerdame">
+                            <label class="form-check-label" for="check">Recuerdame</label>
+                          </div>
+                          
+                          <div class=" text-center">
+                              <button class="btn btn-primary btn-block"
+                                      type="submit">Iniciar Sesión</button>
+                          </div>
+  
+                      </form> 
+  
+                  </div> 
+  
+              
+          </div>
+      </div>
+   
+  
+  
+  
+  
+  
+   
+   

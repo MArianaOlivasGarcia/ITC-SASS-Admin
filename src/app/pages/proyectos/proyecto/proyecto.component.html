@@ -1,0 +1,218 @@
+
+
+
+
+<h4>Proyecto <small *ngIf="proyectoSeleccionado">{{ proyectoSeleccionado.nombre }}</small></h4>
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+    <div class="col">
+        <button class="btn btn-danger"
+            routerLink="/dashboard/proyectos">
+            <i class="fas fa-arrow-left mr-2"></i>Regresar
+        </button>
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+<!-- =====================
+== FORMULARIO ALUMNO
+======================= --> 
+
+<div class="row animated fadeIn faster m-3">
+    <div class="col">
+
+      <h5>Información del Proyecto</h5>
+
+      <br>
+
+      <form [formGroup]="proyectoForm"
+            (submit)="guardar()"
+            autocomplete="off">
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Nombre</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('nombre') }"
+                   placeholder="Nombre"
+                   formControlName="nombre">
+            <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
+              {{ mensajesError('nombre') }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Objetivo</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('objetivo') }"
+                   placeholder="Objetivo"
+                   formControlName="objetivo">
+            <div *ngIf="campoNoValido('objetivo')" class="invalid-feedback">
+              {{ mensajesError('objetivo') }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Actividades</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('actividades') }"
+                   placeholder="Actividades"
+                   formControlName="actividades">
+            <div *ngIf="campoNoValido('actividades')" class="invalid-feedback">
+              {{ mensajesError('actividades') }}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Periodo</label>
+                <input type="text" 
+                       class="form-control" 
+                       [ngClass]="{'is-invalid': campoNoValido('periodo') }"
+                       placeholder="Periodo"
+                       formControlName="periodo">
+                <div *ngIf="campoNoValido('periodo')" class="invalid-feedback">
+                  {{ mensajesError('periodo') }}
+                </div>
+              </div>
+          <div class="form-group col-md-6">
+            <label>Lugar</label>
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Lugar"
+                   [ngClass]="{'is-invalid': campoNoValido('lugar') }"
+                   formControlName="lugar">
+            <div *ngIf="campoNoValido('lugar')" class="invalid-feedback">
+              {{ mensajesError('lugar') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Modalidad</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
+                   placeholder="Modalidad"
+                   formControlName="modalidad">
+            <div *ngIf="campoNoValido('modalidad')" class="invalid-feedback">
+              {{ mensajesError('modalidad') }}
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Dependencia</label>
+            <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('dependencia') }"
+                    formControlName="dependencia">
+              <option value="">SELECCIONAR DEPENDENCIA</option>
+              <option *ngFor="let dependencia of dependencias"
+                        [value]="dependencia._id">
+                        {{ dependencia.nombre }}
+              </option>
+            </select>      
+            <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
+              {{ mensajesError('dependencia') }}
+            </div>    
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Tipo</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('tipo') }"
+                   placeholder="Tipo"
+                   formControlName="tipo">
+            <div *ngIf="campoNoValido('tipo')" class="invalid-feedback">
+              {{ mensajesError('tipo') }}
+            </div>   
+          </div>
+          <div class="form-group col-md-6">
+            <label>Horario</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('horario') }"
+                   placeholder="Horario"
+                   formControlName="horario">
+            <div *ngIf="campoNoValido('horario')" class="invalid-feedback">
+              {{ mensajesError('horario') }}
+            </div> 
+          </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Apoyo economico</label>
+              <input type="text" 
+                     class="form-control" 
+                     [ngClass]="{'is-invalid': campoNoValido('apoyo_economico') }"
+                     placeholder="Apoyo economico"
+                     formControlName="apoyo_economico">
+              <div *ngIf="campoNoValido('apoyo_economico')" class="invalid-feedback">
+                {{ mensajesError('apoyo_economico') }}
+              </div>   
+            </div>
+            <div class="form-group col-md-6">
+              <label>Responsable</label>
+              <input type="text" 
+                     class="form-control" 
+                     [ngClass]="{'is-invalid': campoNoValido('responsable') }"
+                     placeholder="Responsable"
+                     formControlName="responsable">
+              <div *ngIf="campoNoValido('responsable')" class="invalid-feedback">
+                {{ mensajesError('responsable') }}
+              </div> 
+            </div>
+          </div>
+
+          <table class="table table-striped table-hover table-bordered"
+                  *ngIf="proyectoSeleccionado">
+            <thead>
+              <tr>
+                <th>Carrera</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of proyectoSeleccionado.carreras">
+                <td>{{ item.carrera.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-primary btn-block"
+                    type="submit">
+            <i class="fas fa-save mr-2"></i>Guardar    
+            </button>
+          </div>
+        </div>
+
+
+      </form>
+
+    </div>
+
+</div>
+<!-- =====================
+== FIN FORMULARIO ALUMNO
+======================= --> 

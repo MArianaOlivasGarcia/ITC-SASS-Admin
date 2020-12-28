@@ -1,0 +1,122 @@
+
+
+
+<h4>Dependencias</h4>
+
+<hr>
+
+<!-- =====================
+== BUSCAR
+======================= -->
+<div class="row animated fadeIn faster">
+    <div class="col-12">
+      <input type="text"
+            class="form-control"
+            placeholder="Buscar dependencia..."
+            (keyup)="buscar( inputTermino.value )"
+            #inputTermino >
+    </div>
+</div> 
+<!-- =====================
+== FIN BUSCAR
+======================= -->
+
+
+<!-- =====================
+== BOTÓN AGREGAR
+======================= -->
+<div class="row text-right mt-3">
+    <div class="col">
+        <button class="btn btn-primary"
+            routerLink="/dashboard/dependencia/nuevo">
+            <i class="fas fa-plus mr-2"></i>Agregar
+        </button> 
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN AGREGAR
+======================= -->
+
+
+<!-- =====================
+== TABLA DEPENDENCIAS
+======================= -->
+<div class="row mb-5 mt-3" *ngIf="!cargando && dependencias.length > 0">
+    <div class="col-12">
+        
+                <h5>Total de dependencias ({{totalDependencias}})</h5>
+
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Representan legal</th>
+                            <th scope="col">Domicilio</th>
+                            <th scope="col">Correo electrónico</th>
+                            <th scope="col">Herramientas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let dependencia of dependencias" class="manita">
+                            <td>{{ dependencia.nombre }}</td>
+                            <td>{{ dependencia.representante_legal }}</td>
+                            <td>{{ dependencia.domicilio }}</td>
+                            <td>{{ dependencia.email }}</td>
+                            <td class="text-center">
+                                <a class="btn btn-info" 
+                                   [routerLink]="['/dashboard','dependencia', dependencia._id ]">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                            </td>
+                          </tr>
+                      
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3" *ngIf="inputTermino.value.length === 0">
+                    <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                    <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+                </div>
+    
+    </div>
+</div>
+<!-- =====================
+== FIN TABLA DEPENDENCIAS
+======================= -->
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+  
+<!-- =====================
+== MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && dependencias.length == 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No hay registros</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->

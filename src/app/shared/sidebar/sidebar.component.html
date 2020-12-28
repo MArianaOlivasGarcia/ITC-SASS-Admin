@@ -1,0 +1,27 @@
+
+<div id="sidebar-container" class=" bg-light min-vh-100 sticky-top shadow">
+
+    <div class="logo text-center">
+        <img style="width: 100px;" src="../../../assets/images/logo-tucan.png" alt="SASS">
+    </div>
+
+     <div class="menu list-group-flush"> 
+
+            <div *ngFor="let item of sidebarService.menu">
+                <div class="pl-3 p-2">
+                    <small>{{ item.titulo }}</small>
+                </div>
+                <div *ngFor="let subItem of item.submenu">
+                    <a class="list-group-item list-group-item-action bg-light border-0 pl-3 p-2" 
+                       [routerLink]="subItem.url" 
+                       routerLinkActive="text-primary">
+                        <i [class]="subItem.icono"></i>{{ subItem.titulo }}
+                    </a>
+                </div>     
+            </div>
+
+
+            <br>
+
+        </div>
+</div> 

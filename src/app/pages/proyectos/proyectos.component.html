@@ -1,0 +1,96 @@
+
+
+<h4>Banco de Proyectos</h4>
+
+<hr>
+<!-- =====================
+== BUSCAR
+======================= -->
+ <div class="row animated fadeIn faster">
+    <div class="col-12">
+      <input type="text"
+            class="form-control"
+            placeholder="Buscar proyecto..."
+            (keyup)="buscar( inputTermino.value )"
+            #inputTermino >
+    </div>
+</div> 
+<!-- =====================
+== FIN BUSCAR
+======================= -->
+
+
+<!-- =====================
+== BOTÓN AGREGAR
+======================= -->
+<div class="row text-right mt-3">
+    <div class="col">
+        <button class="btn btn-primary"
+            routerLink="/dashboard/proyecto/nuevo">
+            <i class="fas fa-plus mr-2"></i>Agregar
+        </button>
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN AGREGAR
+======================= -->
+
+
+<!-- =====================
+== CARDS PROYECTOS
+======================= -->
+<div class="card-columns">
+    <div class="card mt-3" *ngFor="let proyecto of proyectos">
+        <div class="card-body">
+          <h5 class="card-title">{{ proyecto.nombre }}</h5>
+          <h6 class="card-title">{{ proyecto.dependencia.nombre }}</h6>
+          <p class="card-text">
+              {{ proyecto.objetivo }}
+          </p>
+          <div class="text-right">
+            <a class="btn btn-info"
+                [routerLink]="['/dashboard','proyecto', proyecto._id ]">
+                <i class="fa fa-pen"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+</div>
+<!-- =====================
+== FIN CARDS PROYECTOS
+======================= -->
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+  
+<!-- =====================
+== MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && proyectos.length == 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No hay registros</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->
+
+

@@ -1,0 +1,24 @@
+
+
+<div id="content-wrapper" 
+     class="d-flex"
+     [class.toggled]="sidebarService.ocultarSidebar">
+
+
+    <app-sidebar></app-sidebar>
+
+
+    <div id="page-container" class="w-100">
+
+        <app-header></app-header>
+ 
+        <div class="container" style="margin-top: 80px;">
+
+            <!-- <app-breadcrumbs></app-breadcrumbs> -->
+        
+            <router-outlet></router-outlet>
+        </div>
+
+    </div> 
+    
+</div> 

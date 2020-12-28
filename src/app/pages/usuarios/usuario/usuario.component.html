@@ -1,0 +1,182 @@
+
+
+<h4>Usuario <small *ngIf="usuarioSeleccionado">{{ usuarioSeleccionado.nombre }}</small></h4>
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+    <div class="col">
+        <button class="btn btn-danger"
+            routerLink="/dashboard/usuarios">
+            <i class="fas fa-arrow-left mr-2"></i>Regresar
+        </button>
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+
+<!-- =====================
+== FORMULARIO USUARIO
+======================= --> 
+<div class="row animated fadeIn faster m-3">
+
+    <div class="col-md-6">
+
+
+        <h5>Información del Usuario</h5>
+    
+            <!-- =====================
+            == FORMULARIO INFORMACION USUARIO
+            ======================= --> 
+            <form [formGroup]="usuarioForm"
+                    (submit)="guardar()"
+                    autocomplete="off">
+    
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'nombre') }"
+                        placeholder="Nombre"
+                        formControlName="nombre">
+                    <div *ngIf="campoNoValido( usuarioForm, 'nombre')" class="invalid-feedback">
+                        {{ mensajesError( usuarioForm, 'nombre') }}
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'username') }"
+                        placeholder="Username"
+                        formControlName="username">
+                    <div *ngIf="campoNoValido( usuarioForm, 'username')" class="invalid-feedback">
+                        {{ mensajesError( usuarioForm, 'username') }}
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label>Role</label>
+                    <select class="custom-select mr-sm-2"
+                        [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'role') }"
+                        formControlName="role">
+                        <option value="">SELECCIONAR ROLE</option>
+                        <option value="ADMIN_ROLE">ADMIN</option>
+                        <option value="USER_ROLE">USER</option>
+                    </select>
+                    <div *ngIf="campoNoValido( usuarioForm, 'role')" class="invalid-feedback">
+                        {{ mensajesError( usuarioForm, 'role') }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Gestión</label>
+                    <select class="custom-select mr-sm-2"
+                        [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'gestion') }"
+                        formControlName="gestion">
+                        <option value="">SELECCIONAR CARRERA</option>
+                        <option *ngFor="let carrera of carreras"
+                            [value]="carrera._id">
+                            {{ carrera.nombre }}
+                        </option>
+                    </select>
+                    <div *ngIf="campoNoValido( usuarioForm, 'gestion')" class="invalid-feedback">
+                        {{ mensajesError( usuarioForm, 'gestion') }}
+                    </div>
+                </div>
+
+
+    
+                <hr>
+    
+                <div class="form-group text-center">
+                    <button type="submit"
+                            class="btn btn-primary btn-block">
+                    <i class="fas fa-save mr-2"></i>Guardar    
+                    </button>
+                </div>
+    
+            </form>
+            <!-- =====================
+            == FIN FORMULARIO INFORMACION USUARIO
+            ======================= --> 
+        
+
+    </div>
+
+
+    <div class="col-md-6 mt-5 mt-md-0">
+
+ 
+        <h5>Renovar contraseña</h5>
+    
+            <!-- =====================
+            == FORMULARIO RENOVAR CONTRASEÑA
+            ======================= --> 
+            <form [formGroup]="renovarForm"
+                  (submit)="renovarPassword()"
+                  autocomplete="off">
+    
+                <div class="form-group">
+                    <label>Nueva contraseña</label>
+                    <input type="password"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido( renovarForm, 'password') }"
+                        placeholder="Nueva contraseña"
+                        formControlName="password">
+                    <div *ngIf="campoNoValido( renovarForm, 'password')" class="invalid-feedback">
+                        {{ mensajesError( renovarForm, 'password') }}
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label>Confirmar contraseña</label>
+                    <input type="password"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido( renovarForm, 'confirm_password') }"
+                        placeholder="Confirmar contraseña"
+                        formControlName="confirm_password">
+                    <div *ngIf="campoNoValido( renovarForm, 'confirm_password')" class="invalid-feedback">
+                        {{ mensajesError( renovarForm, 'confirm_password') }}
+                    </div>
+                </div>
+        
+                <hr>
+            
+                <div class="form-group text-center">
+                    <button type="submit"
+                            class="btn btn-primary btn-block">
+                    Actualizar    
+                    </button>
+                </div>
+    
+            </form>
+            <!-- =====================
+            == FIN FORMULARIO RENOVAR CONTRASEÑA
+            ======================= --> 
+        
+
+    </div>
+
+
+</div>
+<!-- =====================
+== FIN FORMULARIO USUARIO
+======================= --> 
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,136 @@
+
+
+<h4>Usuarios</h4>
+
+<hr>
+<!-- =====================
+== BUSCAR
+======================= -->
+ <div class="row animated fadeIn faster">
+    <div class="col-12">
+      <input type="text"
+            class="form-control"
+            placeholder="Buscar usuario..."
+            (keyup)="buscar( inputTermino.value )"
+            #inputTermino >
+    </div>
+</div> 
+<!-- =====================
+== FIN BUSCAR
+======================= -->
+
+
+<!-- =====================
+== BOTÓN AGREGAR
+======================= -->
+<div class="row text-right mt-3">
+    <div class="col">
+        <button class="btn btn-primary"
+            routerLink="/dashboard/usuario/nuevo">
+            <i class="fas fa-plus mr-2"></i>Agregar
+        </button>
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN AGREGAR
+======================= -->
+
+
+
+<!-- =====================
+== TABLA USUARIOS
+======================= -->
+<div class="row mb-5 mt-3" *ngIf="!cargando && usuarios.length > 0">
+    <div class="col-12">
+        
+                <h5>Total de usuarios ({{totalUsuarios}})</h5>
+
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col">Foto</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Gestión</th>
+                            <th scope="col">Herramientas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let usuario of usuarios" class="manita">
+                            <td>
+                                <img [src]="usuario.fotoUrl" 
+                                        [alt]="usuario.nombre"
+                                        style="height: 80px; width: 80px;"
+                                        class="img-thumbnail">
+                            </td>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.username }}</td>
+                            <td>
+                                
+                                <span class="badge badge-pill badge-info" *ngIf="usuario.role == 'ADMIN_ROLE' ">Admin</span>
+                                <span class="badge badge-pill badge-info" *ngIf="usuario.role == 'USER_ROLE' ">User</span>
+  
+                            </td>
+                            <td>
+                                {{ usuario.gestion.nombre }}                               
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-info" 
+                                   [routerLink]="['/dashboard','usuario', usuario._id ]">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                            </td>
+                          </tr>
+                      
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3" *ngIf="inputTermino.value.length === 0">
+                    <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                    <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+                </div>
+    
+    </div>
+</div>
+<!-- =====================
+== FIN TABLA USUARIOS
+======================= -->
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+  
+
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && usuarios.length == 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No hay registros</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NOY HAY REGISTROS
+======================= -->

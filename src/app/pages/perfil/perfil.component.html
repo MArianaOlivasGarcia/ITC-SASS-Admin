@@ -1,0 +1,197 @@
+
+
+<h4>Mi pefil</h4>
+
+<hr>
+
+<div class="row">
+
+    <div class="col-md-6">
+
+        <div class="row animated fadeIn faster m-3">
+
+            <div class="col">
+        
+                <h5>Mis datos</h5>
+
+                     
+                        <form [formGroup]="usuarioForm"
+                              autocomplete="off"
+                              (submit)="guardar()">
+        
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text"
+                                    class="form-control"
+                                    [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'nombre') }"
+                                    placeholder="Nombre"
+                                    formControlName="nombre">
+                                    <div *ngIf="campoNoValido( usuarioForm, 'nombre')" class="invalid-feedback">
+                                        {{ mensajesError( usuarioForm, 'nombre') }}
+                                    </div>
+                            </div>
+                
+                
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text"
+                                    class="form-control"
+                                    [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'username') }"
+                                    placeholder="Username"
+                                    formControlName="username">
+                                    <div *ngIf="campoNoValido( usuarioForm, 'username')" class="invalid-feedback">
+                                        {{ mensajesError( usuarioForm, 'username') }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select class="custom-select mr-sm-2"
+                                    [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'role') }"
+                                    formControlName="role">
+                                    <option value="">SELECCIONAR ROLE</option>
+                                    <option value="ADMIN_ROLE">ADMIN</option>
+                                    <option value="USER_ROLE">USER</option>
+                                </select>
+                                <div *ngIf="campoNoValido( usuarioForm, 'role')" class="invalid-feedback">
+                                    {{ mensajesError( usuarioForm, 'role') }}
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Gestión</label>
+                                <select class="custom-select mr-sm-2"
+                                    [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'gestion') }"
+                                    formControlName="gestion">
+                                    <option value="">SELECCIONAR CARRERA</option>
+<!--                                     <option value="5fe39044784597310838867c">TODAS LAS CARRERAS</option>
+ -->                                    <option *ngFor="let carrera of carreras"
+                                        [value]="carrera._id">
+                                        {{ carrera.nombre }}
+                                    </option>
+                                </select>
+                                <div *ngIf="campoNoValido( usuarioForm, 'gestion')" class="invalid-feedback">
+                                    {{ mensajesError( usuarioForm, 'gestion') }}
+                                </div>
+                            </div>
+
+                            <hr>
+    
+                            <div class="form-group text-center">
+                                <button type="submit"
+                                        class="btn btn-primary btn-block">
+                                Actualizar perfil  
+                                </button>
+                            </div>
+        
+                        </form>
+    
+                
+            </div>
+
+        </div>
+
+
+        <div class="row animated fadeIn faster m-3">
+
+            <div class="col">
+        
+                <h5>Cambiar contraseña</h5>
+
+                     
+                    <form [formGroup]="changePasswordForm"
+                          autocomplete="off"
+                          (submit)="cambiarPassword()">
+        
+                            <div class="form-group">
+                                <label>Contraseña anterior</label>
+                                <input type="password"
+                                    class="form-control"
+                                    [ngClass]="{'is-invalid': campoNoValido( changePasswordForm, 'old_password') }"
+                                    placeholder="Contraseña anterior"
+                                    formControlName="old_password">
+                                    <div *ngIf="campoNoValido( changePasswordForm, 'old_password')" class="invalid-feedback">
+                                        {{ mensajesError( changePasswordForm, 'old_password') }}
+                                    </div>
+                            </div>
+                
+                
+                            <div class="form-group">
+                                <label>Nueva contraseña</label>
+                                <input type="password"
+                                    class="form-control"
+                                    [ngClass]="{'is-invalid': campoNoValido( changePasswordForm, 'new_password') }"
+                                    placeholder="Nueva contraseña"
+                                    formControlName="new_password">
+                                    <div *ngIf="campoNoValido( changePasswordForm, 'new_password')" class="invalid-feedback">
+                                        {{ mensajesError( changePasswordForm, 'new_password') }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Confirmar contraseña</label>
+                                <input type="password"
+                                    class="form-control"
+                                    [ngClass]="{'is-invalid': campoNoValido( changePasswordForm, 'confirm_password') }"
+                                    placeholder="Confirmar contraseña"
+                                    formControlName="confirm_password">
+                                    <div *ngIf="campoNoValido( changePasswordForm, 'confirm_password')" class="invalid-feedback">
+                                        {{ mensajesError( changePasswordForm, 'confirm_password') }}
+                                    </div>
+                            </div>
+
+                            <hr>
+    
+                            <div class="form-group text-center">
+                                <button type="submit"
+                                        class="btn btn-primary btn-block">
+                                Cambiar contraseña  
+                                </button>
+                            </div>
+        
+                        </form>
+    
+                
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <div class="col-md-6 mt-3">
+
+        <div class="card border-0">
+            
+                <h5>Fotografía</h5>
+                
+                <div class="d-flex justify-content-center">
+                    <img *ngIf="!fotoTemporal" [src]="usuario.fotoUrl" [alt]="usuario.nombre" class="w-50 h-50" >
+                    <img *ngIf="fotoTemporal" [src]="fotoTemporal" [alt]="usuario.nombre" class="w-50 h-50" >
+                </div>
+      
+                <br>
+             
+                <input type="file"
+                    (change)="changeFoto( $event?.target?.files[0] )">
+      
+                <hr>
+
+                <button class="btn btn-success btn-block"
+                    [disabled]="!fotoSubir"
+                    (click)="uploadFoto()">
+                    Subir fotografía
+                </button>
+      
+            
+        </div>
+
+    </div>
+
+</div>
+
+
