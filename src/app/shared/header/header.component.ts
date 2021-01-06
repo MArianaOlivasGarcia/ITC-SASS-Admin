@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { SidebarService } from 'src/app/services/sidebar.service';
+import { WebSocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent {
   public usuario: Usuario;
 
   constructor( private authService: AuthService,
-               private sidebarService: SidebarService ) {
+               private sidebarService: SidebarService,
+               public webSocketService: WebSocketService ) {
     this.usuario = this.authService.usuario;
   }
 
