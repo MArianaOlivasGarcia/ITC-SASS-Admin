@@ -24,4 +24,19 @@ export class WebSocketService {
     });
   }
 
+
+  emit( evento: string, payload?: any, callback?: Function ) {
+    console.log('Emitiendo', evento);
+    this.socket.emit( evento, payload, callback );
+  }
+
+
+  desconectar(): void {
+    this.socket.disconnect();
+  }
+
+
+  conectar(): void {
+    this.socket.connect();
+  }
 }

@@ -8,6 +8,7 @@ import { ChangePasswordForm } from '../interfaces/change-password-form.interface
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { Usuario } from '../models/usuario.model';
+import { WebSocketService } from './websocket.service';
 
 const base_url = environment.base_url;
 
@@ -20,7 +21,8 @@ export class AuthService {
   public usuario: Usuario;
 
   constructor( private http: HttpClient,
-               private router: Router ) { }
+               private router: Router,
+               private wsService: WebSocketService ) { }
 
 
   get token(): string {
@@ -57,6 +59,7 @@ export class AuthService {
 
 
   login( formData: LoginForm ): Observable<any>{
+    this.wsService.conectar();
     return this.http.post(`${ base_url }/auth/login`, formData )
                   .pipe(
                     tap( (resp: any) => {
@@ -80,6 +83,7 @@ export class AuthService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('menu');
     this.router.navigateByUrl('/login');
+    this.wsService.desconectar();
   }
 
 

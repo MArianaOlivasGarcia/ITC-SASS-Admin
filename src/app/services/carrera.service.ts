@@ -24,7 +24,6 @@ export class CarreraService {
           const carreras = resp.carreras.map(
                                   carrera => new Carrera(
                                   carrera.nombre,
-                                  carrera.siglas,
                                   carrera._id) );
           return carreras;
         })

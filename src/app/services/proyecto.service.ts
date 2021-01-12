@@ -31,11 +31,12 @@ export class ProyectoService {
                                       proyecto.objetivo,
                                       proyecto.actividades,
                                       proyecto.periodo,
-                                      proyecto.lugar,
+                                      proyecto.lugar_desempeño,
                                       proyecto.modalidad,
                                       proyecto.horario,
                                       proyecto.tipo,
                                       proyecto.responsable,
+                                      proyecto.puesto_responsable,
                                       proyecto.carreras,
                                       proyecto._id )
                                   );

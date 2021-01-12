@@ -27,7 +27,24 @@ import { AvisosComponent } from './avisos/avisos.component';
 import { AvisoComponent } from './avisos/aviso/aviso.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DocumentoComponent } from './documentos/documento/documento.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
+
+const token = localStorage.getItem('accessToken') || '';
+
+const config: SocketIoConfig = {
+  url: environment.ws_url, options: {
+    transports: ['websocket'],
+    query: {
+      Authorization: `Bearer ${token}`
+    } 
+  }
+};
 
 
 @NgModule({
@@ -64,7 +81,12 @@ import { DocumentoComponent } from './documentos/documento/documento.component';
     AppRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    SocketIoModule.forRoot(config),
   ]
 })
 export class PagesModule { }

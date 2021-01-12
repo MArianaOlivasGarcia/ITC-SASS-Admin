@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Alumno } from '../models/alumno.model';
+import { Carrera } from '../models/carrera.model';
 import { Dependencia } from '../models/dependencia.model';
 import { Proyecto } from '../models/proyecto.models';
 import { Usuario } from '../models/usuario.model';
@@ -16,11 +17,6 @@ const base_url = environment.base_url;
 export class BusquedaService {
 
   constructor( private http: HttpClient ) { }
-
-
-  get token(): string {
-    return localStorage.getItem('token') || '';
-  }
 
 
   private transformarDependencias( resultados: any[] ): Dependencia[] {
@@ -54,9 +50,12 @@ export class BusquedaService {
                             alumno.apellido_materno,
                             alumno.sexo,
                             alumno.fecha_nacimiento,
+                            alumno.edad,
                             alumno.carrera,
                             alumno.semestre,
                             alumno.creditos_acumulados,
+                            alumno.porcentaje_avance,
+                            alumno.periodo,
                             alumno._id,
                             alumno.foto,
                             alumno.email,
@@ -70,20 +69,28 @@ export class BusquedaService {
       proyecto => new Proyecto( proyecto.apoyo_economico,
                                 proyecto.nombre,
                                 proyecto.dependencia,
-                                proyecto.carreras,
                                 proyecto.objetivo,
                                 proyecto.actividades,
                                 proyecto.periodo,
-                                proyecto.lugar,
+                                proyecto.lugar_desempeño,
                                 proyecto.modalidad,
                                 proyecto.horario,
                                 proyecto.tipo,
                                 proyecto.responsable,
+                                proyecto.puesto_responsable,
+                                proyecto.carreras,
                                 proyecto._id ));
   }
 
 
-  busqueda( tipo: 'usuarios' | 'alumnos' | 'dependencias' | 'proyectos',
+  private transformarCarreras( resultados: any[] ): Carrera[] {
+    return resultados.map(
+      carrera => new Carrera( carrera.nombre,
+                              carrera._id ));
+  }
+
+
+  busqueda( tipo: 'usuarios' | 'alumnos' | 'dependencias' | 'proyectos' | 'carreras',
             termino: string ): Observable<any> {
 
     const url = `${ base_url }/busqueda/coleccion/${ tipo }/${ termino }`;
@@ -105,6 +112,9 @@ export class BusquedaService {
 
                       case 'proyectos':
                         return this.transformarProyectos( resp.respuesta );
+
+                      case 'carreras':
+                        return this.transformarCarreras( resp.respuesta );
 
                       default:
                         return [];

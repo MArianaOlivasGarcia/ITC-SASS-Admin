@@ -48,6 +48,8 @@ export class AlumnoComponent implements OnInit {
       carrera: ['', [Validators.required ] ],
       semestre: ['', [Validators.required ] ],
       creditos_acumulados: ['', [Validators.required ] ],
+      porcentaje_avance: ['', [Validators.required ] ],
+      periodo: ['', [Validators.required ] ],
     });
 
     // tslint:disable: deprecation
@@ -88,7 +90,9 @@ export class AlumnoComponent implements OnInit {
                   fecha_nacimiento,
                   carrera: { _id },
                   semestre,
-                  creditos_acumulados } = alumno;
+                  creditos_acumulados,
+                  porcentaje_avance,
+                  periodo } = alumno;
           this.alumnoSeleccionado = alumno;
           this.alumnoForm.setValue({ numero_control,
                                      nombre,
@@ -98,7 +102,9 @@ export class AlumnoComponent implements OnInit {
                                      fecha_nacimiento,
                                      carrera: _id,
                                      semestre,
-                                     creditos_acumulados });
+                                     creditos_acumulados,
+                                     porcentaje_avance,
+                                     periodo });
         });
 
   }

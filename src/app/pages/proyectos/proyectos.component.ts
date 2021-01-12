@@ -37,19 +37,7 @@ export class ProyectosComponent implements OnInit {
 
   }
 
-  cambiarPagina( valor: number ): void {
-
-    this.desde += valor;
-
-    if ( this.desde < 0 ) {
-      this.desde = 0;
-    } else if ( this.desde >= this.totalProyectos ) {
-      this.desde -= valor;
-    }
-
-    this.cargarProyectos();
-
-  }
+  
 
 
   buscar( termino: string ): void {

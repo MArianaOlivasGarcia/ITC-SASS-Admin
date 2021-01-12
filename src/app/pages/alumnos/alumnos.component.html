@@ -53,7 +53,8 @@
                             <th scope="col" style="min-width: 200px;">Nombre</th>
                             <th scope="col" style="min-width: 200px;">Apellidos</th>
                             <th scope="col" style="min-width: 250px;">Carrera</th>
-                            <th scope="col" style="min-width: 50px;">Editar</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Expediente</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -61,7 +62,7 @@
                             <td>
                                 <img [src]="alumno.fotoUrl" 
                                     [alt]="alumno.nombre"
-                                    style="height: 80px; width: 80px;"
+                                    style="height: 70px; width: 70px;"
                                     class="img-thumbnail">
                             </td>
                             <td>{{ alumno.numero_control }}</td>
@@ -69,12 +70,16 @@
                             <td>{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}</td>
                             <td>{{ alumno.carrera.nombre }}</td>
                             <td class="text-center">
-                                <a class="btn btn-info" 
+                                <a class="btn btn-info btn-sm" 
                                    [routerLink]="['/dashboard','alumno', alumno._id ]">
                                     <i class="fa fa-pen"></i>
                                 </a>
-<!--                                 <a class="btn btn-info" [routerLink]="['/dashboard', 'expediente', alumno._id]">Ver Expediente</a>
- -->                            </td>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-success btn-sm">
+                                    Ver
+                                </a>
+                            </td>
                           </tr>
                       
                         </tbody>

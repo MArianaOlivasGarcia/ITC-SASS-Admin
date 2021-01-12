@@ -135,7 +135,7 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
             <label>Semestre</label>
             <input type="number" 
                    min="1" 
@@ -148,7 +148,7 @@
               {{ mensajesError( alumnoForm ,'semestre') }}
             </div>   
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
             <label>Creditos Acumulados</label>
             <input type="text" 
                    class="form-control" 
@@ -157,6 +157,28 @@
                    formControlName="creditos_acumulados">
             <div *ngIf="campoNoValido( alumnoForm ,'creditos_acumulados')" class="invalid-feedback">
               {{ mensajesError( alumnoForm ,'creditos_acumulados') }}
+            </div> 
+          </div>
+          <div class="form-group col-md-3">
+            <label>Porcentaje Avance</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'porcentaje_avance') }"
+                   placeholder="Porcentaje Avance"
+                   formControlName="porcentaje_avance">
+            <div *ngIf="campoNoValido( alumnoForm ,'porcentaje_avance')" class="invalid-feedback">
+              {{ mensajesError( alumnoForm ,'porcentaje_avance') }}
+            </div> 
+          </div>
+          <div class="form-group col-md-3">
+            <label>Periodo</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'periodo') }"
+                   placeholder="Periodo"
+                   formControlName="periodo">
+            <div *ngIf="campoNoValido( alumnoForm ,'periodo')" class="invalid-feedback">
+              {{ mensajesError( alumnoForm ,'periodo') }}
             </div> 
           </div>
         </div>

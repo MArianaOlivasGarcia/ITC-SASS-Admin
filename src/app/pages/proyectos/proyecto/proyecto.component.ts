@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { Carrera } from 'src/app/models/carrera.model';
 import { Dependencia } from 'src/app/models/dependencia.model';
+import { ItemCarreraProyecto } from 'src/app/models/item-carrera-proyecto.model';
 import { Proyecto } from 'src/app/models/proyecto.models';
-import { CarreraService } from 'src/app/services/carrera.service';
+import { BusquedaService } from 'src/app/services/busqueda.service';
 import { DependenciaService } from 'src/app/services/dependencia.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
 import Swal from 'sweetalert2';
@@ -18,25 +22,27 @@ export class ProyectoComponent implements OnInit {
 
 
   public formSubmitted = false;
-
   public proyectoForm: FormGroup;
   public dependencias: Dependencia[] = [];
-  public carreras: Carrera[] = [];
-
   public proyectoSeleccionado: Proyecto;
+
+  public itemCarreras: ItemCarreraProyecto[] = [];
+  public carreraControl = new FormControl();
+  public carrerasFiltradas: Observable<Carrera[]>;
+
+
 
   constructor(  private fb: FormBuilder,
                 private proyectoService: ProyectoService,
                 private dependenciaService: DependenciaService,
-                private carreraService: CarreraService,
+                private busquedaService: BusquedaService,
                 private router: Router,
                 private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void {
 
     this.cargarDependencias();
-    this.cargarCarreras();
-
+    
     this.activatedRoute.params.subscribe( ({ id }) => {
       this.cargarProyecto( id );
     });
@@ -48,14 +54,20 @@ export class ProyectoComponent implements OnInit {
       objetivo: ['', Validators.required ],
       actividades: ['', Validators.required ],
       periodo: ['', Validators.required ],
-      lugar: ['', Validators.required ],
+      lugar_desempeño: ['', Validators.required ],
       modalidad: ['', Validators.required ],
       tipo: ['', Validators.required ],
       horario: ['', Validators.required ],
-      apoyo_economico: ['', Validators.required ],
-      responsable: ['', Validators.required ]
+      apoyo_economico: [false],
+      responsable: ['', Validators.required ],
+      puesto_responsable: ['', Validators.required ],
     });
 
+    this.carrerasFiltradas = this.carreraControl.valueChanges
+      .pipe(
+        map( value => typeof value === 'string' ? value: value.nombre ),
+        mergeMap(value => value ? this._filter(value): [])
+      );
 
   }
 
@@ -68,21 +80,12 @@ export class ProyectoComponent implements OnInit {
           );
   }
 
-  cargarCarreras(): void {
-    this.carreraService.getCarreras()
-          .subscribe( carreras =>
-            this.carreras = carreras
-          );
-  }
-
-
   cargarProyecto( id: string ): void{
 
     if ( id === 'nuevo' ) { return; }
 
     this.proyectoService.getProyecto( id )
         .subscribe( proyecto => {
-          console.log(proyecto)
           // TODO: SI NO ENCUENTRA EL PROYECTO O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/proyectos`);
 
@@ -92,24 +95,26 @@ export class ProyectoComponent implements OnInit {
                   objetivo,
                   actividades,
                   periodo,
-                  lugar,
+                  lugar_desempeño,
                   modalidad,
                   horario,
                   tipo,
                   responsable,
-                  carreras } = proyecto;
+                  puesto_responsable } = proyecto;
           this.proyectoSeleccionado = proyecto;
+          this.itemCarreras = proyecto.carreras;
           this.proyectoForm.setValue({ apoyo_economico,
                                        nombre,
                                        dependencia: _id,
                                        objetivo,
                                        actividades,
                                        periodo,
-                                       lugar,
+                                       lugar_desempeño,
                                        modalidad,
                                        horario,
                                        tipo,
-                                       responsable});
+                                       responsable,
+                                       puesto_responsable});
 
         });
 
@@ -118,10 +123,10 @@ export class ProyectoComponent implements OnInit {
 
 
   guardar(): void {
-
-    console.log(this.proyectoForm.value);
-
     this.formSubmitted = true;
+    if ( this.itemCarreras.length == 0 ){
+      this.carreraControl.setErrors({'invalid': true})
+    }
     if ( this.proyectoForm.invalid ) { return; }
 
     const { nombre } = this.proyectoForm.value;
@@ -130,29 +135,35 @@ export class ProyectoComponent implements OnInit {
       // Actualizar
       const data = {
         ... this.proyectoForm.value,
-        _id: this.proyectoSeleccionado._id
+        _id: this.proyectoSeleccionado._id,
+        carreras: this.itemCarreras
       };
 
       this.proyectoService.actualizarProyecto( data )
           .subscribe( () => {
             Swal.fire({
               title: 'Guardado',
-              text: `Alumno ${nombre} actualizado con éxito.`,
+              text: `Proyecto ${nombre} actualizado con éxito.`,
               icon: 'success'
             });
           });
 
     } else {
       // CREAR PROYECTO
-      this.proyectoService.crearProyecto( this.proyectoForm.value )
+      const data = {
+        ... this.proyectoForm.value,
+        carreras: this.itemCarreras
+      };
+
+      this.proyectoService.crearProyecto( data )
       .subscribe( resp => {
         Swal.fire({
           title: 'Creado',
-          text: `Alumno ${nombre} creado con éxito.`,
+          text: `Proyecto ${nombre} creado con éxito.`,
           icon: 'success'
         });
-        this.router.navigateByUrl(`/dashboard/alumno/${resp.alumno._id}`);
-      });
+        this.router.navigateByUrl(`/dashboard/proyecto/${resp.proyecto._id}`);
+        });
 
     }
 
@@ -173,9 +184,84 @@ export class ProyectoComponent implements OnInit {
 
 
   mensajesError( campo: string  ): string {
-
-    return this.proyectoForm.get(campo)?.hasError('required') ? `Este campo es requerido.` :
-           this.proyectoForm.get(campo)?.hasError('email') ? `Correo electrónico no valido.` : '';
+    return this.proyectoForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : '';
   }
 
+
+
+  private _filter(value: string): Observable<Carrera[]> {
+    const filterValue = value.toLowerCase();
+
+    return this.busquedaService.busqueda('carreras', filterValue);
+    
+  }
+
+
+  mostrarNombre( carrera?: Carrera ): string | undefined {
+    return carrera ? carrera.nombre : undefined;
+  }
+
+
+  seleccionarCarrera( event: MatAutocompleteSelectedEvent ): void {
+    let carrera = event.option.value as Carrera;
+
+    if ( this.existeItem(carrera._id) ) {
+      this.incrementarCantidad( carrera._id );
+    } else {
+      let nuevoItemCarreraProyecto = new ItemCarreraProyecto(1, carrera);
+      this.itemCarreras.push( nuevoItemCarreraProyecto );
+    }
+
+
+    this.carreraControl.setValue('');
+    event.option.focus();
+    event.option.deselect();
+  }
+
+
+  actualizarCantidad( id: string, event: any) {
+    let cantidad: number = event.target.value as number;
+
+    if( cantidad == 0 ) {
+      return this.borrarItemCarrera(id);
+    }
+
+    this.itemCarreras = this.itemCarreras
+                  .map( (item: ItemCarreraProyecto) => {
+                    if( id === item.carrera._id ) {
+                      item.cantidad = cantidad
+                    }
+                    return item;
+                  })
+  }
+
+
+  existeItem(id: string): boolean {
+    let existe = false;
+    this.itemCarreras.forEach((item: ItemCarreraProyecto) => {
+      if(id === item.carrera._id){
+        existe = true;
+      }
+    })
+    return existe;
+  }
+
+
+  incrementarCantidad(id: string) : void {
+    this.itemCarreras = this.itemCarreras.map( (item: ItemCarreraProyecto) => {
+      if(id === item.carrera._id){
+        ++item.cantidad;
+      }
+      return item;
+    });
+  }
+
+  borrarItemCarrera( id: string ):void {
+    this.itemCarreras = this.itemCarreras.filter( (item: ItemCarreraProyecto) => {
+      id !== item.carrera._id;
+    })
+  }
+
+
 }
+

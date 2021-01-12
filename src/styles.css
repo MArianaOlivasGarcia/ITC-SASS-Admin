@@ -49,3 +49,9 @@
     margin-left: -13rem;
   }
 }
+
+
+
+.mat-form-field-infix{
+  width: 350px !important;
+} 

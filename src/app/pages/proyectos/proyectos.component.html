@@ -44,11 +44,12 @@
         <div class="card-body">
           <h5 class="card-title">{{ proyecto.nombre }}</h5>
           <h6 class="card-title">{{ proyecto.dependencia.nombre }}</h6>
+          <h6 class="card-title">{{ proyecto.responsable }}</h6>
           <p class="card-text">
               {{ proyecto.objetivo }}
           </p>
           <div class="text-right">
-            <a class="btn btn-info"
+            <a class="btn btn-info btn-sm"
                 [routerLink]="['/dashboard','proyecto', proyecto._id ]">
                 <i class="fa fa-pen"></i>
             </a>
