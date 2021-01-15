@@ -1,1 +1,8 @@
-<p>documento works!</p>
+<h4>{{item?.titulo}} de <small>{{item?.alumno.nombre}}</small></h4>
+<span *ngIf="item?.aprobado" class="badge badge-pill badge-success p-1">Aprobado</span>
+<span *ngIf="item?.revision" class="badge badge-pill badge-warning text-white p-1">Pendiente</span>
+<span *ngIf="item?.rechazado" class="badge badge-pill badge-danger p-1">Rechazado</span>
+
+<hr>
+
+<app-pdf-viewer *ngIf="item?.archivo" [pdfSrc]="'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'"></app-pdf-viewer>

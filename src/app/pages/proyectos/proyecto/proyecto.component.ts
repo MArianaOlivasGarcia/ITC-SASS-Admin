@@ -54,7 +54,7 @@ export class ProyectoComponent implements OnInit {
       objetivo: ['', Validators.required ],
       actividades: ['', Validators.required ],
       periodo: ['', Validators.required ],
-      lugar_desempeño: ['', Validators.required ],
+      lugar_desempeno: ['', Validators.required ],
       modalidad: ['', Validators.required ],
       tipo: ['', Validators.required ],
       horario: ['', Validators.required ],
@@ -95,7 +95,7 @@ export class ProyectoComponent implements OnInit {
                   objetivo,
                   actividades,
                   periodo,
-                  lugar_desempeño,
+                  lugar_desempeno,
                   modalidad,
                   horario,
                   tipo,
@@ -109,7 +109,7 @@ export class ProyectoComponent implements OnInit {
                                        objetivo,
                                        actividades,
                                        periodo,
-                                       lugar_desempeño,
+                                       lugar_desempeno,
                                        modalidad,
                                        horario,
                                        tipo,
@@ -172,7 +172,6 @@ export class ProyectoComponent implements OnInit {
 
 
   campoNoValido( campo: string ): boolean {
-
 
     if ( this.proyectoForm.get(campo)?.invalid && this.formSubmitted ) {
       return true;

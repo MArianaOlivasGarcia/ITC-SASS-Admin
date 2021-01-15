@@ -19,6 +19,7 @@ export class Alumno {
         public periodo: string,
         public _id?: string,
         public foto?: string,
+        public firma?: string,
         public email?: string,
         public telefono?: string,
         public domicilio?: string,
@@ -29,6 +30,14 @@ export class Alumno {
     get fotoUrl(): string {
         if ( this.foto ) {
             return `${ base_url }/upload/alumnos/${ this.foto }`;
+        } else {
+            return `${ base_url }/upload/no-image/no-image`;
+        }
+    }
+
+    get firmaUrl(): string {
+        if ( this.foto ) {
+            return `${ base_url }/upload/firma/alumnos/${ this.firma }`;
         } else {
             return `${ base_url }/upload/no-image/no-image`;
         }

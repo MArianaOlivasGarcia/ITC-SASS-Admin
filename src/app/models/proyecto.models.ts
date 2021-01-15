@@ -11,7 +11,7 @@ export class Proyecto {
         public objetivo: string,
         public actividades: string,
         public periodo: string,
-        public lugar_desempeño: string,
+        public lugar_desempeno: string,
         public modalidad: string,
         public horario: string,
         public tipo: string,

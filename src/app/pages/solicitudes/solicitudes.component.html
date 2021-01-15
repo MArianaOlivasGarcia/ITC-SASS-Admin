@@ -1,0 +1,101 @@
+<h5>Solicitudes de Proyectos</h5>
+<hr>
+
+
+<div class="row d-flex justify-content-end">
+    <div class="col-md-3">
+        <select class="custom-select" #selectStatus (change)="cambioValue(selectStatus.value)" >
+            <option [value]="'pendiente'">Pendiente</option>
+            <option [value]="'rechazado'">Rechazado</option>
+            <option [value]="'aceptado'">Aceptado</option>
+          </select>
+    </div>
+</div>
+
+
+<!-- =====================
+== TABLA SOLICITUDES
+======================= -->
+<div class="row mb-5 mt-3" *ngIf="!cargando && solicitudes.length > 0">
+    <div class="col-12">
+        
+                <h5>Total de solicitudes ({{totalSolicitudes}})<small>
+                    <span class="badge badge-pill text-white text-capitalize p-1 ml-1"
+                          [class.badge-warning]="estado == 'pendiente'"
+                          [class.badge-danger]="estado == 'rechazado'"
+                          [class.badge-success]="estado == 'aceptado'">{{estado}}</span>
+                </small></h5>
+
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col">No. Control</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Carrera</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Herramientas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="manita" *ngFor="let solicitud of solicitudes">
+                            <td>{{solicitud.alumno.numero_control}}</td>
+                            <td>{{solicitud.alumno.nombre}}</td>
+                            <td>{{solicitud.alumno.apellido_paterno}} {{solicitud.alumno.apellido_materno}}</td>
+                            <td>{{solicitud.alumno.carrera.nombre}}</td>
+                            <td>{{solicitud.created_at | date}}</td>
+                            <td>
+                                <a class="btn btn-info btn-sm" [routerLink]="['/dashboard/solicitud', solicitud._id]">Ver</a>
+                            </td>
+                          </tr>
+                      
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3" >
+                    <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                    <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+                </div>
+    
+    </div>
+</div>
+<!-- =====================
+== FIN TABLA SOLICITUDES
+======================= -->
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+  <div class="col-12">
+      <div class="alert alert-info text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+          <p class="mb-0">Espere por favor</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+
+<!-- =====================
+== MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && solicitudes.length == 0">
+  <div class="col-12">
+      <div class="alert alert-warning text-center">
+          <h4 class="alert-heading">No hay registros</h4>
+          <i class="fa fa-exclamation fa-2x"></i>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->

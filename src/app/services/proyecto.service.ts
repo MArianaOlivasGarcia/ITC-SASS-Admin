@@ -10,7 +10,7 @@ const base_url = environment.base_url;
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class ProyectoService {
 
@@ -31,7 +31,7 @@ export class ProyectoService {
                                       proyecto.objetivo,
                                       proyecto.actividades,
                                       proyecto.periodo,
-                                      proyecto.lugar_desempeño,
+                                      proyecto.lugar_desempeno,
                                       proyecto.modalidad,
                                       proyecto.horario,
                                       proyecto.tipo,

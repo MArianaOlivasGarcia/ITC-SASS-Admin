@@ -55,3 +55,26 @@
 .mat-form-field-infix{
   width: 350px !important;
 } 
+
+
+
+/*BADGES*/
+.badge-success{
+  background-color: #21E9AC !important;
+}
+
+.badge-warning{
+  background-color: #FFBE6A !important;
+}
+
+.badge-info{
+  background-color: #78B8FC !important;
+}
+
+.badge-danger{
+  background-color: #FF6767 !important;
+}
+
+.badge-secondary{
+  background-color: #A1A1A1 !important;
+}

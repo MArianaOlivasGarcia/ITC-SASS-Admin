@@ -1,1 +1,46 @@
-<p>detalle-alumno works!</p>
+
+<div  class="fondo-modal" *ngIf="modalService.modal">
+    <div class="modal" tabindex="-1" role="dialog"  style="display:block;">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <!-- modal-dialog-centered  -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalle Alumno</h5>
+            <button (click)="cerrarModal()" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+  
+            <div class="container"> 
+
+                <div class="row">
+        
+                  <div class="col-md-6">
+        
+                    <ul class="list-group text-dark mb-3">
+                      <li class="list-group-item active">{{ alumno.nombre }} {{ alumno.apellido_paterno}} {{ alumno.apellido_materno}}</li>
+                      <li class="list-group-item">{{ alumno.numero_control }}</li>
+                      <li class="list-group-item">{{ alumno.carrera.nombre }}</li>
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 text-center" *ngIf="alumno.firma">
+                    <img [src]="alumno.firmaUrl" class="border" width="200" height="200">
+                    <br>
+                    <button class="btn btn-bloc btn-danger mt-1"
+                            (click)="eliminarFirma()">Eliminar Firma</button>
+                  </div>
+
+                </div>
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

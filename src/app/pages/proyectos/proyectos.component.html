@@ -37,61 +37,81 @@
 
 
 <!-- =====================
-== CARDS PROYECTOS
+== TABLA PROYECTOS
 ======================= -->
-<div class="card-columns">
-    <div class="card mt-3" *ngFor="let proyecto of proyectos">
-        <div class="card-body">
-          <h5 class="card-title">{{ proyecto.nombre }}</h5>
-          <h6 class="card-title">{{ proyecto.dependencia.nombre }}</h6>
-          <h6 class="card-title">{{ proyecto.responsable }}</h6>
-          <p class="card-text">
-              {{ proyecto.objetivo }}
-          </p>
-          <div class="text-right">
-            <a class="btn btn-info btn-sm"
-                [routerLink]="['/dashboard','proyecto', proyecto._id ]">
-                <i class="fa fa-pen"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+<div class="row mb-5 mt-3" *ngIf="!cargando && proyectos.length > 0">
+    <div class="col-12">
+        
+                <h5>Total de solicitudes (numero)</h5>
+
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Dependencia</th>
+                            <th scope="col">Encargado</th>
+                            <th scope="col">Objetivo</th>
+                            <th scope="col">Periodo</th>
+                            <th scope="col">Ver</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="manita" *ngFor="let proyecto of proyectos">                           
+                                <td>{{proyecto.nombre}}</td>
+                                <td>{{proyecto.dependencia.nombre}}</td>
+                                <td>{{proyecto.responsable}}</td>
+                                <td>{{proyecto.objetivo}}</td>
+                                <td>{{proyecto.periodo }}</td>
+                                <td><button class="btn btn-sm btn-info" (click)="abrirModal(proyecto)">Ver</button></td>
+                          </tr>
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3" >
+                    <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                    <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+                </div>
+    
+    </div>
 </div>
 <!-- =====================
-== FIN CARDS PROYECTOS
+== FIN TABLA PROYECTOS
 ======================= -->
+
 
 
 <!-- =====================
 == MENSAJE CARGANDO
 ======================= -->
 <div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <h4 class="alert-heading">Cargando</h4>
-            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
-            <p class="mb-0">Espere por favor</p>
-        </div> 
-    </div>
+  <div class="col-12">
+      <div class="alert alert-info text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+          <p class="mb-0">Espere por favor</p>
+      </div> 
+  </div>
 </div>
 <!-- =====================
 == FIN MENSAJE CARGANDO
 ======================= -->
 
-  
+
 <!-- =====================
 == MENSAJE NO HAY REGISTROS
 ======================= -->
 <div class="row animated fadeIn faster mt-3" *ngIf="!cargando && proyectos.length == 0">
-    <div class="col-12">
-        <div class="alert alert-warning text-center">
-            <h4 class="alert-heading">No hay registros</h4>
-            <i class="fa fa-exclamation fa-2x"></i>
-        </div> 
-    </div>
+  <div class="col-12">
+      <div class="alert alert-warning text-center">
+          <h4 class="alert-heading">No hay registros</h4>
+          <i class="fa fa-exclamation fa-2x"></i>
+      </div> 
+  </div>
 </div>
 <!-- =====================
 == FIN MENSAJE NO HAY REGISTROS
 ======================= -->
-
 

@@ -3,6 +3,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 import { AlumnosComponent } from './alumnos/alumnos.component';
 import { AlumnoComponent } from './alumnos/alumno/alumno.component';
@@ -33,6 +34,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { SolicitudesComponent } from './solicitudes/solicitudes.component';
+import { SolicitudComponent } from './solicitudes/solicitud/solicitud.component';
 
 
 const token = localStorage.getItem('accessToken') || '';
@@ -71,7 +75,10 @@ const config: SocketIoConfig = {
     AvisosComponent,
     AvisoComponent,
     DocumentosComponent,
-    DocumentoComponent],
+    DocumentoComponent,
+    PdfViewerComponent,
+    SolicitudesComponent,
+    SolicitudComponent,],
   exports: [
     DashboardComponent,
     PagesComponent
@@ -87,6 +94,7 @@ const config: SocketIoConfig = {
     MatInputModule,
     MatFormFieldModule,
     SocketIoModule.forRoot(config),
+    NgxExtendedPdfViewerModule
   ]
 })
 export class PagesModule { }

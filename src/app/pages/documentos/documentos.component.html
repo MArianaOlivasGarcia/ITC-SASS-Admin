@@ -1,1 +1,138 @@
-<p>documentos works!</p>
+
+
+<h4>Solicitud de Servicio Social</h4>
+
+<hr>
+
+
+<!-- =====================
+== TABLA PENDIENTES
+======================= --> 
+<div class="row mb-5 mt-3"  *ngIf="pendientes.length > 0">
+    <div class="col-12">
+   
+                <div class="table-responsive ">
+                    <table class="table table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col">No. Control</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Ver</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="manita" *ngFor="let pendiente of pendientes">
+                              <td>{{pendiente.alumno.numero_control}}</td>
+                              <td>{{pendiente.alumno.nombre}}</td>
+                              <td>{{pendiente.alumno.apellido_paterno}} {{pendiente.alumno.apellido_materno}}</td>
+                              <td>
+                                <span class="badge badge-pill badge-warning text-white p-1">Pendiente</span>
+                              </td>
+                              <td><a class="btn btn-info btn-sm" [routerLink]="['/dashboard/documento', pendiente._id]" >Ver</a></td>
+                          </tr>
+                      
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3">
+                  <button class="btn btn-secondary mr-2">Anterior</button>
+                  <button class="btn btn-secondary">Siguiente</button>
+                </div>
+    
+    </div>
+  </div>
+  <!-- =====================
+  == FIN TABLA PENDIENTES
+  ======================= --> 
+  
+
+
+  <!-- =====================
+== TABLA RECHAZADOS
+======================= --> 
+<div class="row mb-5 mt-3" >
+  <div class="col-12">
+ 
+              <div class="table-responsive">
+                  <table class="table  table-hover mt-3 animated fadeIn faster">
+                      <thead class="text-primary">
+                        <tr>
+                          <th scope="col">No. Control</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Apellidos</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Ver</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="manita" *ngFor="let i of [1,1,1,1,1]">
+                            <td>1750050</td>
+                            <td>Salvador Antonio</td>
+                            <td>Olivas García</td>
+                            <td>
+                              <span class="badge badge-pill badge-danger p-1">Rechazado</span>
+                            </td>
+                            <td><a class="btn btn-info btn-sm" [routerLink]="['/dashboard/documento', aaaaaaaa]" >Ver</a></td>
+                        </tr>
+                    
+                      </tbody>
+                  </table>    
+              </div>
+              <div class="text-center pt-3">
+                  <button class="btn btn-secondary mr-2">Anterior</button>
+                  <button class="btn btn-secondary">Siguiente</button>
+                </div>
+  
+  </div>
+</div>
+<!-- =====================
+== FIN TABLA RECHAZADOS
+======================= --> 
+
+
+
+
+<!-- =====================
+== TABLA APROBADOS
+======================= --> 
+<div class="row mb-5 mt-3" >
+  <div class="col-12">
+ 
+              <div class="table-responsive ">
+                  <table class="table table-hover mt-3 animated fadeIn faster">
+                      <thead class="text-primary">
+                        <tr>
+                          <th scope="col">No. Control</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Apellidos</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Ver</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="manita" *ngFor="let o of [1,1,1,1,1]">
+                            <td>19530052</td>
+                            <td>Frida Valeria</td>
+                            <td>Olivas García</td>
+                            <td>
+                              <span class="badge badge-pill badge-success p-1">Aprobado</span>
+                            </td>
+                            <td><a class="btn btn-info btn-sm" [routerLink]="['/dashboard/documento', aaaaaaaa]" >Ver</a></td>
+                        </tr>
+                    
+                      </tbody>
+                  </table>    
+              </div>
+              <div class="text-center pt-3">
+                <button class="btn btn-secondary mr-2">Anterior</button>
+                <button class="btn btn-secondary">Siguiente</button>
+              </div>
+  
+  </div>
+</div>
+<!-- =====================
+== FIN TABLA APROBADOS
+======================= --> 

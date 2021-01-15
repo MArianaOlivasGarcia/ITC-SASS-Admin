@@ -1,4 +1,6 @@
 
+<app-detalle-alumno *ngIf="alumnoSeleccionado" [alumno] ="alumnoSeleccionado" ></app-detalle-alumno>
+
 <h4>Alumnos</h4>
 <hr>
 
@@ -63,7 +65,8 @@
                                 <img [src]="alumno.fotoUrl" 
                                     [alt]="alumno.nombre"
                                     style="height: 70px; width: 70px;"
-                                    class="img-thumbnail">
+                                    class="img-thumbnail"
+                                    (click)="abrirModal(alumno)">
                             </td>
                             <td>{{ alumno.numero_control }}</td>
                             <td>{{ alumno.nombre }}</td>

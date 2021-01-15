@@ -1,0 +1,272 @@
+<h5>Solicitud de Proyecto de <small>Mariana del Carmen</small><small><span class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span></small></h5>
+<hr>
+
+<div class="row animated fadeIn fast mt-3" *ngIf="solicitud">
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-6">
+
+                <ul class="list-group text-dark mb-3">
+                  
+                  <li class="list-group-item active"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
+                  
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-3 text-bold">
+                          <strong>No. de Control:</strong>
+                      </div>
+                      <div class="col-md-9 mt-md-0 mt-1">
+                        <p class="m-0">{{ solicitud.alumno.numero_control }}</p>
+                      </div>
+                    </div>
+                  </li>
+          
+                  <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Nombre:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.alumno.nombre }}</p>
+                        </div>
+                      </div>
+                    </li>
+          
+          
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Apellidos:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.alumno.apellido_paterno }} {{ solicitud.alumno.apellido_materno }}</p>
+                        </div>
+                      </div>
+                    </li>
+          
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Carrera:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.alumno.carrera.nombre }}</p>
+                        </div>
+                      </div>
+                    </li>
+          
+                </ul>
+          
+              </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-12">
+
+                <ul class="list-group text-dark mb-3">
+                  
+                  <li class="list-group-item active"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
+                  
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-3 text-bold">
+                          <strong>Nombre:</strong>
+                      </div>
+                      <div class="col-md-9 mt-md-0 mt-1">
+                        <p class="m-0">{{ solicitud.proyecto.nombre }}</p>
+                      </div>
+                    </div>
+                  </li>
+          
+                  <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Dependencia:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.dependencia.nombre }}</p>
+                        </div>
+                      </div>
+                    </li>
+          
+          
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Responsable:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.responsable }}</p>
+                        </div>
+                      </div>
+                    </li>
+          
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Puesto del responsable:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.puesto_responsable }}</p>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-3 text-bold">
+                              <strong>Objetivo:</strong>
+                          </div>
+                          <div class="col-md-9 mt-md-0 mt-1">
+                            <p class="m-0">{{ solicitud.proyecto.objetivo }}</p>
+                          </div>
+                        </div>
+                      </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Actividades:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.actividades }}</p>
+                        </div>
+                      </div>
+                    </li>
+
+
+                    <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-3 text-bold">
+                              <strong>Periodo:</strong>
+                          </div>
+                          <div class="col-md-9 mt-md-0 mt-1">
+                            <p class="m-0">{{ solicitud.proyecto.periodo }}</p>
+                          </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Lugar de desempeño:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.lugar_desempeno }}</p>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Modalidad:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.modalidad }}</p>
+                        </div>
+                      </div>
+                    </li>
+
+
+                    <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-3 text-bold">
+                              <strong>Tipo:</strong>
+                          </div>
+                          <div class="col-md-9 mt-md-0 mt-1">
+                            <p class="m-0">{{ solicitud.proyecto.tipo }}</p>
+                          </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-bold">
+                            <strong>Horario:</strong>
+                        </div>
+                        <div class="col-md-9 mt-md-0 mt-1">
+                          <p class="m-0">{{ solicitud.proyecto.horario }}</p>
+                        </div>
+                      </div>
+                    </li>
+
+
+                    <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-3 text-bold">
+                              <strong>Apoyo Económico:</strong>
+                          </div>
+                          <div class="col-md-9 mt-md-0 mt-1">
+                            <p class="m-0" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
+                            <p class="m-0" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
+                          </div>
+                        </div>
+                      </li>
+          
+                </ul>
+          
+              </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row animated fadeIn fast">
+
+    <div class="col-md-6">
+
+        <form [formGroup]="solicitudForm"
+              (submit)="guardar()"
+              autocomplete="off">
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Estado</label>
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="status">
+                  <option [ngValue]="true">Aceptado</option>
+                  <option [ngValue]="false">Rechazado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="motivoInput">Motivo</label>
+                <input formControlName="motivo" 
+                       [ngClass]="{'is-invalid': campoNoValido('motivo') }"
+                       placeholder="Motivo"
+                       class="form-control"
+                       id="motivoInput">
+                <div *ngIf="campoNoValido('motivo')">
+                    {{ mensajesError('motivo') }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="observacionInput">Observación</label>
+                <textarea formControlName="observacion" 
+                          rows="3"
+                          [ngClass]="{'is-invalid': campoNoValido('observacion') }"
+                          placeholder="Escribe la observación aquí..." 
+                          class="form-control"
+                          id="observacionInput"></textarea>
+                    <div *ngIf="campoNoValido('observacion')">
+                        {{ mensajesError('observacion') }}
+                    </div>
+            </div>
+
+            <hr>
+
+            <button type="submit" class="btn btn-primary btn-bloc">Guardar</button>
+
+        </form>
+
+
+    </div>
+
+</div>

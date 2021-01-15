@@ -30,4 +30,10 @@ export class FileUploadService {
   }
 
 
+  deleteFirmaAlumno( idAlumno: string ): Observable<any>{
+    const url = `${ base_url }/upload/firma/${ idAlumno }`;
+    return this.http.delete( url );
+  }
+
+
 }

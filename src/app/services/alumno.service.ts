@@ -53,6 +53,7 @@ export class AlumnoService {
                                     alumno.periodo,
                                     alumno._id,
                                     alumno.foto,
+                                    alumno.firma,
                                     alumno.email,
                                     alumno.telefono,
                                     alumno.domicilio,
