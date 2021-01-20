@@ -1,8 +1,143 @@
-<h4>{{item?.titulo}} de <small>{{item?.alumno.nombre}}</small></h4>
-<span *ngIf="item?.aprobado" class="badge badge-pill badge-success p-1">Aprobado</span>
-<span *ngIf="item?.revision" class="badge badge-pill badge-warning text-white p-1">Pendiente</span>
-<span *ngIf="item?.rechazado" class="badge badge-pill badge-danger p-1">Rechazado</span>
-
-<hr>
-
-<app-pdf-viewer *ngIf="item?.archivo" [pdfSrc]="'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'"></app-pdf-viewer>
+<h5>{{item?.titulo}} de <small>{{item?.alumno.nombre}}</small>
+    <small>
+            <span *ngIf="item?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+            <span *ngIf="item?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+            <span *ngIf="item?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+    </small>
+  </h5>
+  
+  <hr>
+  
+  <div class="row animated fadeIn fast m-3" *ngIf="item">
+  
+      <div class="col-12">
+          <div class="row">
+              <div class="col-md-8">
+  
+                  <ul class="list-group text-dark mb-3">
+                    
+                    <li class="list-group-item active"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
+                    
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-5 text-bold">
+                            <strong>No. de Control:</strong>
+                        </div>
+                        <div class="col-md-7 mt-md-0 mt-1">
+                          <p class="m-0">{{ item.alumno.numero_control }}</p>
+                        </div>
+                      </div>
+                    </li>
+            
+                    <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-5 text-bold">
+                              <strong>Nombre:</strong>
+                          </div>
+                          <div class="col-md-7 mt-md-0 mt-1">
+                            <p class="m-0">{{ item.alumno.nombre }}</p>
+                          </div>
+                        </div>
+                      </li>
+            
+            
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-5 text-bold">
+                              <strong>Apellidos:</strong>
+                          </div>
+                          <div class="col-md-7 mt-md-0 mt-1">
+                            <p class="m-0">{{ item.alumno.apellido_paterno }} {{ item.alumno.apellido_materno }}</p>
+                          </div>
+                        </div>
+                      </li>
+            
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-5 text-bold">
+                              <strong>Carrera:</strong>
+                          </div>
+                          <div class="col-md-7 mt-md-0 mt-1">
+                            <p class="m-0">{{ item.alumno.carrera.nombre }}</p>
+                          </div>
+                        </div>
+                      </li>
+            
+                  </ul>
+            
+                </div>
+          </div>
+      </div>
+      
+      
+  
+      <div class="col-12">
+          <div class="row">
+              <div class="col-md-12">
+  
+                  <h1>DOCUMENTO</h1>
+            
+                </div>
+          </div>
+      </div>
+  
+  </div>
+  
+  
+  <div class="row animated fadeIn fast m-3">
+  
+      <div class="col-md-6">
+  
+          <form [formGroup]="itemForm"
+                (submit)="guardar()"
+                autocomplete="off">
+  
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Estado</label>
+                  <select class="form-control"
+                          id="exampleFormControlSelect1" 
+                          formControlName="status"
+                           (ngModelChange)="cambioValue( $event )">
+                    <option [ngValue]="true">Aceptado</option>
+                    <option [ngValue]="false">Rechazado</option>
+                  </select>
+              </div>
+  
+              <div class="form-group" *ngIf="!isAceptado">
+                  <label for="motivoInput">Motivo</label>
+                  <input formControlName="motivo" 
+                         [ngClass]="{'is-invalid': campoNoValido('motivo') }"
+                         placeholder="Motivo"
+                         class="form-control"
+                         id="motivoInput">
+                  <div *ngIf="campoNoValido('motivo')" class="invalid-feedback">
+                      {{ mensajesError('motivo') }}
+                  </div>
+              </div>
+  
+  
+              <div class="form-group" *ngIf="!isAceptado">
+                  <label for="observacionInput">Observación</label>
+                  <textarea formControlName="observacion" 
+                            rows="3"
+                            [ngClass]="{'is-invalid': campoNoValido('observacion') }"
+                            placeholder="Escribe la observación aquí..." 
+                            class="form-control"
+                            id="observacionInput"></textarea>
+                      <div *ngIf="campoNoValido('observacion')" class="invalid-feedback">
+                          {{ mensajesError('observacion') }}
+                      </div>
+              </div>
+  
+              <hr>
+  
+              <button type="submit" 
+                      class="btn btn-primary btn-bloc"
+                      *ngIf="!item?.aceptado">Guardar</button>
+  
+          </form>
+  
+  
+      </div>
+  
+  </div>

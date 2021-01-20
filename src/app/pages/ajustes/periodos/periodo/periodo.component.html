@@ -1,0 +1,96 @@
+<h4>Periodo <small *ngIf="periodoSeleccionado">{{ periodoSeleccionado.nombre }}</small></h4>
+
+
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+    <div class="row text-right">
+        <div class="col">
+            <button class="btn btn-danger"
+                routerLink="/dashboard/ajustes">
+                <i class="fas fa-arrow-left mr-2"></i>Regresar
+            </button>
+        </div>
+    </div> 
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+<!-- =====================
+== FORMULARIO PERIODO
+======================= --> 
+<div class="row animated fadeIn faster m-3">
+    <div class="col-md-7">
+
+        <h5>Información del Periodo</h5>
+
+        <form [formGroup]="periodoForm"
+              (submit)="guardar()"
+              autocomplete="off"> 
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('nombre') }"
+                    placeholder="Nombre"
+                    formControlName="nombre">
+                <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
+                    {{ mensajesError('nombre') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha Inicio</label>
+                <input type="date"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('fecha_inicio') }"
+                    formControlName="fecha_inicio">
+                <div *ngIf="campoNoValido('fecha_inicio')" class="invalid-feedback">
+                    {{ mensajesError('fecha_inicio') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha Termino</label>
+                <input type="date"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('fecha_termino') }"
+                    formControlName="fecha_termino">
+                <div *ngIf="campoNoValido('fecha_termino')" class="invalid-feedback">
+                    {{ mensajesError('fecha_termino') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input"
+                         type="checkbox"
+                         formControlName="isActual">
+                  <label class="form-check-label">
+                    Asignar como periodo actual.
+                  </label>
+                </div>
+              </div>
+
+
+
+            <hr>
+
+            <div class="form-group text-center">
+                <button type="submit"
+                        class="btn btn-primary btn-block">
+                <i class="fas fa-save mr-2"></i>Guardar    
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<!-- =====================
+== FIN FORMULARIO PERIODO
+======================= --> 

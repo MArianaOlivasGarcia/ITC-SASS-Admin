@@ -30,10 +30,17 @@
             <i class="fas fa-plus mr-2"></i>Agregar
         </button>
     </div>
+    <div class="col-md-3" *ngIf="inputTermino.value.length === 0">
+        <select class="custom-select" #selectTipo (change)="cambioValue(selectTipo.value)" >
+            <option [value]="'publico'">Públicos</option>
+            <option [value]="'privado'">Privados</option>
+          </select>
+    </div>
 </div>
 <!-- =====================
 == FIN BOTÓN AGREGAR
 ======================= -->
+
 
 
 <!-- =====================
@@ -42,7 +49,7 @@
 <div class="row mb-5 mt-3" *ngIf="!cargando && proyectos.length > 0">
     <div class="col-12">
         
-                <h5>Total de solicitudes (numero)</h5>
+                <h5>Total de proyectos ({{totalProyectos}})</h5>
 
 
                 <div class="table-responsive">
@@ -54,7 +61,8 @@
                             <th scope="col">Encargado</th>
                             <th scope="col">Objetivo</th>
                             <th scope="col">Periodo</th>
-                            <th scope="col">Ver</th>
+                            <th scope="col" *ngIf="inputTermino.value.length > 0">Tipo</th>
+                            <th scope="col">Editar</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -63,14 +71,18 @@
                                 <td>{{proyecto.dependencia.nombre}}</td>
                                 <td>{{proyecto.responsable}}</td>
                                 <td>{{proyecto.objetivo}}</td>
-                                <td>{{proyecto.periodo }}</td>
-                                <td><button class="btn btn-sm btn-info" (click)="abrirModal(proyecto)">Ver</button></td>
+                                <td>{{proyecto.periodo.nombre }}</td>
+                                <td *ngIf="inputTermino.value.length > 0">
+                                    <span *ngIf="proyecto.publico" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Público</span>
+                                    <span *ngIf="!proyecto.publico" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Privado</span>
+                                </td>
+                                <td><a class="btn btn-sm btn-info" [routerLink]="['/dashboard/proyecto', proyecto._id]"><i class="fa fa-pen"></i></a></td>
                           </tr>
                         </tbody>
                     </table>    
                 </div>
 
-                <div class="text-center pt-3" >
+                <div class="text-center pt-3" *ngIf="inputTermino.value.length === 0">
                     <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
                     <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
                 </div>

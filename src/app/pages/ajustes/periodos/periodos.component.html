@@ -1,0 +1,63 @@
+
+  
+<h5>Periodos Disponibles: </h5>
+<!-- =====================
+== BOTÓN AGREGAR
+======================= -->
+<div class="row text-right mt-3">
+  <div class="col">
+      <button class="btn btn-primary"
+          routerLink="/dashboard/ajustes/periodo/nuevo">
+          <i class="fas fa-plus mr-2"></i>Agregar
+      </button> 
+  </div>
+</div>
+<!-- =====================
+== FIN BOTÓN AGREGAR
+======================= -->
+<!-- =====================
+== TABLA PERIODOS
+======================= -->
+<div class="row mb-5 mt-3" *ngIf="!cargando && periodos.length > 0">
+  <div class="col-12">
+      
+              <h5>Total de periodos ({{totalPeriodos}})</h5>
+
+
+              <div class="table-responsive">
+                  <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                      <thead class="text-primary">
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Fecha Inicio</th>
+                          <th scope="col">Fecha Termino</th>
+                          <th scope="col">Editar</th>
+                        </tr>
+                      </thead>
+                      <tbody> 
+                        <tr *ngFor="let periodo of periodos" class="manita">
+                          <td>{{ periodo.nombre }}</td>
+                          <td>{{ periodo.fecha_inicio | date }}</td>
+                          <td>{{ periodo.fecha_termino | date }}</td>
+                          <td class="text-center">
+                              <a class="btn btn-info btn-sm" 
+                                 [routerLink]="['/dashboard/ajustes/periodo', periodo._id ]">
+                                  <i class="fa fa-pen"></i>
+                              </a>
+                          </td>
+                        </tr>
+                    
+                      </tbody>
+                  </table>    
+              </div>
+
+              <div class="text-center pt-3" >
+                  <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                  <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+              </div>
+  
+  </div>
+</div>
+<!-- =====================
+== FIN TABLA PERIODOS
+======================= -->

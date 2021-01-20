@@ -20,6 +20,9 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { DocumentoComponent } from './documentos/documento/documento.component';
 import { SolicitudesComponent } from './solicitudes/solicitudes.component';
 import { SolicitudComponent } from './solicitudes/solicitud/solicitud.component';
+import { AjustesComponent } from './ajustes/ajustes.component';
+import { CarreraComponent } from './ajustes/carreras/carrera/carrera.component';
+import { PeriodoComponent } from './ajustes/periodos/periodo/periodo.component';
 
 const routes: Routes = [
     { path: 'expediente/:id',  component: ExpedienteComponent,   data: { titulo: 'Expediente' } },
@@ -38,9 +41,12 @@ const routes: Routes = [
     { path: 'avisos',          component: AvisosComponent,       data: { titulo: 'Avisos' } },
     { path: 'aviso/:id',       component: AvisoComponent,        data: { titulo: 'Aviso' } },
     { path: 'documentos/:codigo', component: DocumentosComponent, data: { titulo: 'Documentos' } },
-    { path: 'documento/:id',   component: DocumentoComponent, data: { titulo: 'Documentos' } },
+    { path: 'documento/:id',   component: DocumentoComponent,   data: { titulo: 'Documentos' } },
     { path: 'solicitudes',     component: SolicitudesComponent, data: { titulo: 'Solicitudes' } },
-    { path: 'solicitud/:id',   component: SolicitudComponent, data: { titulo: 'Solicitud' } },
+    { path: 'solicitud/:id',   component: SolicitudComponent,   data: { titulo: 'Solicitud' } },
+    { path: 'ajustes/carrera/:id', component: CarreraComponent,   data: { titulo: 'Carrera' } },
+    { path: 'ajustes/periodo/:id', component: PeriodoComponent,   data: { titulo: 'Solicitud' } },
+    { path: 'ajustes',         component: AjustesComponent,     data: { titulo: 'Ajustes' } },
     { path: '',                component: DashboardComponent },
 ];
 

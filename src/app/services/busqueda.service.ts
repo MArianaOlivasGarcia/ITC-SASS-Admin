@@ -80,6 +80,8 @@ export class BusquedaService {
                                 proyecto.responsable,
                                 proyecto.puesto_responsable,
                                 proyecto.carreras,
+                                proyecto.publico,
+                                proyecto.alumno,
                                 proyecto._id ));
   }
 

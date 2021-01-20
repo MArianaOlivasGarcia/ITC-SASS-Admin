@@ -171,15 +171,19 @@
             </div> 
           </div>
           <div class="form-group col-md-3">
-            <label>Periodo</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'periodo') }"
-                   placeholder="Periodo"
-                   formControlName="periodo">
+            <label>Periodo Ingreso</label>
+            <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'periodo') }"
+                    formControlName="periodo">
+              <option value="">SELECCIONAR PERIODO</option>
+              <option *ngFor="let periodo of periodos"
+                        [value]="periodo._id">
+                        {{ periodo.nombre }}
+              </option>
+            </select>      
             <div *ngIf="campoNoValido( alumnoForm ,'periodo')" class="invalid-feedback">
               {{ mensajesError( alumnoForm ,'periodo') }}
-            </div> 
+            </div>    
           </div>
         </div>
 

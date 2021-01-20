@@ -4,15 +4,17 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { DependenciaService } from 'src/app/services/dependencia.service';
+import { BusquedaService } from 'src/app/services/busqueda.service';
+import { PeriodoService } from 'src/app/services/periodo.service';
+import { ProyectoService } from 'src/app/services/proyecto.service';
 import { Carrera } from 'src/app/models/carrera.model';
 import { Dependencia } from 'src/app/models/dependencia.model';
 import { ItemCarreraProyecto } from 'src/app/models/item-carrera-proyecto.model';
+import { Periodo } from 'src/app/models/periodo.model';
 import { Proyecto } from 'src/app/models/proyecto.models';
-import { BusquedaService } from 'src/app/services/busqueda.service';
-import { DependenciaService } from 'src/app/services/dependencia.service';
-import { ProyectoService } from 'src/app/services/proyecto.service';
 import Swal from 'sweetalert2';
-
+ 
 @Component({
   selector: 'app-proyecto',
   templateUrl: './proyecto.component.html',
@@ -23,27 +25,33 @@ export class ProyectoComponent implements OnInit {
 
   public formSubmitted = false;
   public proyectoForm: FormGroup;
-  public dependencias: Dependencia[] = [];
   public proyectoSeleccionado: Proyecto;
-
+  
   public itemCarreras: ItemCarreraProyecto[] = [];
   public carreraControl = new FormControl();
   public carrerasFiltradas: Observable<Carrera[]>;
-
-
+  public showCarreras: boolean = false;
+  
+  public dependencias: Dependencia[] = [];
+  public periodos: Periodo[];
 
   constructor(  private fb: FormBuilder,
                 private proyectoService: ProyectoService,
                 private dependenciaService: DependenciaService,
                 private busquedaService: BusquedaService,
+                private periodoService: PeriodoService,
                 private router: Router,
                 private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void {
 
     this.cargarDependencias();
+    this.cargarPeriodos();
     
     this.activatedRoute.params.subscribe( ({ id }) => {
+      if ( id == 'nuevo' ) {
+        this.showCarreras = true;
+      }
       this.cargarProyecto( id );
     });
 
@@ -74,11 +82,20 @@ export class ProyectoComponent implements OnInit {
 
   cargarDependencias(): void {
     this.dependenciaService.getDependencias()
-          .subscribe( resp => {
-            this.dependencias = resp.dependencias;
+          .subscribe( (dependencias) => {
+            this.dependencias = dependencias;
             }
           );
   }
+
+  cargarPeriodos(): void {
+    this.periodoService.getPeriodos()
+          .subscribe( periodos => {
+            this.periodos = periodos;
+            }
+          );
+  }
+
 
   cargarProyecto( id: string ): void{
 
@@ -124,10 +141,16 @@ export class ProyectoComponent implements OnInit {
 
   guardar(): void {
     this.formSubmitted = true;
+    
     if ( this.itemCarreras.length == 0 ){
       this.carreraControl.setErrors({'invalid': true})
     }
-    if ( this.proyectoForm.invalid ) { return; }
+
+    if ( this.proyectoSeleccionado.publico ){
+      if ( this.proyectoForm.invalid || this.carreraControl.invalid ) { return; }
+    }
+   
+    if( this.proyectoForm.invalid ) { return; }
 
     const { nombre } = this.proyectoForm.value;
 
@@ -166,7 +189,7 @@ export class ProyectoComponent implements OnInit {
         });
 
     }
-
+ 
 
   }
 
@@ -260,6 +283,7 @@ export class ProyectoComponent implements OnInit {
       id !== item.carrera._id;
     })
   }
+  
 
 
 }

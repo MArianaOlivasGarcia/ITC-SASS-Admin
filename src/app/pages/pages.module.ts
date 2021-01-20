@@ -37,6 +37,11 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { SolicitudesComponent } from './solicitudes/solicitudes.component';
 import { SolicitudComponent } from './solicitudes/solicitud/solicitud.component';
+import { AjustesComponent } from './ajustes/ajustes.component';
+import { CarreraComponent } from './ajustes/carreras/carrera/carrera.component';
+import { PeriodoComponent } from './ajustes/periodos/periodo/periodo.component';
+import { CarrerasComponent } from './ajustes/carreras/carreras.component';
+import { PeriodosComponent } from './ajustes/periodos/periodos.component';
 
 
 const token = localStorage.getItem('accessToken') || '';
@@ -78,7 +83,12 @@ const config: SocketIoConfig = {
     DocumentoComponent,
     PdfViewerComponent,
     SolicitudesComponent,
-    SolicitudComponent,],
+    SolicitudComponent,
+    AjustesComponent,
+    CarreraComponent,
+    PeriodoComponent,
+    CarrerasComponent,
+    PeriodosComponent,],
   exports: [
     DashboardComponent,
     PagesComponent

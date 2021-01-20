@@ -21,8 +21,77 @@
 ======================= -->   
 
 
+
+
 <!-- =====================
-== FORMULARIO ALUMNO
+== DATOS DEL ALUMNO QUE CREO EL PROYECTO "PRIVADO"
+======================= --> 
+<div class="row animated fadeIn fast m-3" *ngIf="proyectoSeleccionado?.alumno">
+  <div class="col-md-8">
+
+      <ul class="list-group text-dark mb-3">
+        
+        <li class="list-group-item active"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
+        
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-3 text-bold">
+                <strong>No. de Control:</strong>
+            </div>
+            <div class="col-md-9 mt-md-0 mt-1">
+              <p class="m-0">{{ proyectoSeleccionado.alumno.numero_control }}</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-3 text-bold">
+                  <strong>Nombre:</strong>
+              </div>
+              <div class="col-md-9 mt-md-0 mt-1">
+                <p class="m-0">{{ proyectoSeleccionado.alumno.nombre }}</p>
+              </div>
+            </div>
+          </li>
+
+
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-3 text-bold">
+                  <strong>Apellidos:</strong>
+              </div>
+              <div class="col-md-9 mt-md-0 mt-1">
+                <p class="m-0">{{ proyectoSeleccionado.alumno.apellido_paterno }} {{ proyectoSeleccionado.alumno.apellido_materno }}</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-3 text-bold">
+                  <strong>Carrera:</strong>
+              </div>
+              <div class="col-md-9 mt-md-0 mt-1">
+                <p class="m-0">{{ proyectoSeleccionado.alumno.carrera.nombre }}</p>
+              </div>
+            </div>
+          </li>
+
+      </ul>
+
+    </div>
+</div>
+<!-- =====================
+== FIN DATOS DEL ALUMNO QUE CREO EL PROYECTO "PRIVADO"
+======================= --> 
+
+
+
+
+
+<!-- =====================
+== FORMULARIO PROYECTO
 ======================= --> 
 
 <div class="row animated fadeIn faster m-3">
@@ -43,7 +112,7 @@
                    class="form-control" 
                    [ngClass]="{'is-invalid': campoNoValido('nombre') }"
                    placeholder="Nombre del Proyecto"
-                   formControlName="nombre">
+                   formControlName="nombre"> 
             <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
               {{ mensajesError('nombre') }}
             </div>
@@ -95,17 +164,21 @@
 
 
         <div class="form-row">
-            <div class="form-group col-md-4">
-                <label>Periodo</label>
-                <input type="text" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': campoNoValido('periodo') }"
-                       placeholder="Periodo"
-                       formControlName="periodo">
-                <div *ngIf="campoNoValido('periodo')" class="invalid-feedback">
-                  {{ mensajesError('periodo') }}
-                </div>
-              </div>
+          <div class="form-group col-md-4">
+            <label>Periodo</label>
+            <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('periodo') }"
+                    formControlName="periodo">
+              <option value="">SELECCIONAR PERIODO</option>
+              <option *ngFor="let periodo of periodos"
+                        [value]="periodo._id">
+                        {{ periodo.nombre }}
+              </option>
+            </select>      
+            <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
+              {{ mensajesError('dependencia') }}
+            </div>    
+          </div>
           <div class="form-group col-md-4">
             <label>Lugar de desempeño</label>
             <input type="text" 
@@ -190,7 +263,8 @@
 
           
           <div class="form-row"> 
-            <div class="form-group col-md-6">
+
+            <div class="form-group col-md-6" *ngIf="showCarreras || proyectoSeleccionado?.publico">
               <label>Carreras solicitadas</label>
               <br>
               <mat-form-field>
@@ -212,6 +286,7 @@
                 Debe seleccionar almenos una carrera.
               </div> 
             </div>
+
             <div class="form-group col-md-4">
               <div class="form-check">
                 <input class="form-check-input" 
@@ -273,5 +348,5 @@
 
 </div>
 <!-- =====================
-== FIN FORMULARIO ALUMNO
+== FIN FORMULARIO PROYECTO
 ======================= --> 

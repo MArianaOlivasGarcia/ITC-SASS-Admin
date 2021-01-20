@@ -8,7 +8,7 @@ import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.se
   styleUrls: ['./solicitudes.component.css']
 })
 export class SolicitudesComponent implements OnInit {
-
+ 
   public totalSolicitudes = 0;
   public solicitudes: Solicitud[] = [];
   public solicitudesTemp: Solicitud[] = [];
@@ -20,15 +20,15 @@ export class SolicitudesComponent implements OnInit {
   constructor( private solicitudService: SolicitudProyectoService ) { }
 
   ngOnInit(): void {
-    this.cargarSolicitudes( 'pendiente' );
+    this.cargarSolicitudes( this.estado );
   }
 
 
   cargarSolicitudes( status: 'pendiente' | 'rechazado' | 'aceptado'): void {
 
     this.cargando = true;
-
-    this.solicitudService.getSolicitudesByStatus( status )
+ 
+    this.solicitudService.getSolicitudesByStatus( status, this.desde )
         .subscribe( ({ total, solicitudes }) => {
           this.totalSolicitudes = total;
           this.solicitudes = solicitudes;
@@ -44,7 +44,7 @@ export class SolicitudesComponent implements OnInit {
     
     this.cargarSolicitudes( value );
 
-  }
+  }  
 
 
   cambiarPagina( valor: number ): void {
@@ -60,7 +60,7 @@ export class SolicitudesComponent implements OnInit {
     this.cargarSolicitudes( this.estado );
 
   }
-
+ 
 
   buscar( termino: string ): void {
 

@@ -1,3 +1,4 @@
+import { Alumno } from './alumno.model';
 import { Dependencia } from './dependencia.model';
 import { ItemCarreraProyecto } from './item-carrera-proyecto.model';
 
@@ -18,6 +19,8 @@ export class Proyecto {
         public responsable: string,
         public puesto_responsable: string,
         public carreras: ItemCarreraProyecto[] = [],
+        public publico: boolean,
+        public alumno?: Alumno,
         public _id?: string,
     ){}
 

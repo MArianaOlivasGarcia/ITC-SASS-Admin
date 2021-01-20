@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./dependencia.component.css']
 })
 export class DependenciaComponent implements OnInit {
-
+ 
   public formSubmitted = false;
  
   public dependenciaForm: FormGroup;

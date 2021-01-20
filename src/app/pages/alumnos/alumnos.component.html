@@ -79,9 +79,11 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-success btn-sm">
+                                <a class="btn btn-success btn-sm" *ngIf="alumno.expediente"
+                                [routerLink]="['/dashboard/expediente', alumno.expediente._id ]">
                                     Ver
                                 </a>
+                                <span *ngIf="!alumno.expediente" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Sin expediente</span>
                             </td>
                           </tr>
                       

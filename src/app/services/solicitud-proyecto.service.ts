@@ -14,7 +14,7 @@ const base_url = environment.base_url;
 export class SolicitudProyectoService {
 
   constructor( private http: HttpClient ) { }
-
+ 
   getSolicitudesByStatus( status: 'pendiente' | 'rechazado' | 'aceptado' ,desde: number = 0 ): Observable<any> {
 
     const url = `${ base_url }/solicitud/all/${status}?desde=${ desde }`;
@@ -50,6 +50,29 @@ export class SolicitudProyectoService {
       .pipe(
         map( (resp: { status: boolean, solicitud: Solicitud } ) => resp.solicitud )
       );
+  }
+
+
+  aceptarSolicitud( id: String): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/solicitud/aceptar/${id}`;
+
+    return this.http.put(url, null, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    })
+  }
+
+  rechazarSolicitud( id: String, error: {motivo: string, observacion: string}): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/solicitud/rechazar/${id}`;
+
+    return this.http.put(url, error, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    })
   }
 
 }

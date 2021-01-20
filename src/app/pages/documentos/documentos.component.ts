@@ -10,29 +10,66 @@ import { ExpedienteService } from 'src/app/services/expediente.service';
 })
 export class DocumentosComponent implements OnInit {
 
-  public aprobados: ItemExpediente[] = [];
-  public pendientes: ItemExpediente[] = []; 
-  public rechazados: ItemExpediente[] = [];
+  public totalItems = 0;
+  public items: ItemExpediente[] = [];
+  public itemsTemp: ItemExpediente[] = [];
+  public desde = 0;
+  public cargando = true;
+ 
+  public estado: 'pendiente' | 'rechazado' | 'aceptado' = 'pendiente';
+  public codigo: string;
 
   constructor( private expedienteService: ExpedienteService,
                private activatedRouter: ActivatedRoute ) { }
 
+
+
   ngOnInit(): void {
 
     this.activatedRouter.params.subscribe( params => {
-      const { codigo } = params;
-      this.obtenerDocumentos( codigo );
+        const {codigo} = params;
+        this.codigo = codigo;
+        this.cargarItems( this.estado, this.codigo );
     })
+      
+  }
+
+  cargarItems( status: 'pendiente' | 'rechazado' | 'aceptado', codigo: string ): void {
+
+    this.cargando = true;
+
+    this.expedienteService.getAllByStatusAndCodigo(status, codigo , this.desde)
+      .subscribe( ({total, items}) => {
+        this.totalItems = total;
+        this.items = items;
+        this.itemsTemp = items;
+        this.cargando = false;
+        this.estado = status;
+      })
 
   }
 
-  obtenerDocumentos( codigo: string ): void {
-    this.expedienteService.getAllByCodigo( codigo )
-          .subscribe( resp => {
-            this.aprobados = resp.aprobados;
-            this.pendientes =  resp.pendientes;
-            this.rechazados =  resp.rechazados;
-          });
+
+  cambioValue( value: 'pendiente' | 'rechazado' | 'aceptado' ){
+    
+    this.cargarItems( value, this.codigo );
+
+  } 
+
+  
+  cambiarPagina( valor: number ): void {
+
+    this.desde += valor;
+
+    if ( this.desde < 0 ) {
+      this.desde = 0;
+    } else if ( this.desde >= this.totalItems ) {
+      this.desde -= valor;
+    }
+
+    this.cargarItems( this.estado, this.codigo );
+
   }
+
 
 }

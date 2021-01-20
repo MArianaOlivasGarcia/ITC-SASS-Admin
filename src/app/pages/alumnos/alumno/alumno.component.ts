@@ -3,13 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alumno } from 'src/app/models/alumno.model';
 import { Carrera } from 'src/app/models/carrera.model';
+import { Periodo } from 'src/app/models/periodo.model';
 import { AlumnoService } from 'src/app/services/alumno.service';
 import { CarreraService } from 'src/app/services/carrera.service';
+import { PeriodoService } from 'src/app/services/periodo.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alumno',
-  templateUrl: './alumno.component.html',
+  templateUrl: './alumno.component.html', 
   styleUrls: ['./alumno.component.css']
 })
 export class AlumnoComponent implements OnInit {
@@ -22,16 +24,19 @@ export class AlumnoComponent implements OnInit {
 
   public alumnoSeleccionado: Alumno;
   public carreras: Carrera[] = [];
+  public periodos: Periodo[] = [];
 
   constructor(  private fb: FormBuilder,
                 private alumnoService: AlumnoService,
                 private carreraService: CarreraService,
+                private periodoService: PeriodoService,
                 private router: Router,
                 private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void {
 
     this.cargarCarreras();
+    this.cargarPeriodos();
 
     this.activatedRoute.params.subscribe( ({ id }) => {
       this.cargarAlumno( id );
@@ -68,6 +73,14 @@ export class AlumnoComponent implements OnInit {
     this.carreraService.getCarreras()
           .subscribe( carreras =>
             this.carreras = carreras
+          );
+  }
+
+
+  cargarPeriodos(): void {
+    this.periodoService.getPeriodos()
+          .subscribe( periodos =>
+            this.periodos = periodos
           );
   }
 

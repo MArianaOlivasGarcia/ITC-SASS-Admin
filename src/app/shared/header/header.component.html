@@ -22,13 +22,17 @@
           </a>
            
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" routerLink="perfil" routerLinkActive="text-primary">
-              <i class="fas fa-user-alt mr-2"></i>Mi perfil
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+            
+            <div  *ngFor="let item of headerService.submenu">
+              <a class="dropdown-item" [routerLink]="item.url" routerLinkActive="text-primary">
+                <i [class]="item.icono"></i>{{item.titulo}}
+              </a>
+              <div class="dropdown-divider"></div>
+            </div>
+            <a class="dropdown-item"  (click)="logout()" style="cursor: pointer;">
               <i class="fas fa-power-off mr-2"></i>Cerrar sesión
             </a>
+            
           </div>
         </li>
 

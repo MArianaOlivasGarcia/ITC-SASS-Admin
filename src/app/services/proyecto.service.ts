@@ -16,9 +16,9 @@ export class ProyectoService {
 
   constructor( private http: HttpClient ) { }
 
-  getProyectos( desde: number = 0 ): Observable<any> {
-
-    const url = `${ base_url }/proyecto/all?desde=${ desde }`;
+  getProyectos( desde: number = 0, tipo: 'publico' | 'privado' ): Observable<any> {
+ 
+    const url = `${ base_url }/proyecto/all/${ tipo }?desde=${ desde }`;
 
     return this.http.get<CargarProyectos>( url )
         .pipe(
@@ -38,10 +38,12 @@ export class ProyectoService {
                                       proyecto.responsable,
                                       proyecto.puesto_responsable,
                                       proyecto.carreras,
+                                      proyecto.publico,
+                                      proyecto.alumno,
                                       proyecto._id )
                                   );
             return {
-              /* total: resp.total, */
+              total: resp.total,
               proyectos,
             };
           })

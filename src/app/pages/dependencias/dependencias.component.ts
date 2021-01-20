@@ -28,7 +28,7 @@ export class DependenciasComponent implements OnInit {
 
     this.cargando = true;
 
-    this.dependenciaService.getDependencias( this.desde )
+    this.dependenciaService.getDependenciasPaginadas( this.desde )
         .subscribe( ({ total, dependencias }) => {
           this.totalDependencias = total;
           this.dependencias = dependencias;

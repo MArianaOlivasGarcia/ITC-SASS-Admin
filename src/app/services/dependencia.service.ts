@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { CargarDependencias } from '../interfaces/cargar-dependencias.interface';
 import { Dependencia } from '../models/dependencia.model';
 
-
+ 
 const base_url = environment.base_url;
 
 
@@ -17,9 +17,33 @@ export class DependenciaService {
 
   constructor( private http: HttpClient ) { }
 
-  getDependencias( desde: number = 0 ): Observable<any> {
 
-    const url = `${ base_url }/dependencia/all?desde=${ desde }`;
+
+  getDependencias(): Observable<any> {
+
+
+    return this.http.get(`${base_url}/dependencia/all`)
+      .pipe(
+        map( (resp: { status: boolean, dependencias: Dependencia[] } ) => {
+          const dependencias = resp.dependencias.map(
+                                  dependencia => new Dependencia(
+                                    dependencia.nombre,
+                                    dependencia.representante_legal,
+                                    dependencia.domicilio,
+                                    dependencia.email,
+                                    dependencia._id ) );
+          return dependencias;
+        })
+      );
+
+  }
+
+
+  // TODO: ESte es get dependencias paginadas
+  // Crear un Get detependecias TODAS
+  getDependenciasPaginadas( desde: number = 0 ): Observable<any> {
+
+    const url = `${ base_url }/dependencia/all/paginados?desde=${ desde }`;
 
     return this.http.get<CargarDependencias>( url )
         .pipe(

@@ -1,0 +1,62 @@
+<h4>Carrera <small *ngIf="carreraSeleccionada">{{ carreraSeleccionada.nombre }}</small></h4>
+
+
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+    <div class="row text-right">
+        <div class="col">
+            <button class="btn btn-danger"
+                routerLink="/dashboard/ajustes">
+                <i class="fas fa-arrow-left mr-2"></i>Regresar
+            </button>
+        </div>
+    </div> 
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+<!-- =====================
+== FORMULARIO CARRERA
+======================= --> 
+<div class="row animated fadeIn faster m-3">
+    <div class="col-md-7">
+
+        <h5>Información de la Carrera</h5>
+
+        <form [formGroup]="carreraForm"
+              (submit)="guardar()"
+              autocomplete="off"> 
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': campoNoValido('nombre') }"
+                    placeholder="Nombre"
+                    formControlName="nombre">
+                <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
+                    {{ mensajesError('nombre') }}
+                </div>
+            </div>
+
+
+            <hr>
+
+            <div class="form-group text-center">
+                <button type="submit"
+                        class="btn btn-primary btn-block">
+                <i class="fas fa-save mr-2"></i>Guardar    
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<!-- =====================
+== FIN FORMULARIO CARRERA
+======================= --> 

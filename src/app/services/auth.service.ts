@@ -25,7 +25,7 @@ export class AuthService {
                private wsService: WebSocketService ) { }
 
 
-  get token(): string {
+  get token(): string { 
     return localStorage.getItem('accessToken') || '';
   }
 
@@ -46,9 +46,10 @@ export class AuthService {
 
         localStorage.setItem('accessToken', resp.accessToken );
         localStorage.setItem('menu', JSON.stringify(resp.menu) );
+        localStorage.setItem('submenu', JSON.stringify(resp.submenu) );
         const { nombre, username, foto, role, _id, gestion, online } = resp.user;
         this.usuario = new Usuario( nombre, username, foto, role, _id, gestion, '', online );
-        console.log(this.usuario);
+        console.log(resp);
       }),
       map( resp => true ), // of permite crear un observable
       catchError( error => of(false) )
