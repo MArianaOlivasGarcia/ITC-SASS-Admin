@@ -49,15 +49,14 @@ export class AlumnoComponent implements OnInit {
       apellido_materno: ['', Validators.required ],
       sexo: ['', Validators.required ],
       fecha_nacimiento: ['', Validators.required ],
-      numero_control: ['', Validators.required ],
+      numero_control: ['',[Validators.required, Validators.maxLength(8), Validators.minLength(8)] ],
       carrera: ['', [Validators.required ] ],
-      semestre: ['', [Validators.required ] ],
       creditos_acumulados: ['', [Validators.required ] ],
-      porcentaje_avance: ['', [Validators.required ] ],
-      periodo: ['', [Validators.required ] ],
+      periodo_ingreso: ['', [Validators.required ] ],
+      porcentaje_avance: [''],
+      semestre: [''],
     });
 
-    // tslint:disable: deprecation
     this.renovarForm = this.fb.group({
       password: ['', Validators.required ],
       confirm_password: ['', Validators.required ]
@@ -105,7 +104,7 @@ export class AlumnoComponent implements OnInit {
                   semestre,
                   creditos_acumulados,
                   porcentaje_avance,
-                  periodo } = alumno;
+                  periodo_ingreso } = alumno;
           this.alumnoSeleccionado = alumno;
           this.alumnoForm.setValue({ numero_control,
                                      nombre,
@@ -117,7 +116,7 @@ export class AlumnoComponent implements OnInit {
                                      semestre,
                                      creditos_acumulados,
                                      porcentaje_avance,
-                                     periodo });
+                                     periodo_ingreso });
         });
 
   }
@@ -194,6 +193,8 @@ export class AlumnoComponent implements OnInit {
 
   mensajesError( formGroup: FormGroup, campo: string  ): string {
     return formGroup.get(campo)?.hasError('required') ? `Este campo es requerido.` :
+           formGroup.get(campo)?.hasError('maxlength') ? `Máximo 8 caracteres.` :
+           formGroup.get(campo)?.hasError('minlength') ? `Mínimo 8 caracteres.` :
            formGroup.get(campo)?.hasError('noIgual') ? `Las contraseñas no coinciden.` : '';
   }
 

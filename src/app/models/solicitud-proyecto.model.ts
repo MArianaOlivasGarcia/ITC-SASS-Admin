@@ -8,11 +8,17 @@ export class Solicitud {
     constructor(
         public alumno: Alumno,
         public proyecto: Proyecto,
+        public usuario_reviso?: Usuario,
+        public inicio_servicio?: Date,
+        public termino_servicio?: Date,
         public pendiente?: boolean,
+        public aceptado?: boolean,        
         public rechazado?: boolean,
-        public aceptado?: boolean,
-        public valido?: Usuario,
-        public created_at?: Date,
+        public fecha_solicitud?: Date,
+        public error?: {
+            motivo: string,
+            observacion: string
+        },
         public _id?: string
     ){}
 

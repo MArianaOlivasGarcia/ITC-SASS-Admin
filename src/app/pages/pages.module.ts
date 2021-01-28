@@ -28,12 +28,6 @@ import { AvisosComponent } from './avisos/avisos.component';
 import { AvisoComponent } from './avisos/aviso/aviso.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DocumentoComponent } from './documentos/documento/documento.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from 'src/environments/environment';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { SolicitudesComponent } from './solicitudes/solicitudes.component';
 import { SolicitudComponent } from './solicitudes/solicitud/solicitud.component';
@@ -43,6 +37,15 @@ import { PeriodoComponent } from './ajustes/periodos/periodo/periodo.component';
 import { CarrerasComponent } from './ajustes/carreras/carreras.component';
 import { PeriodosComponent } from './ajustes/periodos/periodos.component';
 
+import { ImagenPipe } from '../pipes/imagen.pipe';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { environment } from 'src/environments/environment';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 const token = localStorage.getItem('accessToken') || '';
 
@@ -58,6 +61,7 @@ const config: SocketIoConfig = {
 
 @NgModule({
   declarations: [
+    ImagenPipe,
     AlumnosComponent,
     AlumnoComponent,
     DetalleAlumnoComponent,

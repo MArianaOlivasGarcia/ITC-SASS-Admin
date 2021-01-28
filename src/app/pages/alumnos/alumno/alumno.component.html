@@ -110,8 +110,7 @@
             <input type="text" 
                    class="form-control" 
                    [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'numero_control') }"
-                   placeholder="No. de control" 
-                   maxlength="8"
+                   placeholder="No. de control"
                    formControlName="numero_control">
             <div *ngIf="campoNoValido( alumnoForm ,'numero_control')" class="invalid-feedback">
               {{ mensajesError( alumnoForm ,'numero_control') }}
@@ -137,16 +136,10 @@
         <div class="form-row">
           <div class="form-group col-md-3">
             <label>Semestre</label>
-            <input type="number" 
-                   min="1" 
-                   max="14" 
+            <input type="number"
                    class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'semestre') }"
                    placeholder="Semestre"
                    formControlName="semestre">
-            <div *ngIf="campoNoValido( alumnoForm ,'semestre')" class="invalid-feedback">
-              {{ mensajesError( alumnoForm ,'semestre') }}
-            </div>   
           </div>
           <div class="form-group col-md-3">
             <label>Creditos Acumulados</label>
@@ -163,26 +156,22 @@
             <label>Porcentaje Avance</label>
             <input type="text" 
                    class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'porcentaje_avance') }"
                    placeholder="Porcentaje Avance"
                    formControlName="porcentaje_avance">
-            <div *ngIf="campoNoValido( alumnoForm ,'porcentaje_avance')" class="invalid-feedback">
-              {{ mensajesError( alumnoForm ,'porcentaje_avance') }}
-            </div> 
           </div>
-          <div class="form-group col-md-3">
+         <div class="form-group col-md-3">
             <label>Periodo Ingreso</label>
             <select class="custom-select mr-sm-2"
-                    [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'periodo') }"
-                    formControlName="periodo">
+                    [ngClass]="{'is-invalid': campoNoValido( alumnoForm ,'periodo_ingreso') }"
+                    formControlName="periodo_ingreso">
               <option value="">SELECCIONAR PERIODO</option>
               <option *ngFor="let periodo of periodos"
                         [value]="periodo._id">
                         {{ periodo.nombre }}
               </option>
             </select>      
-            <div *ngIf="campoNoValido( alumnoForm ,'periodo')" class="invalid-feedback">
-              {{ mensajesError( alumnoForm ,'periodo') }}
+            <div *ngIf="campoNoValido( alumnoForm ,'periodo_ingreso')" class="invalid-feedback">
+              {{ mensajesError( alumnoForm ,'periodo_ingreso') }}
             </div>    
           </div>
         </div>

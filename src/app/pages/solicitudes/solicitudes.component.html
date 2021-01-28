@@ -45,7 +45,7 @@
                             <td>{{solicitud.alumno.nombre}}</td>
                             <td>{{solicitud.alumno.apellido_paterno}} {{solicitud.alumno.apellido_materno}}</td>
                             <td>{{solicitud.alumno.carrera.nombre}}</td>
-                            <td>{{solicitud.created_at | date}}</td>
+                            <td>{{solicitud.fecha_solicitud | date}}</td>
                             <td>
                                 <a class="btn btn-info btn-sm" [routerLink]="['/dashboard/solicitud', solicitud._id]">Ver</a>
                             </td>

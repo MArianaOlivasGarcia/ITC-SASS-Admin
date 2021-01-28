@@ -6,7 +6,8 @@ export class ItemCarreraProyecto {
 
     constructor(
         public cantidad: number,
-        public carrera: Carrera
+        public carrera: Carrera,
+        public _id?: string,
     ){}
 
 }

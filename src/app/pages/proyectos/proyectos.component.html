@@ -62,7 +62,7 @@
                             <th scope="col">Objetivo</th>
                             <th scope="col">Periodo</th>
                             <th scope="col" *ngIf="inputTermino.value.length > 0">Tipo</th>
-                            <th scope="col">Editar</th>
+                            <th scope="col">Herramientas</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -76,7 +76,10 @@
                                     <span *ngIf="proyecto.publico" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Público</span>
                                     <span *ngIf="!proyecto.publico" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Privado</span>
                                 </td>
-                                <td><a class="btn btn-sm btn-info" [routerLink]="['/dashboard/proyecto', proyecto._id]"><i class="fa fa-pen"></i></a></td>
+                                <td>
+                                    <a class="btn btn-sm btn-info mr-1" [routerLink]="['/dashboard/proyecto', proyecto._id]"><i class="fa fa-pen"></i></a>
+                                    <button class="btn btn-sm btn-info" (click)="duplicar( proyecto._id )">Duplicar</button>
+                                </td>
                           </tr>
                         </tbody>
                     </table>    

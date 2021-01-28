@@ -31,6 +31,8 @@ export class ProyectoService {
                                       proyecto.objetivo,
                                       proyecto.actividades,
                                       proyecto.periodo,
+                                      proyecto.fecha_inicial,
+                                      proyecto.fecha_limite,
                                       proyecto.lugar_desempeno,
                                       proyecto.modalidad,
                                       proyecto.horario,
@@ -52,15 +54,9 @@ export class ProyectoService {
   }
 
   getProyecto( id: string ): Observable<any> {
-
     const url = `${ base_url }/proyecto/${ id }`;
-    return this.http.get( url )
-        .pipe(
-          map( (resp: { status: boolean, proyecto: Proyecto } ) => resp.proyecto )
-        );
-
+    return this.http.get( url );
   }
-
 
   crearProyecto( proyecto: Proyecto ): Observable<any> {
     const url = `${ base_url }/proyecto/create`;
@@ -71,5 +67,14 @@ export class ProyectoService {
     const url = `${ base_url }/proyecto/${ proyecto._id }`;
     return this.http.put( url, proyecto );
   }
+
+  duplicarProyecto( id: string ): Observable<any> {
+    const url = `${ base_url }/proyecto/duplicar/${ id }`;
+    return this.http.get( url )
+      .pipe(
+        map( (resp: {status: boolean, proyecto: Proyecto}) => resp.proyecto )
+      );
+  }
+
 
 }

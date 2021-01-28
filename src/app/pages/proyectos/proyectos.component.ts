@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Proyecto } from 'src/app/models/proyecto.models';
 import { BusquedaService } from 'src/app/services/busqueda.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-proyectos',
@@ -19,7 +21,8 @@ export class ProyectosComponent implements OnInit {
   public tipo: 'publico' | 'privado' = 'publico';
 
   constructor( private proyectoService: ProyectoService,
-               private busquedaService: BusquedaService ) { }
+               private busquedaService: BusquedaService,
+               private router: Router ) { }
 
   ngOnInit(): void {
     this.cargarProyectos( this.tipo );
@@ -77,5 +80,38 @@ export class ProyectosComponent implements OnInit {
 
   }
   
+
+  duplicar( id: string ): void {
+
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro que deseas duplicar este proyecto?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'SI',
+      cancelButtonText: 'NO'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      
+        this.proyectoService.duplicarProyecto( id )
+        .subscribe( proyecto => {
+
+          const { nombre } = proyecto;
+          Swal.fire({
+            title: 'Duplicado',
+            text: `Proyecto ${nombre} duplicado con éxito.`,
+            icon: 'success'
+          });
+          
+          this.router.navigateByUrl(`/dashboard/proyecto/${proyecto._id}`);
+        })
+      
+      }
+    })
+
+  }
 
 }

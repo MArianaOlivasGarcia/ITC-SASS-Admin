@@ -27,6 +27,7 @@
 == DATOS DEL ALUMNO QUE CREO EL PROYECTO "PRIVADO"
 ======================= --> 
 <div class="row animated fadeIn fast m-3" *ngIf="proyectoSeleccionado?.alumno">
+  
   <div class="col-md-8">
 
       <ul class="list-group text-dark mb-3">
@@ -80,7 +81,8 @@
 
       </ul>
 
-    </div>
+  </div>
+
 </div>
 <!-- =====================
 == FIN DATOS DEL ALUMNO QUE CREO EL PROYECTO "PRIVADO"
@@ -194,12 +196,8 @@
             <label>Modalidad</label>
             <input type="text" 
                    class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
                    placeholder="Modalidad"
                    formControlName="modalidad">
-            <div *ngIf="campoNoValido('modalidad')" class="invalid-feedback">
-              {{ mensajesError('modalidad') }}
-            </div>
           </div>
         </div>
 
@@ -208,14 +206,23 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Tipo</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('tipo') }"
-                   placeholder="Tipo"
-                   formControlName="tipo">
-            <div *ngIf="campoNoValido('tipo')" class="invalid-feedback">
-              {{ mensajesError('tipo') }}
-            </div>   
+            <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('tipo') }"
+                    formControlName="tipo">
+              <option value="">SELECCIONAR TIPO</option>
+              <option value="Actividades deportivas">Actividades deportivas</option>
+              <option value="Actividades cívicas">Actividades cívicas</option>
+              <option value="Actividades culturales">Actividades culturales</option>
+              <option value="Apoyo a la salud">Apoyo a la salud</option>
+              <option value="Desarrollo de comunidad">Desarrollo de comunidad</option>
+              <option value="Desarrollo sustentable">Desarrollo sustentable</option>
+              <option value="Educación para adultos">Educación para adultos</option>
+              <option value="Medio ambiente">Medio ambiente</option>
+              <option value="Otro">Otro</option>
+            </select>      
+            <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
+              {{ mensajesError('dependencia') }}
+            </div>    
           </div>
           <div class="form-group col-md-4">
             <label>Horario</label>
@@ -229,17 +236,30 @@
             </div> 
           </div>
 
+          <div class="form-group col-md-4">
+            <div class="form-check">
+              <input class="form-check-input" 
+                    type="checkbox" 
+                    id="gridCheck"
+                    formControlName="apoyo_economico">
+              <label class="form-check-label" for="gridCheck">
+                Apoyo económico
+              </label>
+            </div>
+          </div>
+          
+
         </div>
 
 
         <div class="form-row">
             
             <div class="form-group col-md-6">
-              <label>Responsable</label>
+              <label>Nombre del responsable</label>
               <input type="text" 
                      class="form-control" 
                      [ngClass]="{'is-invalid': campoNoValido('responsable') }"
-                     placeholder="Responsable"
+                     placeholder="Nombre del responsable"
                      formControlName="responsable">
               <div *ngIf="campoNoValido('responsable')" class="invalid-feedback">
                 {{ mensajesError('responsable') }}
@@ -261,11 +281,45 @@
           </div>
 
 
+          <hr>
+
+          <h6>Disponibilidad</h6>
+          <br>
+
+          <div class="form-row"> 
+
+            <div class="form-group col-md-6">
+              <label>Fecha Inicial</label>
+              <input type="date" 
+                     class="form-control"
+                     [ngClass]="{'is-invalid': campoNoValido('fecha_inicial') }"
+                     formControlName="fecha_inicial">
+              <div *ngIf="campoNoValido('fecha_inicial')" class="invalid-feedback">
+                {{ mensajesError('fecha_inicial') }}
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Fecha Limite</label>
+              <input type="date" 
+                     class="form-control"
+                     [ngClass]="{'is-invalid': campoNoValido('fecha_limite') }"
+                     placeholder="Puesto del responsable"
+                     formControlName="fecha_limite">
+              <div *ngIf="campoNoValido('fecha_limite')" class="invalid-feedback">
+                {{ mensajesError('fecha_limite') }}
+              </div>
+            </div>
+            
+          </div>
+
           
+          <hr>
+
           <div class="form-row"> 
 
             <div class="form-group col-md-6" *ngIf="showCarreras || proyectoSeleccionado?.publico">
-              <label>Carreras solicitadas</label>
+              <h6>Carreras solicitadas</h6>
               <br>
               <mat-form-field>
                 <input type="text"
@@ -287,17 +341,7 @@
               </div> 
             </div>
 
-            <div class="form-group col-md-4">
-              <div class="form-check">
-                <input class="form-check-input" 
-                      type="checkbox" 
-                      id="gridCheck"
-                      formControlName="apoyo_economico">
-                <label class="form-check-label" for="gridCheck">
-                  Apoyo económico
-                </label>
-              </div>
-            </div>
+            
           </div>
 
           <table class="table table-striped table-hover table-bordered"
@@ -321,6 +365,7 @@
                 </td>
                 <td>
                   <button class="btn btn-outline-danger"
+                        type="button"
                         (click)="borrarItemCarrera(itemCarrera.carrera._id)">
                         <i class="fas fa-times"></i></button>
                 </td>

@@ -1,4 +1,4 @@
-<h5>Solicitud de Proyecto de <small>{{solicitud?.alumno.nombre}}</small>
+<h5>Solicitud de Proyecto de <small>{{alumno?.nombre}}</small>
   <small>
           <span *ngIf="solicitud?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
           <span *ngIf="solicitud?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
@@ -12,7 +12,15 @@
 
     <div class="col-12">
         <div class="row">
-            <div class="col-md-8">
+          <div class="col-md-4">
+            <h6>Fotografía</h6>
+                
+            <div class="d-flex justify-content-center">
+                <img  [src]="alumno.foto | imagen:'alumnos'" [alt]="alumno.nombre" style="width: 200px; height: 200px;" >
+            </div>
+          </div>
+
+            <div class="col-md-8 mt-md-0 mt-3">
 
                 <ul class="list-group text-dark mb-3">
                   
@@ -24,7 +32,7 @@
                           <strong>No. de Control:</strong>
                       </div>
                       <div class="col-md-7 mt-md-0 mt-1">
-                        <p class="m-0">{{ solicitud.alumno.numero_control }}</p>
+                        <p class="m-0">{{ alumno.numero_control }}</p>
                       </div>
                     </div>
                   </li>
@@ -35,7 +43,7 @@
                             <strong>Nombre:</strong>
                         </div>
                         <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.alumno.nombre }}</p>
+                          <p class="m-0">{{ alumno.nombre }}</p>
                         </div>
                       </div>
                     </li>
@@ -47,7 +55,7 @@
                             <strong>Apellidos:</strong>
                         </div>
                         <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.alumno.apellido_paterno }} {{ solicitud.alumno.apellido_materno }}</p>
+                          <p class="m-0">{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}</p>
                         </div>
                       </div>
                     </li>
@@ -58,14 +66,14 @@
                             <strong>Carrera:</strong>
                         </div>
                         <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.alumno.carrera.nombre }}</p>
+                          <p class="m-0">{{ alumno.carrera.nombre }}</p>
                         </div>
                       </div>
                     </li>
           
                 </ul>
           
-              </div>
+            </div>  
         </div>
     </div>
     
@@ -81,10 +89,10 @@
                   
                   <li class="list-group-item">
                     <div class="row">
-                      <div class="col-md-3 text-bold">
+                      <div class="col-md-4 text-bold">
                           <strong>Nombre:</strong>
                       </div>
-                      <div class="col-md-9 mt-md-0 mt-1">
+                      <div class="col-md-8 mt-md-0 mt-1">
                         <p class="m-0">{{ solicitud.proyecto.nombre }}</p>
                       </div>
                     </div>
@@ -92,10 +100,10 @@
           
                   <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Dependencia:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.dependencia.nombre }}</p>
                         </div>
                       </div>
@@ -104,10 +112,10 @@
           
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Responsable:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.responsable }}</p>
                         </div>
                       </div>
@@ -115,10 +123,10 @@
           
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Puesto del responsable:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.puesto_responsable }}</p>
                         </div>
                       </div>
@@ -126,10 +134,10 @@
 
                     <li class="list-group-item">
                         <div class="row">
-                          <div class="col-md-3 text-bold">
+                          <div class="col-md-4 text-bold">
                               <strong>Objetivo:</strong>
                           </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
+                          <div class="col-md-8 mt-md-0 mt-1">
                             <p class="m-0">{{ solicitud.proyecto.objetivo }}</p>
                           </div>
                         </div>
@@ -137,10 +145,10 @@
 
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Actividades:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.actividades }}</p>
                         </div>
                       </div>
@@ -149,10 +157,10 @@
 
                     <li class="list-group-item">
                         <div class="row">
-                          <div class="col-md-3 text-bold">
+                          <div class="col-md-4 text-bold">
                               <strong>Periodo:</strong>
                           </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
+                          <div class="col-md-8 mt-md-0 mt-1">
                             <p class="m-0">{{ solicitud.proyecto.periodo.nombre }}</p>
                           </div>
                         </div>
@@ -160,10 +168,10 @@
 
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Lugar de desempeño:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.lugar_desempeno }}</p>
                         </div>
                       </div>
@@ -171,10 +179,10 @@
 
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Modalidad:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.modalidad }}</p>
                         </div>
                       </div>
@@ -183,10 +191,10 @@
 
                     <li class="list-group-item">
                         <div class="row">
-                          <div class="col-md-3 text-bold">
+                          <div class="col-md-4 text-bold">
                               <strong>Tipo:</strong>
                           </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
+                          <div class="col-md-8 mt-md-0 mt-1">
                             <p class="m-0">{{ solicitud.proyecto.tipo }}</p>
                           </div>
                         </div>
@@ -194,10 +202,10 @@
 
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-bold">
+                        <div class="col-md-4 text-bold">
                             <strong>Horario:</strong>
                         </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
+                        <div class="col-md-8 mt-md-0 mt-1">
                           <p class="m-0">{{ solicitud.proyecto.horario }}</p>
                         </div>
                       </div>
@@ -206,10 +214,10 @@
 
                     <li class="list-group-item">
                         <div class="row">
-                          <div class="col-md-3 text-bold">
+                          <div class="col-md-4 text-bold">
                               <strong>Apoyo Económico:</strong>
                           </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
+                          <div class="col-md-8 mt-md-0 mt-1">
                             <p class="m-0" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
                             <p class="m-0" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
                           </div>
@@ -225,6 +233,9 @@
 </div>
 
 
+
+
+
 <div class="row animated fadeIn fast m-3">
 
     <div class="col-md-6">
@@ -232,6 +243,30 @@
         <form [formGroup]="solicitudForm"
               (submit)="guardar()"
               autocomplete="off">
+
+            <h6>Fecha Servicio Social</h6>
+
+            <div class="form-row">
+              <div class="col-md-6">
+                <label>Fecha Inicial</label>
+                <input type="date" #fecha
+                      class="form-control"
+                      formControlName="inicio_servicio"
+                      [ngClass]="{'is-invalid': campoNoValido('inicio_servicio') }"
+                      (ngModelChange)="cambiarFecha( fecha.value )">
+                <div *ngIf="campoNoValido('inicio_servicio')" class="invalid-feedback">
+                    {{ mensajesError('inicio_servicio') }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Fecha Termino</label>
+                <input type="date" 
+                       class="form-control"
+                       formControlName="termino_servicio">
+              </div>
+            </div> 
+
+            <br>
 
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Estado</label>
@@ -273,8 +308,9 @@
             <hr>
 
             <button type="submit" 
-                    class="btn btn-primary btn-bloc"
-                    *ngIf="!solicitud?.aceptado" >Guardar</button>
+                    class="btn btn-success btn-block"
+                    [class.btn-danger]="!isAceptado"
+                    *ngIf="!solicitud?.aceptado">Guardar</button>
 
         </form>
 
@@ -282,3 +318,4 @@
     </div>
 
 </div>
+

@@ -21,16 +21,19 @@ export class SolicitudProyectoService {
 
     return this.http.get<CargarSolicitudes>( url )
         .pipe(
-          map( resp => {
+          map( resp => { 
             const solicitudes = resp.solicitudes.map(
                                     solicitud => new Solicitud(
                                       solicitud.alumno,
                                       solicitud.proyecto,
+                                      solicitud.usuario_reviso,
+                                      solicitud.inicio_servicio,
+                                      solicitud.termino_servicio,
                                       solicitud.pendiente,
-                                      solicitud.rechazado,
                                       solicitud.aceptado,
-                                      solicitud.valido,
-                                      solicitud.created_at,
+                                      solicitud.rechazado,
+                                      solicitud.fecha_solicitud,
+                                      solicitud.error,
                                       solicitud._id
                                     )
                                   );
@@ -53,11 +56,11 @@ export class SolicitudProyectoService {
   }
 
 
-  aceptarSolicitud( id: String): Observable<any> {
+  aceptarSolicitud( solicitud: Solicitud ): Observable<any> {
     const token = localStorage.getItem('accessToken') || '';
-    const url = `${ base_url }/solicitud/aceptar/${id}`;
+    const url = `${ base_url }/solicitud/aceptar/${solicitud._id}`;
 
-    return this.http.put(url, null, {
+    return this.http.put(url, solicitud, {
       headers: {
         Authorization: `Bearer ${ token }`
       }

@@ -63,12 +63,14 @@ export class ProyectoComponent implements OnInit {
       actividades: ['', Validators.required ],
       periodo: ['', Validators.required ],
       lugar_desempeno: ['', Validators.required ],
-      modalidad: ['', Validators.required ],
+      modalidad: [{value:'Público', disabled: true}],
       tipo: ['', Validators.required ],
       horario: ['', Validators.required ],
       apoyo_economico: [false],
       responsable: ['', Validators.required ],
       puesto_responsable: ['', Validators.required ],
+      fecha_inicial: ['', Validators.required ],
+      fecha_limite: ['', Validators.required ],
     });
 
     this.carrerasFiltradas = this.carreraControl.valueChanges
@@ -102,7 +104,7 @@ export class ProyectoComponent implements OnInit {
     if ( id === 'nuevo' ) { return; }
 
     this.proyectoService.getProyecto( id )
-        .subscribe( proyecto => {
+        .subscribe( resp => {
           // TODO: SI NO ENCUENTRA EL PROYECTO O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/proyectos`);
 
@@ -117,9 +119,11 @@ export class ProyectoComponent implements OnInit {
                   horario,
                   tipo,
                   responsable,
-                  puesto_responsable } = proyecto;
-          this.proyectoSeleccionado = proyecto;
-          this.itemCarreras = proyecto.carreras;
+                  puesto_responsable,
+                  fecha_inicial,
+                  fecha_limite } = resp.proyecto;
+          this.proyectoSeleccionado = resp.proyecto;
+          this.itemCarreras = resp.itemsCarrera;
           this.proyectoForm.setValue({ apoyo_economico,
                                        nombre,
                                        dependencia: _id,
@@ -131,7 +135,9 @@ export class ProyectoComponent implements OnInit {
                                        horario,
                                        tipo,
                                        responsable,
-                                       puesto_responsable});
+                                       puesto_responsable,
+                                       fecha_inicial,
+                                       fecha_limite });
 
         });
 
@@ -146,7 +152,7 @@ export class ProyectoComponent implements OnInit {
       this.carreraControl.setErrors({'invalid': true})
     }
 
-    if ( this.proyectoSeleccionado.publico ){
+    if ( this.proyectoSeleccionado?.publico ){
       if ( this.proyectoForm.invalid || this.carreraControl.invalid ) { return; }
     }
    
@@ -255,6 +261,7 @@ export class ProyectoComponent implements OnInit {
                     }
                     return item;
                   })
+
   }
 
 
@@ -279,9 +286,7 @@ export class ProyectoComponent implements OnInit {
   }
 
   borrarItemCarrera( id: string ):void {
-    this.itemCarreras = this.itemCarreras.filter( (item: ItemCarreraProyecto) => {
-      id !== item.carrera._id;
-    })
+    this.itemCarreras = this.itemCarreras.filter( (item: ItemCarreraProyecto) => id !== item.carrera._id );
   }
   
 

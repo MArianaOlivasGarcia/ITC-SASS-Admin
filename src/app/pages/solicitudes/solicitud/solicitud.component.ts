@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Alumno } from 'src/app/models/alumno.model';
 import { Solicitud } from 'src/app/models/solicitud-proyecto.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 import Swal from 'sweetalert2';
 
@@ -14,12 +14,15 @@ import Swal from 'sweetalert2';
 export class SolicitudComponent implements OnInit {
 
   public solicitud: Solicitud;
+  public alumno: Alumno;
 
   public formSubmitted: boolean = false;
   public solicitudForm: FormGroup;
 
   public isAceptado: boolean = true;
   public isPendiente: boolean = true;
+
+  public terminoServicio: Date;
 
   constructor( private solicitudService: SolicitudProyectoService,
                private activatedRouter: ActivatedRoute,
@@ -34,6 +37,8 @@ export class SolicitudComponent implements OnInit {
       status: [ this.isAceptado , Validators.required ],
       motivo: '',
       observacion: '',
+      inicio_servicio: ['', Validators.required],
+      termino_servicio: [{value: '', disabled: true}],
     });
 
 
@@ -44,6 +49,8 @@ export class SolicitudComponent implements OnInit {
     this.solicitudService.getById( id )
           .subscribe( solicitud => {
             this.solicitud = solicitud;
+            this.alumno = solicitud.alumno;
+
             this.isAceptado = solicitud.aceptado;
             this.isPendiente = solicitud.pendiente;
 
@@ -53,21 +60,36 @@ export class SolicitudComponent implements OnInit {
 
             if( !this.isAceptado && !this.isPendiente ) {
               const { error: {
-                motivo,
-                observacion
-              }} = solicitud;
+                        motivo,
+                        observacion,
+                      },
+                      inicio_servicio,
+                      termino_servicio} = solicitud;
               this.solicitudForm.setValue({
+                inicio_servicio,
+                termino_servicio,
                 status: this.isAceptado,
                 motivo,
                 observacion
               })
-            } 
+            } else {
+              const { inicio_servicio,
+                      termino_servicio} = solicitud;
+              this.solicitudForm.setValue({
+                inicio_servicio,
+                termino_servicio,
+                status: this.isAceptado,
+                motivo: '',
+                observacion: ''
+              })
+            }
   
           })
   }
 
 
   guardar(): void {
+    
     this.formSubmitted = true;
     const {status, observacion, motivo} = this.solicitudForm.value;
     
@@ -110,41 +132,50 @@ export class SolicitudComponent implements OnInit {
       
       
 
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Estás seguro que deseas aceptar la solicitud?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          const { inicio_servicio, termino_servicio } = this.solicitudForm.getRawValue();
+          this.solicitud.inicio_servicio = inicio_servicio;
+
+          const data = {
+            ...this.solicitud,
+            inicio_servicio,
+            termino_servicio
+          }
+
+          this.solicitudService.aceptarSolicitud( data )
+            .subscribe( resp =>  {
+        
+              this.solicitud = resp.solicitud;
+
+              Swal.fire({
+                title: 'Aceptado',
+                text: resp.message,
+                icon: 'success'
+              })
+
+        
+              }, err => {
                 Swal.fire({
-                  title: '¿Estas seguro?',
-                  text: '¿Estas seguro que deseas aceptar la solicitud?',
-                  icon: 'question',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'SI',
-                  cancelButtonText: 'NO'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-
-                    this.solicitudService.aceptarSolicitud( this.solicitud._id )
-                      .subscribe( resp =>  {
-                  
-                        this.solicitud = resp.solicitud;
-
-                        Swal.fire({
-                          title: 'Aceptado',
-                          text: resp.message,
-                          icon: 'success'
-                        })
-
-                  
-                        }, err => {
-                          Swal.fire({
-                            title: 'Error', 
-                            text: err.error.message,
-                            icon: 'error' 
-                          })
-                        })
-                        
-                  }
+                  title: 'Error', 
+                  text: err.error.message,
+                  icon: 'error' 
                 })
-              }
+              })
+              
+        }
+      })
+    }
 
   }
 
@@ -170,5 +201,14 @@ export class SolicitudComponent implements OnInit {
 
   }
 
+
+  cambiarFecha( value: any ) {
+    let inicioServicio = new Date(value);
+    let terminoServicio =  new Date(inicioServicio.setMonth( inicioServicio.getMonth() + 6 ));
+
+    let tDate =terminoServicio.toISOString().substring(0,10);
+
+    this.solicitudForm.controls.termino_servicio.setValue(tDate);
+  }
 
 }

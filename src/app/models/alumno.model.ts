@@ -1,4 +1,5 @@
 import { environment } from '../../environments/environment';
+import { Expediente } from './expediente.model';
 import { Periodo } from './periodo.model';
 
 const base_url = environment.base_url;
@@ -14,11 +15,12 @@ export class Alumno {
         public fecha_nacimiento: Date,
         public edad: number,
         public carrera: string,
-        public semestre: number,
         public creditos_acumulados: number,
         public porcentaje_avance: number,
-        public periodo: Periodo,
+        public periodo_ingreso: Periodo,
+        public expediente: Expediente,
         public _id?: string,
+        public semestre?: number,
         public foto?: string,
         public firma?: string,
         public email?: string,

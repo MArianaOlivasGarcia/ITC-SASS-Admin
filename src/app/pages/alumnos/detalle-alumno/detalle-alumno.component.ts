@@ -25,16 +25,34 @@ export class DetalleAlumnoComponent implements OnInit {
 
 
   eliminarFirma(): void {
-    this.uploadService.deleteFirmaAlumno( this.alumno._id )
+
+
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "La firma sera eliminada.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.uploadService.deleteFirmaAlumno( this.alumno._id )
           .subscribe( resp => {
             this.alumno = resp.alumno;
             this.modalService.notificarUpload.emit(this.alumno);
             Swal.fire({
               title: 'Guardado',
-              text: `La foto del alumno ${ this.alumno.nombre } se ha eliminado con éxito`,
+              text: `La firma del alumno ${ this.alumno.nombre } se ha eliminado con éxito`,
               icon: 'success'
             })
           })
+
+      }
+    })
+
+
   }
 
 }
