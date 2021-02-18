@@ -1,4 +1,4 @@
-<h5>Solicitud de Proyecto de <small>{{alumno?.nombre}}</small>
+<h5>Solicitud de Servicio Social de <small>{{alumno?.nombre}}</small>
   <small>
           <span *ngIf="solicitud?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
           <span *ngIf="solicitud?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
@@ -8,7 +8,41 @@
 
 <hr>
 
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+  <div class="col">
+      <button class="btn btn-danger"
+          routerLink="/dashboard/solicitudes">
+          <i class="fas fa-arrow-left mr-2"></i>Regresar
+      </button>
+  </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+<!-- =====================
+== INFO VALIDACIÓN
+======================= --> 
+<div class="row animated fadeIn m-3 text-right" *ngIf="solicitud && !solicitud?.pendiente">
+  <div class="col">
+    <p class="mb-0"><strong>Usuario que valido:</strong> {{solicitud?.usuario_valido.nombre}}.</p>
+    <p class="mb-0"><strong>Fecha de validación:</strong> {{solicitud?.fecha_validacion | date}}.</p>
+  </div>
+</div>
+<!-- =====================
+== FIN INFO VALIDACIÓN
+======================= --> 
+
+
+
+
 <div class="row animated fadeIn fast m-3" *ngIf="solicitud">
+
 
     <div class="col-12">
         <div class="row">
@@ -20,11 +54,14 @@
             </div>
           </div>
 
-            <div class="col-md-8 mt-md-0 mt-3">
+          <div class="col-md-8 mt-md-0 mt-3">
 
                 <ul class="list-group text-dark mb-3">
                   
-                  <li class="list-group-item active"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
+                  <li class="list-group-item active"
+                    [class.aceptado]="solicitud?.aceptado"
+                    [class.pendiente]="solicitud?.pendiente"
+                    [class.rechazado]="solicitud?.rechazado"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
                   
                   <li class="list-group-item">
                     <div class="row">
@@ -58,7 +95,7 @@
                           <p class="m-0">{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}</p>
                         </div>
                       </div>
-                    </li>
+                    </li> 
           
                     <li class="list-group-item">
                       <div class="row">
@@ -73,7 +110,7 @@
           
                 </ul>
           
-            </div>  
+          </div>  
         </div>
     </div>
     
@@ -85,7 +122,10 @@
 
                 <ul class="list-group text-dark mb-3">
                   
-                  <li class="list-group-item active"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
+                  <li class="list-group-item active"
+                    [class.aceptado]="solicitud?.aceptado"
+                    [class.pendiente]="solicitud?.pendiente"
+                    [class.rechazado]="solicitud?.rechazado"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
                   
                   <li class="list-group-item">
                     <div class="row">
@@ -231,6 +271,8 @@
     </div>
 
 </div>
+
+
 
 
 

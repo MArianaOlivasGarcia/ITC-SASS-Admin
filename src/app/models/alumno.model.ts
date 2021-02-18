@@ -39,7 +39,7 @@ export class Alumno {
     }
 
     get firmaUrl(): string {
-        if ( this.foto ) {
+        if ( this.firma ) {
             return `${ base_url }/upload/firma/alumnos/${ this.firma }`;
         } else {
             return `${ base_url }/upload/no-image/no-image`;

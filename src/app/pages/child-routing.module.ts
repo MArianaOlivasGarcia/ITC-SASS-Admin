@@ -23,31 +23,34 @@ import { SolicitudComponent } from './solicitudes/solicitud/solicitud.component'
 import { AjustesComponent } from './ajustes/ajustes.component';
 import { CarreraComponent } from './ajustes/carreras/carrera/carrera.component';
 import { PeriodoComponent } from './ajustes/periodos/periodo/periodo.component';
+import { AdminGuard } from '../guards/admin.guard';
+import { AlumnosProyectoComponent } from './proyectos/alumnos-proyecto/alumnos-proyecto.component';
 
 const routes: Routes = [
-    { path: 'expediente/:id',  component: ExpedienteComponent,   data: { titulo: 'Expediente' } },
-    { path: 'alumno/:id',      component: AlumnoComponent,       data: { titulo: 'Alumno' } },
-    { path: 'alumnos',         component: AlumnosComponent,      data: { titulo: 'Alumnos' } },
-    { path: 'dependencia/:id', component: DependenciaComponent,  data: { titulo: 'Dependencia' } },
-    { path: 'dependencias',    component: DependenciasComponent, data: { titulo: 'Dependencias' } },
-    { path: 'usuario/nuevo',   component: RegisterComponent,     data: { titulo: 'Registrar usuario' } },
-    { path: 'usuario/:id',     component: UsuarioComponent,      data: { titulo: 'Usuario' } },
-    { path: 'usuarios',        component: UsuariosComponent,     data: { titulo: 'Usuarios' } },
-    { path: 'proyecto/:id',    component: ProyectoComponent,     data: { titulo: 'Proyecto' } },
-    { path: 'proyectos',       component: ProyectosComponent,    data: { titulo: 'Banco de Proyectos' } },
-    { path: 'perfil',          component: PerfilComponent,       data: { titulo: 'Mi Perfil' } },
-    { path: 'mensajes',        component: MensajesComponent,     data: { titulo: 'Mensajes' } },
-    { path: 'chat/:id',        component: MensajeComponent,      data: { titulo: 'Chat' } },
-    { path: 'avisos',          component: AvisosComponent,       data: { titulo: 'Avisos' } },
-    { path: 'aviso/:id',       component: AvisoComponent,        data: { titulo: 'Aviso' } },
-    { path: 'documentos/:codigo', component: DocumentosComponent, data: { titulo: 'Documentos' } },
-    { path: 'documento/:id',   component: DocumentoComponent,   data: { titulo: 'Documentos' } },
-    { path: 'solicitudes',     component: SolicitudesComponent, data: { titulo: 'Solicitudes' } },
-    { path: 'solicitud/:id',   component: SolicitudComponent,   data: { titulo: 'Solicitud' } },
-    { path: 'ajustes/carrera/:id', component: CarreraComponent,   data: { titulo: 'Carrera' } },
-    { path: 'ajustes/periodo/:id', component: PeriodoComponent,   data: { titulo: 'Solicitud' } },
-    { path: 'ajustes',         component: AjustesComponent,     data: { titulo: 'Ajustes' } },
-    { path: '',                component: DashboardComponent },
+  { path: 'alumno/:id',          canActivate: [ AdminGuard ], component: AlumnoComponent,       data: { titulo: 'Alumno' } },
+  { path: 'alumnos',             canActivate: [ AdminGuard ], component: AlumnosComponent,      data: { titulo: 'Alumnos' } },
+  { path: 'dependencia/:id',     canActivate: [ AdminGuard ], component: DependenciaComponent,  data: { titulo: 'Dependencia' } },
+  { path: 'dependencias',        canActivate: [ AdminGuard ], component: DependenciasComponent, data: { titulo: 'Dependencias' } },
+  { path: 'usuario/nuevo',       canActivate: [ AdminGuard ], component: RegisterComponent,     data: { titulo: 'Registrar usuario' } },
+  { path: 'usuario/:id',         canActivate: [ AdminGuard ], component: UsuarioComponent,      data: { titulo: 'Usuario' } },
+  { path: 'usuarios',            canActivate: [ AdminGuard ], component: UsuariosComponent,     data: { titulo: 'Usuarios' } },
+  { path: 'proyecto-alumnos/:id',canActivate: [ AdminGuard ], component: AlumnosProyectoComponent, data: { titulo: 'Proyecto' } },
+  { path: 'proyecto/:id',        canActivate: [ AdminGuard ], component: ProyectoComponent,     data: { titulo: 'Proyecto' } },
+  { path: 'proyectos',           canActivate: [ AdminGuard ], component: ProyectosComponent,    data: { titulo: 'Banco de Proyectos' } },
+  { path: 'ajustes/carrera/:id', canActivate: [ AdminGuard ], component: CarreraComponent,      data: { titulo: 'Carrera' } },
+  { path: 'ajustes/periodo/:id', canActivate: [ AdminGuard ], component: PeriodoComponent,      data: { titulo: 'Solicitud' } },
+  { path: 'ajustes',             component: AjustesComponent,     data: { titulo: 'Ajustes' } },
+  { path: 'avisos',              component: AvisosComponent,      data: { titulo: 'Avisos' } },
+  { path: 'aviso/:id',           component: AvisoComponent,       data: { titulo: 'Aviso' } },
+  { path: 'perfil',              component: PerfilComponent,      data: { titulo: 'Mi Perfil' } },
+  { path: 'mensajes',            component: MensajesComponent,    data: { titulo: 'Mensajes' } },
+  { path: 'chat/:id',            component: MensajeComponent,     data: { titulo: 'Chat' } },
+  { path: 'documentos',          component: DocumentosComponent,  data: { titulo: 'Documentos' } },
+  { path: 'documento/:id',       component: DocumentoComponent,   data: { titulo: 'Documentos' } },
+  { path: 'solicitudes',         component: SolicitudesComponent, data: { titulo: 'Solicitudes' } },
+  { path: 'solicitud/:id',       component: SolicitudComponent,   data: { titulo: 'Solicitud' } },
+  { path: 'expediente/:id',      component: ExpedienteComponent,  data: { titulo: 'Expediente' } },
+  { path: '',                    component: DashboardComponent },
 ];
 
 @NgModule({

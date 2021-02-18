@@ -17,16 +17,21 @@ export class SolicitudProyectoService {
  
   getSolicitudesByStatus( status: 'pendiente' | 'rechazado' | 'aceptado' ,desde: number = 0 ): Observable<any> {
 
+    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/solicitud/all/${status}?desde=${ desde }`;
 
-    return this.http.get<CargarSolicitudes>( url )
+    return this.http.get<CargarSolicitudes>( url, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    })
         .pipe(
           map( resp => { 
             const solicitudes = resp.solicitudes.map(
                                     solicitud => new Solicitud(
                                       solicitud.alumno,
                                       solicitud.proyecto,
-                                      solicitud.usuario_reviso,
+                                      solicitud.usuario_valido,
                                       solicitud.inicio_servicio,
                                       solicitud.termino_servicio,
                                       solicitud.pendiente,
@@ -34,6 +39,7 @@ export class SolicitudProyectoService {
                                       solicitud.rechazado,
                                       solicitud.fecha_solicitud,
                                       solicitud.error,
+                                      solicitud.fecha_validacion,
                                       solicitud._id
                                     )
                                   );

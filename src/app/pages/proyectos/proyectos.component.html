@@ -1,7 +1,7 @@
 
 
 <h4>Banco de Proyectos</h4>
-
+  
 <hr>
 <!-- =====================
 == BUSCAR
@@ -24,18 +24,25 @@
 == BOTÓN AGREGAR
 ======================= -->
 <div class="row text-right mt-3">
-    <div class="col">
+    <div class="mt-3 m-md-0 col">
         <button class="btn btn-primary"
             routerLink="/dashboard/proyecto/nuevo">
             <i class="fas fa-plus mr-2"></i>Agregar
         </button>
     </div>
-    <div class="col-md-3" *ngIf="inputTermino.value.length === 0">
-        <select class="custom-select" #selectTipo (change)="cambioValue(selectTipo.value)" >
-            <option [value]="'publico'">Públicos</option>
-            <option [value]="'privado'">Privados</option>
-          </select>
+    <div class="mt-3 m-md-0 col-md-3" *ngIf="inputTermino.value.length === 0">
+        <select class="custom-select" #selectPeriodo (change)="cambioPeriodo(selectPeriodo.value)">
+          <ng-container *ngFor="let periodo of periodos">
+            <option [value]="periodo._id">{{periodo.nombre}}</option>
+          </ng-container>
+        </select>
     </div>
+    <div class="mt-3 m-md-0 col-md-3" *ngIf="inputTermino.value.length === 0">
+        <select class="custom-select" #selectTipo  (change)="cambioCodigo(selectTipo.value)" >
+            <option [selected]="tipo == 'publico'" [value]="'publico'">Públicos</option>
+            <option [selected]="tipo == 'privado'" [value]="'privado'">Privados</option>
+          </select>
+    </div> 
 </div>
 <!-- =====================
 == FIN BOTÓN AGREGAR
@@ -66,7 +73,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="manita" *ngFor="let proyecto of proyectos">                           
+                          <tr class="manita" *ngFor="let proyecto of proyectos">                   
                                 <td>{{proyecto.nombre}}</td>
                                 <td>{{proyecto.dependencia.nombre}}</td>
                                 <td>{{proyecto.responsable}}</td>
@@ -77,12 +84,20 @@
                                     <span *ngIf="!proyecto.publico" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Privado</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-sm btn-info mr-1" [routerLink]="['/dashboard/proyecto', proyecto._id]"><i class="fa fa-pen"></i></a>
-                                    <button class="btn btn-sm btn-info" (click)="duplicar( proyecto._id )">Duplicar</button>
+                                    <a class="btn btn-sm btn-info mr-1" 
+                                       [routerLink]="['/dashboard/proyecto', proyecto._id]"><i class="fa fa-pen"></i></a>
+                                    <button class="btn btn-sm btn-info mr-1" 
+                                        *ngIf="!proyecto.periodo.isProximo && proyecto.publico" 
+                                        (click)="duplicar( proyecto._id )">Duplicar</button>
+                                    <button class="btn btn-sm btn-info mr-1" 
+                                        *ngIf="!proyecto.publico && !proyecto.adoptado"
+                                        (click)="adoptar( proyecto._id )">Adoptar</button>
+                                    <span *ngIf="proyecto.adoptado" class="badge badge-pill badge-info text-white text-capitalize p-1 ml-1">Adoptado</span>
+                                    <a [routerLink]="['/dashboard/proyecto-alumnos', proyecto._id]" class="btn btn-sm btn-info"><i class="fas fa-user-graduate"></i></a>
                                 </td>
                           </tr>
                         </tbody>
-                    </table>    
+                    </table>     
                 </div>
 
                 <div class="text-center pt-3" *ngIf="inputTermino.value.length === 0">

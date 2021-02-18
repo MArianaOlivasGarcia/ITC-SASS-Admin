@@ -1,0 +1,254 @@
+
+
+<h4>Alumnos del proyecto <small>{{ proyecto?.nombre }}</small></h4>
+
+<hr>
+<!-- =====================
+== BUSCAR
+======================= -->
+ <!-- <div class="row animated fadeIn faster">
+    <div class="col-12">
+      <input type="text"
+            class="form-control"
+            placeholder="Buscar proyecto..."
+            (keyup)="buscar( inputTermino.value )"
+            #inputTermino >
+    </div>
+</div>  -->
+<!-- =====================
+== FIN BUSCAR
+======================= -->
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right  mt-3">
+    <div class="col">
+        <button class="btn btn-danger"
+            routerLink="/dashboard/proyectos">
+            <i class="fas fa-arrow-left mr-2"></i>Regresar
+        </button>
+    </div>
+</div> 
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
+
+<!-- =====================
+== DETALLE PROYECTO
+======================= -->
+<div class="row animated fadeIn fast m-3" *ngIf="!cargando && proyecto">
+
+    <div class="col-md-8">
+        
+
+              <ul class="list-group text-dark mb-3">
+                
+                <li class="list-group-item active"><p class="m-0"><strong>{{proyecto.nombre}}</strong></p></li>
+                
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3 text-bold">
+                    <strong>Dependencia:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.dependencia.nombre}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3 text-bold">
+                    <strong>Responsable:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.responsable}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Objetivo:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.objetivo}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Actividades:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.actividades}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Periodo:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.periodo.nombre}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Lugar de Desempeño:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.lugar_desempeno}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Modalidad:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.modalidad}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Tipo:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.tipo}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Horario:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.horario}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Apoyo Económico:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0" *ngIf="proyecto.apoyo_economico">SI</p>
+                      <p class="m-0" *ngIf="!proyecto.apoyo_economico">NO</p>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+
+    </div>
+
+</div>
+
+
+<!-- =====================
+== FIN DETALLE PROYECTO
+======================= -->
+
+
+<!-- =====================
+== TABLA ALUMNOS
+======================= -->
+<div class="row mb-5 mt-3" *ngIf="!cargando && alumnos.length > 0">
+    <div class="col-12">
+        
+                <h5>Total de alumnos ({{totalAlumnos}})</h5>
+
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col" style="min-width: 100px;">Foto</th>
+                            <th scope="col" style="min-width: 120px;">No. Control</th>
+                            <th scope="col" style="min-width: 200px;">Nombre</th>
+                            <th scope="col" style="min-width: 200px;">Apellidos</th>
+                            <th scope="col" style="min-width: 250px;">Carrera</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let alumno of alumnos" class="manita" >
+                            <td>
+                                <img [src]="alumno.fotoUrl" 
+                                    [alt]="alumno.nombre"
+                                    style="height: 70px; width: 70px;"
+                                    class="img-thumbnail">
+                            </td>
+                            <td>{{ alumno.numero_control }}</td>
+                            <td>{{ alumno.nombre }}</td>
+                            <td>{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}</td>
+                            <td>{{ alumno.carrera.nombre }}</td>
+                          </tr>
+                      
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3">
+                    <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                    <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+                </div>
+    
+    </div>
+</div>
+<!-- =====================
+== FIN TABLA ALUMNOS
+======================= -->
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+  
+<!-- =====================
+== MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && alumnos.length == 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No hay registros</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->

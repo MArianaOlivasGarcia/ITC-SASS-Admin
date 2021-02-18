@@ -1,1 +1,117 @@
-<p>aviso works!</p>
+
+
+
+<h4>Aviso <small *ngIf="avisoSeleccionado">{{ avisoSeleccionado.titulo }}</small></h4>
+
+
+<hr>
+
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+    <div class="row text-right">
+        <div class="col">
+            <button class="btn btn-danger"
+                routerLink="/dashboard/avisos">
+                <i class="fas fa-arrow-left mr-2"></i>Regresar
+            </button>
+        </div>
+    </div> 
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+    
+
+<!-- =====================
+== FORMULARIO DEPENDENCIA
+======================= --> 
+    <div class="row animated fadeIn faster m-3">
+        <div class="col-md-6">
+
+            <h5>Información del aviso</h5>
+    
+            <form [formGroup]="avisoForm"
+                  (submit)="guardar()"
+                  autocomplete="off"> 
+    
+                <div class="form-group">
+                    <label>Titulo</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('titulo') }"
+                        placeholder="Titulo"
+                        formControlName="titulo">
+                    <div *ngIf="campoNoValido('titulo')" class="invalid-feedback">
+                        {{ mensajesError('titulo') }}
+                    </div>
+                </div>
+    
+                <div class="form-group"> 
+                    <label>Descripción</label>
+                    <textarea class="form-control"
+                        rows="5"
+                        [ngClass]="{'is-invalid': campoNoValido('descripcion') }"
+                        placeholder="Descripción"
+                        formControlName="descripcion"></textarea>
+                    <div *ngIf="campoNoValido('descripcion')" class="invalid-feedback">
+                        {{ mensajesError('descripcion') }}
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label>Enlace</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('enlace') }"
+                        placeholder="Enlace"
+                        formControlName="enlace">
+                    <div *ngIf="campoNoValido('enlace')" class="invalid-feedback">
+                        {{ mensajesError('enlace') }}
+                    </div>
+                </div>
+
+    
+                <hr>
+    
+                <div class="form-group text-center">
+                    <button type="submit"
+                            class="btn btn-primary btn-block">
+                    <i class="fas fa-save mr-2"></i>Guardar    
+                    </button>
+                </div>
+    
+            </form>
+    
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+
+            <div class="card border-0">
+            
+                <h5>Imagen</h5>
+                
+                <div class="d-flex justify-content-center">
+                    <img *ngIf="!fotoTemporal" [src]="avisoSeleccionado?.foto | imagen:'avisos'" [alt]="avisoSeleccionado?.titulo" class="w-50 h-50" >
+                    <img *ngIf="fotoTemporal" [src]="fotoTemporal" [alt]="avisoSeleccionado.titulo" class="w-50 h-50" >
+                </div>
+      
+                <br>
+             
+                <input type="file"
+                    (change)="changeFoto( $event?.target?.files[0] )">
+      
+                <hr>
+
+                <button class="btn btn-success btn-block"
+                    [disabled]="!fotoSubir"
+                    (click)="uploadFoto()">
+                    Subir fotografía
+                </button>
+      
+            
+        </div>
+
+        </div>
+    </div>
+<!-- =====================
+== FIN FORMULARIO DEPENDENCIA
+======================= --> 

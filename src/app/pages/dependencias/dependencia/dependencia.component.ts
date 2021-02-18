@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class DependenciaComponent implements OnInit {
  
   public formSubmitted = false;
- 
+  
   public dependenciaForm: FormGroup;
   public dependenciaSeleccionada: Dependencia;
 

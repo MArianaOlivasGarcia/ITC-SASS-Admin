@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CargarAlumnosProyecto } from '../interfaces/cargar-alumnos-proyecto.interface';
 import { CargarAlumnos } from '../interfaces/cargar-alumnos.interface';
 import { RenewPasswordForm } from '../interfaces/renew-password-form.interface';
 import { Alumno } from '../models/alumno.model';
@@ -21,21 +22,35 @@ export class AlumnoService {
 
   crearAlumno( alumno: Alumno ): Observable<any> {
     const url = `${ base_url }/alumno/register`;
-    return this.http.post( url, alumno );
+    const token = localStorage.getItem('accessToken') || '';
+    return this.http.post( url, alumno, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    });
   }
 
   actualizarAlumno( alumno: Alumno ): Observable<any> {
     const url = `${ base_url }/alumno/${ alumno._id }`;
-    return this.http.put( url, alumno );
-  }
+    const token = localStorage.getItem('accessToken') || '';
 
+    return this.http.put( url, alumno, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    });
+  }
 
   getAlumnos( desde: number = 0 ): Observable<any> {
 
     const url = `${ base_url }/alumno/all?desde=${ desde }`;
+    const token = localStorage.getItem('accessToken') || '';
 
-    return this.http.get<CargarAlumnos>( url )
-        .pipe(
+    return this.http.get<CargarAlumnos>( url, {
+        headers: {
+          Authorization: `Bearer ${ token }`
+        }
+      }).pipe(
           map( resp => {
             const alumnos = resp.alumnos.map(
                                     alumno => new Alumno(
@@ -68,22 +83,75 @@ export class AlumnoService {
 
   }
 
-
-
   getAlumno( id: string ): Observable<any> {
 
     const url = `${ base_url }/alumno/${ id }`;
-    return this.http.get( url )
-        .pipe(
+    const token = localStorage.getItem('accessToken') || '';
+
+    return this.http.get( url,{
+          headers: {
+            Authorization: `Bearer ${ token }`
+          }
+        }).pipe(
           map( (resp: { status: boolean, alumno: Alumno } ) => resp.alumno )
         );
 
   }
 
 
+  
+
+  getAllByProyecto( desde: number = 0, proyectoId: string ): Observable<any> {
+
+    const url = `${ base_url }/alumno/all/proyecto/${proyectoId}?desde=${ desde }`;
+    const token = localStorage.getItem('accessToken') || '';
+
+    return this.http.get<CargarAlumnosProyecto>( url, {
+        headers: {
+          Authorization: `Bearer ${ token }`
+        }
+      }).pipe(
+          map( resp => {
+            const alumnos = resp.alumnos.map(
+                                    alumno => new Alumno(
+                                    alumno.numero_control,
+                                    alumno.nombre,
+                                    alumno.apellido_paterno,
+                                    alumno.apellido_materno,
+                                    alumno.sexo,
+                                    alumno.fecha_nacimiento,
+                                    alumno.edad,
+                                    alumno.carrera,
+                                    alumno.creditos_acumulados,
+                                    alumno.porcentaje_avance,
+                                    alumno.periodo_ingreso,
+                                    alumno.expediente,
+                                    alumno._id,
+                                    alumno.semestre,
+                                    alumno.foto,
+                                    alumno.firma,
+                                    alumno.email,
+                                    alumno.telefono,
+                                    alumno.domicilio,
+                                    alumno.numero_seguro));
+            return {
+              proyecto: resp.proyecto,
+              alumnos,
+              total: resp.total,
+            };
+          })
+        );
+
+  }
+
 
   renewPassword( idAlumno: string, formData: RenewPasswordForm ): Observable<any> {
-    return this.http.put(`${ base_url }/alumno/renewpassword/${ idAlumno }`, formData );
+    const token = localStorage.getItem('accessToken') || '';
+    return this.http.put(`${ base_url }/alumno/renewpassword/${ idAlumno }`, formData, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    });
   }
 
 }

@@ -1,2 +1,106 @@
+<h4>Avisos</h4>
+<hr>
 
-<h3>Avisos Work</h3>
+
+<!-- =====================
+== BUSCAR
+======================= -->
+<div class="row animated fadeIn faster">
+    <div class="col-12">
+      <input type="text"
+            class="form-control"
+            placeholder="Buscar aviso..."
+            (keyup)="buscar( inputTermino.value )"
+            #inputTermino >
+    </div>
+</div> 
+<!-- =====================
+== FIN BUSCAR
+======================= -->
+
+
+<!-- =====================
+== BOTÓN AGREGAR
+======================= -->
+<div class="row text-right mt-3">
+    <div class="col">
+        <button class="btn btn-primary"
+            routerLink="/dashboard/aviso/nuevo">
+            <i class="fas fa-plus mr-2"></i>Agregar
+        </button> 
+    </div>
+</div>
+<!-- =====================
+== FIN BOTÓN AGREGAR
+======================= -->
+
+
+<!-- =====================
+== CARDS AVISOS
+======================= -->
+
+<div class="row animated fadeIn fast  m-3">
+
+    <div class="card-columns" *ngIf="!cargando && avisos.length > 0">
+
+        <div class="card" *ngFor="let aviso of avisos">
+            <img [src]="aviso.foto | imagen: 'avisos'" class="card-img-top" [alt]="aviso.titulo" *ngIf="aviso.foto">
+            <div class="card-body">
+              <h5 class="card-title">{{aviso.titulo}}</h5>
+              <p class="card-text">{{aviso.descripcion}}</p>
+              <p class="card-text"><small class="text-muted">{{aviso.fecha_publicacion}}</small></p>
+            </div>
+            <div class="card-footer bg-white text-right">
+                <a class="btn btn-info" 
+                    [routerLink]="['/dashboard/aviso', aviso._id ]">
+                    <i class="fa fa-pen"></i>
+                </a>
+            </div>
+        </div>
+    
+    </div>
+
+
+</div>
+
+<div class="text-center pb-3" *ngIf="inputTermino.value.length === 0">
+    <button (click)="cambiarPagina( -10 )" class="btn btn-secondary mr-2">Anterior</button>
+    <button (click)="cambiarPagina( 10 )" class="btn btn-secondary">Siguiente</button>
+</div>
+<!-- =====================
+== FIN CARDS AVISOS
+======================= -->
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+  
+<!-- =====================
+== MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && avisos.length == 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No hay registros</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->

@@ -35,13 +35,13 @@ export class AlumnoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.cargarCarreras();
+    this.cargarCarreras(); 
     this.cargarPeriodos();
 
     this.activatedRoute.params.subscribe( ({ id }) => {
       this.cargarAlumno( id );
     });
-
+ 
 
     this.alumnoForm = this.fb.group({
       nombre: ['', Validators.required ],
@@ -49,12 +49,14 @@ export class AlumnoComponent implements OnInit {
       apellido_materno: ['', Validators.required ],
       sexo: ['', Validators.required ],
       fecha_nacimiento: ['', Validators.required ],
-      numero_control: ['',[Validators.required, Validators.maxLength(8), Validators.minLength(8)] ],
-      carrera: ['', [Validators.required ] ],
+      numero_control: ['',[Validators.required, Validators.maxLength(8), Validators.minLength(8) ] ],
+      carrera: ['', [Validators.required] ],
       creditos_acumulados: ['', [Validators.required ] ],
       periodo_ingreso: ['', [Validators.required ] ],
       porcentaje_avance: [''],
       semestre: [''],
+    }, {
+      validators: this.numControlValido('numero_control')
     });
 
     this.renovarForm = this.fb.group({
@@ -70,9 +72,9 @@ export class AlumnoComponent implements OnInit {
 
   cargarCarreras(): void {
     this.carreraService.getCarreras()
-          .subscribe( carreras =>
+          .subscribe( carreras => {
             this.carreras = carreras
-          );
+          });
   }
 
 
@@ -193,8 +195,9 @@ export class AlumnoComponent implements OnInit {
 
   mensajesError( formGroup: FormGroup, campo: string  ): string {
     return formGroup.get(campo)?.hasError('required') ? `Este campo es requerido.` :
-           formGroup.get(campo)?.hasError('maxlength') ? `Máximo 8 caracteres.` :
-           formGroup.get(campo)?.hasError('minlength') ? `Mínimo 8 caracteres.` :
+            formGroup.get(campo)?.hasError('maxlength') ? `Máximo 8 caracteres.` :
+            formGroup.get(campo)?.hasError('minlength') ? `Mínimo 8 caracteres.` :
+            formGroup.get(campo)?.hasError('noNumCtl') ? `No es un número de control válido.` :
            formGroup.get(campo)?.hasError('noIgual') ? `Las contraseñas no coinciden.` : '';
   }
 
@@ -217,6 +220,42 @@ export class AlumnoComponent implements OnInit {
     };
 
 
+  }
+
+
+  changeNumeroControl( numeroControl: string ) {
+
+    if ( numeroControl.length != 4 ){ return; }
+    
+    const numero_control = numeroControl.slice(2,4);
+     
+    if ( numero_control.indexOf('53') !== -1 ) {
+      console.log('Es válido')
+    } else {
+      console.log('No válido')
+    }
+
+  }
+
+
+  numControlValido( numeroControl: string ) {
+
+    return ( formGroup: FormGroup ) => {
+
+      const numeroControlControl = formGroup.get(numeroControl)
+      const valor = numeroControlControl.value;
+      
+      if ( valor.length < 4 ) { return; }
+      
+      const numero_control = valor.slice(2,4);
+
+      if ( numero_control.indexOf('53') === -1 ) {
+        numeroControlControl.setErrors({noNumCtl: true});
+      }
+
+    };
+
+ 
   }
 
 }

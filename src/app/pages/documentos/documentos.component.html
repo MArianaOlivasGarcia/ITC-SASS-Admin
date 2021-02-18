@@ -1,6 +1,17 @@
 
 
-<h4>{{codigo}}</h4>
+<div class="row animated fadeIn">
+  <div class="col-lg-8 col-md-6 col-sm-12">
+    <h4>Documentos</h4>
+  </div>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <select class="custom-select" #selectDocumento (change)="cambioDocumento(selectDocumento.value)">
+      <ng-container *ngFor="let d of estructura">
+        <option [value]="d.codigo">{{ (d.titulo.length>35)? (d.titulo | slice:0:35)+'... ':(d.titulo) }}</option>
+      </ng-container>
+    </select>
+  </div>
+</div>
 
 <hr>
 
@@ -40,7 +51,7 @@
                             <th scope="col">Apellidos</th>
                             <th scope="col">Carrera</th>
 <!--                             <th scope="col">Fecha</th>
- -->                            <th scope="col">Ver</th>
+ -->                         <th scope="col">Ver</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -51,7 +62,7 @@
                               <td>{{item.alumno.carrera.nombre}}</td>
                               <!-- <td>
                               </td> -->
-                              <td>
+                            <td>
                                 <a class="btn btn-info btn-sm" [routerLink]="['/dashboard/documento', item._id]">Ver</a>
                               </td>
                           </tr>

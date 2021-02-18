@@ -69,10 +69,12 @@ export class BusquedaService {
   private transformarProyectos( resultados: any[] ): Proyecto[] {
     return resultados.map(
       proyecto => new Proyecto( proyecto.apoyo_economico,
+                                proyecto.instalacion,
                                 proyecto.nombre,
                                 proyecto.dependencia,
                                 proyecto.objetivo,
                                 proyecto.actividades,
+                                proyecto.tipo_actividades,
                                 proyecto.periodo,
                                 proyecto.fecha_inicial,
                                 proyecto.fecha_limite,
@@ -85,7 +87,7 @@ export class BusquedaService {
                                 proyecto.carreras,
                                 proyecto.publico,
                                 proyecto.alumno,
-                                proyecto._id ));
+                                proyecto._id));
   }
 
 

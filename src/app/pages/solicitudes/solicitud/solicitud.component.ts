@@ -83,6 +83,8 @@ export class SolicitudComponent implements OnInit {
                 observacion: ''
               })
             }
+
+            console.log(this.solicitud)
   
           })
   }
@@ -134,7 +136,7 @@ export class SolicitudComponent implements OnInit {
 
       Swal.fire({
         title: '¿Estás seguro?',
-        text: '¿Estás seguro que deseas aceptar la solicitud?',
+        text: 'Al aceptar la Solicitud de Servicio Social se abrira el expediente del alumno.',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -153,6 +155,8 @@ export class SolicitudComponent implements OnInit {
             termino_servicio
           }
 
+          Swal.showLoading();
+          
           this.solicitudService.aceptarSolicitud( data )
             .subscribe( resp =>  {
         

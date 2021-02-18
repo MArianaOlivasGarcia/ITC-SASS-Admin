@@ -57,20 +57,20 @@ export class ProyectoComponent implements OnInit {
 
 
     this.proyectoForm = this.fb.group({
-      nombre: ['', Validators.required ],
-      dependencia: ['', Validators.required ],
-      objetivo: ['', Validators.required ],
       actividades: ['', Validators.required ],
-      periodo: ['', Validators.required ],
+      apoyo_economico: [false,  Validators.required],
+      dependencia: ['', Validators.required ],
+      horario: ['', Validators.required ],
+      instalacion: [false,  Validators.required],
       lugar_desempeno: ['', Validators.required ],
       modalidad: [{value:'Público', disabled: true}],
-      tipo: ['', Validators.required ],
-      horario: ['', Validators.required ],
-      apoyo_economico: [false],
-      responsable: ['', Validators.required ],
+      nombre: ['', Validators.required ],
+      objetivo: ['', Validators.required ],
+      periodo: ['', Validators.required ],
       puesto_responsable: ['', Validators.required ],
-      fecha_inicial: ['', Validators.required ],
-      fecha_limite: ['', Validators.required ],
+      responsable: ['', Validators.required ],
+      tipo_actividades: ['', Validators.required ],
+      tipo: ['', Validators.required ],
     });
 
     this.carrerasFiltradas = this.carreraControl.valueChanges
@@ -109,35 +109,35 @@ export class ProyectoComponent implements OnInit {
           //  return this.router.navigateByUrl(`/dashboard/proyectos`);
 
           const { apoyo_economico,
+                  instalacion,
                   nombre,
                   dependencia: { _id },
                   objetivo,
                   actividades,
+                  tipo_actividades,
                   periodo,
                   lugar_desempeno,
                   modalidad,
                   horario,
                   tipo,
                   responsable,
-                  puesto_responsable,
-                  fecha_inicial,
-                  fecha_limite } = resp.proyecto;
+                  puesto_responsable} = resp.proyecto;
           this.proyectoSeleccionado = resp.proyecto;
           this.itemCarreras = resp.itemsCarrera;
           this.proyectoForm.setValue({ apoyo_economico,
+                                       instalacion,
                                        nombre,
                                        dependencia: _id,
                                        objetivo,
                                        actividades,
+                                       tipo_actividades,
                                        periodo,
                                        lugar_desempeno,
                                        modalidad,
                                        horario,
                                        tipo,
                                        responsable,
-                                       puesto_responsable,
-                                       fecha_inicial,
-                                       fecha_limite });
+                                       puesto_responsable});
 
         });
 

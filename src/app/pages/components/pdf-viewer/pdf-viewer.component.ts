@@ -9,7 +9,7 @@ export class PdfViewerComponent implements OnInit {
 
   @Input() pdfSrc: string;
 
-  constructor() { }
+  constructor() { } 
 
   ngOnInit(): void {
   }

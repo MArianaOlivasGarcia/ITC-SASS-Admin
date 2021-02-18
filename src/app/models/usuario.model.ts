@@ -9,8 +9,7 @@ export class Usuario {
         public nombre: string,
         public username?: string,
         public foto?: string,
-        public role?: string,
-        // tslint:disable-next-line: variable-name
+        public role?: 'ADMIN_ROLE' | 'USER_ROLE',
         public _id?: string,
         public gestion?: Carrera,
         public password?: string,

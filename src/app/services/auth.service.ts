@@ -19,7 +19,7 @@ const base_url = environment.base_url;
 export class AuthService {
 
   public usuario: Usuario;
-
+ 
   constructor( private http: HttpClient,
                private router: Router,
                private wsService: WebSocketService ) { }
@@ -28,6 +28,12 @@ export class AuthService {
   get token(): string { 
     return localStorage.getItem('accessToken') || '';
   }
+
+
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.usuario.role;
+  }
+
 
   get id(): string {
     return this.usuario._id || '';
@@ -74,7 +80,12 @@ export class AuthService {
 
 
   register( formData: RegisterForm ): Observable<any>{
-    return this.http.post(`${ base_url }/auth/register`, formData );
+    const token = localStorage.getItem('accessToken') || '';
+    return this.http.post(`${ base_url }/auth/register`, formData, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    });
   }
 
 

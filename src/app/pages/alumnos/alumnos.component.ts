@@ -5,7 +5,7 @@ import { BusquedaService } from 'src/app/services/busqueda.service';
 import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
 
 @Component({
-  selector: 'app-alumnos',
+  selector: 'app-alumnos', 
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.css']
 })
@@ -75,4 +75,4 @@ export class AlumnosComponent implements OnInit {
     this.modalService.abrirModal()
   }
 
-}
+} 

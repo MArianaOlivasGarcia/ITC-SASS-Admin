@@ -15,7 +15,6 @@ import { DependenciaComponent } from './dependencias/dependencia/dependencia.com
 import { DetalleDependenciaComponent } from './dependencias/detalle-dependencia/detalle-dependencia.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
-import { DetalleProyectoComponent } from './proyectos/detalle-proyecto/detalle-proyecto.component';
 import { ProyectoComponent } from './proyectos/proyecto/proyecto.component';
 import { PagesComponent } from './pages.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -46,6 +45,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from 'src/environments/environment';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { AlumnosProyectoComponent } from './proyectos/alumnos-proyecto/alumnos-proyecto.component';
+import { ItemExpedienteComponent } from './alumnos/expediente/item-expediente/item-expediente.component';
 
 const token = localStorage.getItem('accessToken') || '';
 
@@ -72,7 +73,6 @@ const config: SocketIoConfig = {
     DetalleDependenciaComponent,
     PerfilComponent,
     ProyectosComponent,
-    DetalleProyectoComponent,
     ProyectoComponent,
     PagesComponent,
     UsuariosComponent,
@@ -92,7 +92,9 @@ const config: SocketIoConfig = {
     CarreraComponent,
     PeriodoComponent,
     CarrerasComponent,
-    PeriodosComponent,],
+    PeriodosComponent,
+    AlumnosProyectoComponent,
+    ItemExpedienteComponent,],
   exports: [
     DashboardComponent,
     PagesComponent

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItemExpediente } from 'src/app/models/item-expediente.model';
 import { ExpedienteService } from 'src/app/services/expediente.service';
 
@@ -19,20 +19,35 @@ export class DocumentosComponent implements OnInit {
   public estado: 'pendiente' | 'rechazado' | 'aceptado' = 'pendiente';
   public codigo: string;
 
-  constructor( private expedienteService: ExpedienteService,
-               private activatedRouter: ActivatedRoute ) { }
+  public estructura: any[] = [];
+
+  constructor( private expedienteService: ExpedienteService ) { }
 
 
 
   ngOnInit(): void {
-
-    this.activatedRouter.params.subscribe( params => {
-        const {codigo} = params;
-        this.codigo = codigo;
-        this.cargarItems( this.estado, this.codigo );
-    })
-      
+    this.cargarEstructuraExpediente();
+    
   }
+
+
+  cargarEstructuraExpediente(): void {
+    this.expedienteService.getEstructuraExpediente()
+            .subscribe( resp => {
+              this.estructura = resp.estructura;
+              this.codigo = this.estructura[0].codigo;
+              this.cargarItems(this.estado, this.codigo)
+            });
+  }
+
+  cambioDocumento( value: string ){
+    
+    this.codigo = value;
+    this.cargarItems( this.estado, this.codigo);
+
+  } 
+
+
 
   cargarItems( status: 'pendiente' | 'rechazado' | 'aceptado', codigo: string ): void {
 
@@ -51,8 +66,8 @@ export class DocumentosComponent implements OnInit {
 
 
   cambioValue( value: 'pendiente' | 'rechazado' | 'aceptado' ){
-    
-    this.cargarItems( value, this.codigo );
+    this.estado = value;
+    this.cargarItems( this.estado, this.codigo );
 
   } 
 

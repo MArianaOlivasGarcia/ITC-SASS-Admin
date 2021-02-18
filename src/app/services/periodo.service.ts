@@ -27,6 +27,9 @@ export class PeriodoService {
                                   periodo.fecha_termino,
                                   periodo.nombre,
                                   periodo.isActual,
+                                  periodo.isProximo,
+                                  periodo.recepcion_solicitudes,
+                                  periodo.apertura_expedientes,
                                   periodo._id) );
           return periodos;
         })
@@ -47,6 +50,9 @@ export class PeriodoService {
                                     periodo.fecha_termino,
                                     periodo.nombre,
                                     periodo.isActual,
+                                    periodo.isProximo,
+                                    periodo.recepcion_solicitudes,
+                                    periodo.apertura_expedientes,
                                     periodo._id )
                                   );
             return {

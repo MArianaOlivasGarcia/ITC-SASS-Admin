@@ -1,13 +1,28 @@
 <h5>{{item?.titulo}} de <small>{{item?.alumno.nombre}}</small>
-    <small>
-            <span *ngIf="item?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
-            <span *ngIf="item?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
-            <span *ngIf="item?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
-    </small>
-  </h5>
+  <small>
+          <span *ngIf="item?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+          <span *ngIf="item?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+          <span *ngIf="item?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+  </small>
+</h5>
+
+<hr>
   
-  <hr>
-  
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+  <div class="col">
+      <button class="btn btn-danger"
+          routerLink="/dashboard/solicitudes">
+          <i class="fas fa-arrow-left mr-2"></i>Regresar
+      </button>
+  </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
+
   <div class="row animated fadeIn fast m-3" *ngIf="item">
   
       <div class="col-12">
@@ -71,15 +86,16 @@
       
       
   
-      <div class="col-12">
+      <!-- <div class="col-12">
           <div class="row">
               <div class="col-md-12">
   
-                  <h1>DOCUMENTO</h1>
+
+                  <app-pdf-viewer pdfSrc="https://www.colorquimica.com.co/wp-content/uploads/2017/09/test.pdf"></app-pdf-viewer>
             
-                </div>
+              </div>
           </div>
-      </div>
+      </div> -->
   
   </div>
   
@@ -132,7 +148,8 @@
               <hr>
   
               <button type="submit" 
-                      class="btn btn-primary btn-bloc"
+                      class="btn btn-success btn-block"
+                      [class.btn-danger]="!isAceptado"
                       *ngIf="!item?.aceptado">Guardar</button>
   
           </form>

@@ -15,9 +15,9 @@ export class FileUploadService {
 
   constructor( private http: HttpClient ) { }
 
-  actualizarFoto( archivo: File,  id: string  ): Observable<any>{
+  actualizarFoto( tipo: 'usuarios'|'avisos'|'alumnos', archivo: File,  id: string  ): Observable<any>{
 
-    const url = `${ base_url }/upload/usuarios/${ id }`;
+    const url = `${ base_url }/upload/${tipo}/${ id }`;
 
     const formData: FormData = new FormData();
     formData.append('imagen', archivo, archivo.name );

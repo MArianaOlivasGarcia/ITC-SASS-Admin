@@ -13,8 +13,8 @@ import Swal from 'sweetalert2';
 export class PeriodoComponent implements OnInit {
 
   
-  public formSubmitted = false;
- 
+  public formSubmitted: boolean = false;
+  
   public periodoForm: FormGroup;
   public periodoSeleccionado: Periodo;
 
@@ -31,10 +31,15 @@ export class PeriodoComponent implements OnInit {
 
 
     this.periodoForm = this.fb.group({
-      nombre: [''],
+      nombre: [{value:'', disabled: true}],
       fecha_inicio: ['', Validators.required ],
       fecha_termino: ['', Validators.required ],
-      isActual: [false]
+      isActual: [false],
+      isProximo: [false],
+      recepcion_solicitudes: this.fb.group({
+        fecha_inicio: [''],
+        fecha_termino: [''],
+      })
     });
 
   }
@@ -49,10 +54,16 @@ export class PeriodoComponent implements OnInit {
 
           // TODO: SI NO ENCUENTRA LA DEPENDENCIA O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/dependencias`);
-
-          const { nombre, fecha_inicio, fecha_termino, isActual } = periodo;
+          const { nombre, fecha_inicio, fecha_termino, isActual, isProximo, recepcion_solicitudes } = periodo;
+          console.log(recepcion_solicitudes)
           this.periodoSeleccionado = periodo;
-          this.periodoForm.setValue({nombre, fecha_inicio, fecha_termino, isActual});
+          this.periodoForm.setValue({nombre,
+                                    fecha_inicio,
+                                    fecha_termino,
+                                    isActual,
+                                    isProximo,
+                                    recepcion_solicitudes
+                                    });
         });
 
   }
@@ -62,11 +73,12 @@ export class PeriodoComponent implements OnInit {
   guardar(): void {
     console.log(this.periodoForm.value);
     this.formSubmitted = true;
+  
     if ( this.periodoForm.invalid ) { return; }
 
     if ( this.periodoSeleccionado ) {
       // Actualizar
-      const { nombre } = this.periodoForm.value;
+      const { nombre } = this.periodoForm.getRawValue();
       const data = {
         ... this.periodoForm.value,
         _id: this.periodoSeleccionado._id
@@ -78,6 +90,12 @@ export class PeriodoComponent implements OnInit {
               title: 'Guardado',
               text: `Periodo ${nombre} actualizado con éxito.`,
               icon: 'success'
+            });
+          }, err => {
+            Swal.fire({
+              title: 'Error',
+              text: err.error.message ,
+              icon: 'error'
             });
           });
 
@@ -98,7 +116,7 @@ export class PeriodoComponent implements OnInit {
           icon: 'error'
         });
       });
-    } 
+    }
 
   }
 

@@ -7,11 +7,13 @@ import { Periodo } from './periodo.model';
 export class Proyecto {
 
     constructor(
-        public apoyo_economico: string,
+        public apoyo_economico: boolean,
+        public instalacion: boolean,
         public nombre: string,
         public dependencia: Dependencia,
         public objetivo: string,
         public actividades: string,
+        public tipo_actividades: string,
         public periodo: Periodo,
         public fecha_inicial: Date,
         public fecha_limite: Date,
@@ -25,6 +27,7 @@ export class Proyecto {
         public publico?: boolean,
         public alumno?: Alumno,
         public _id?: string,
+        public adoptado?: boolean,
     ){}
 
 }

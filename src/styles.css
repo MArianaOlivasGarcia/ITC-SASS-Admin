@@ -1,3 +1,8 @@
+html, body{
+  height:100%;
+  margin: 0;
+}
+
 
 .bg-blanco {
     background-color: #fff;
@@ -77,4 +82,34 @@
 
 .badge-secondary{
   background-color: #A1A1A1 !important;
+}
+
+
+
+/* MODAL */
+.fondo-modal {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1030 !important;
+}
+
+
+/* ENCABEZADOS LIST ITEM*/
+.pendiente {
+  background-color: #FFBE6A !important;
+  border-color: #FFBE6A !important;
+}
+
+.rechazado {
+  background-color: #FF6767 !important;
+  border-color: #FF6767 !important;
+}
+
+.aceptado {
+  background-color: #21E9AC !important;
+  border-color: #21E9AC !important;
 }

@@ -159,7 +159,7 @@ export class PerfilComponent implements OnInit {
   uploadFoto(): void {
 
 
-    this.fileUploadService.actualizarFoto( this.fotoSubir, this.usuario._id )
+    this.fileUploadService.actualizarFoto( 'usuarios', this.fotoSubir, this.usuario._id )
         .subscribe( resp => {
           this.usuario.foto = resp.nombreFoto;
           Swal.fire({

@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CargarItems } from '../interfaces/cargar-items.interface';
+import { Expediente } from '../models/expediente.model';
 import { ItemExpediente } from '../models/item-expediente.model';
+import { Periodo } from '../models/periodo.model';
 
 
 const base_url = environment.base_url;
@@ -25,13 +27,31 @@ export class ExpedienteService {
     );
   }
 
+  getExpediente( id: string ): Observable<any> {
+    
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/expediente/${ id }`;
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      } 
+    })
+    .pipe(
+      map( (resp: {status: boolean, expediente: Expediente }) => resp.expediente )
+    );
+
+  }
 
   getAllByStatusAndCodigo( status: string, codigo: string, desde: number = 0): Observable<any> {
 
+    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/item/all/${status}/${codigo}?desde=${ desde }`;
 
-    return this.http.get<CargarItems>( url )
-        .pipe(
+    return this.http.get<CargarItems>( url,{
+      headers: {
+        Authorization: `Bearer ${ token }`
+      } 
+    }).pipe(
           map( resp => {
             const items = resp.items.map(
                                     item => new ItemExpediente(
@@ -50,6 +70,7 @@ export class ExpedienteService {
                                       item.iniciado,
                                       item.finalizado,
                                       item.reenvio_required,
+                                      item.fecha_inicial,
                                       item.fecha_limite,
                                       item.fecha_entrega,
                                       item.fecha_aprobacion,
@@ -65,7 +86,6 @@ export class ExpedienteService {
         );
 
   }
-
 
   aceptarDocumento( id: String): Observable<any> {
     const token = localStorage.getItem('accessToken') || '';
@@ -87,6 +107,27 @@ export class ExpedienteService {
         Authorization: `Bearer ${ token }`
       }
     })
+  }
+
+  // TODO: En un futuro pasaremos codigo/plan/version y obtenemos la estructura
+  getEstructuraExpediente(): Observable<any> {
+    
+    const url = `${ base_url }/expediente/estructura`;
+
+    return this.http.get(url);
+
+  }
+
+  aperturarExpedientesByPeriodo( periodo: Periodo ): Observable<any> {
+
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/expediente/create/all/${ periodo._id }`;
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      } 
+    });
+
   }
 
 }

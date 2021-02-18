@@ -16,9 +16,9 @@ export class ProyectoService {
 
   constructor( private http: HttpClient ) { }
 
-  getProyectos( desde: number = 0, tipo: 'publico' | 'privado' ): Observable<any> {
+  getProyectosByTipoAndPeriodo( desde: number = 0, tipo: 'publico' | 'privado', periodo: string ): Observable<any> {
  
-    const url = `${ base_url }/proyecto/all/${ tipo }?desde=${ desde }`;
+    const url = `${ base_url }/proyecto/all/${ tipo }/${ periodo }?desde=${ desde }`;
 
     return this.http.get<CargarProyectos>( url )
         .pipe(
@@ -26,10 +26,12 @@ export class ProyectoService {
             const proyectos = resp.proyectos.map(
                                     proyecto => new Proyecto(
                                       proyecto.apoyo_economico,
+                                      proyecto.instalacion,
                                       proyecto.nombre,
                                       proyecto.dependencia,
                                       proyecto.objetivo,
                                       proyecto.actividades,
+                                      proyecto.tipo_actividades,
                                       proyecto.periodo,
                                       proyecto.fecha_inicial,
                                       proyecto.fecha_limite,
@@ -42,7 +44,8 @@ export class ProyectoService {
                                       proyecto.carreras,
                                       proyecto.publico,
                                       proyecto.alumno,
-                                      proyecto._id )
+                                      proyecto._id,
+                                      proyecto.adoptado )
                                   );
             return {
               total: resp.total,
@@ -59,18 +62,47 @@ export class ProyectoService {
   }
 
   crearProyecto( proyecto: Proyecto ): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/proyecto/create`;
-    return this.http.post( url, proyecto );
+    return this.http.post( url, proyecto, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    });
   }
 
   actualizarProyecto( proyecto: Proyecto ): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/proyecto/${ proyecto._id }`;
-    return this.http.put( url, proyecto );
+    return this.http.put( url, proyecto,  {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    });
   }
 
   duplicarProyecto( id: string ): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/proyecto/duplicar/${ id }`;
-    return this.http.get( url )
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+      })
+      .pipe(
+        map( (resp: {status: boolean, proyecto: Proyecto}) => resp.proyecto )
+      );
+  }
+
+
+  adoptarProyecto( id: string ): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/proyecto/adoptar/${ id }`;
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+      })
       .pipe(
         map( (resp: {status: boolean, proyecto: Proyecto}) => resp.proyecto )
       );

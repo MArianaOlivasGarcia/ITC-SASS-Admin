@@ -65,17 +65,53 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="form-check">
-                  <input class="form-check-input"
-                         type="checkbox"
-                         formControlName="isActual">
-                  <label class="form-check-label">
-                    Asignar como periodo actual.
-                  </label>
-                </div>
-              </div>
+            <div class="form-group"> 
+                <label>Asignar como periodo actual</label>
+                <select class="custom-select mr-sm-2"
+                      formControlName="isActual">
+                <option value="">SELECCIONAR OPCIÓN</option>
+                <option [ngValue]="false">NO</option>
+                <option [ngValue]="true">SI</option>
+              </select>    
+            </div>
 
+            <div class="form-group"> 
+                <label>Asignar como periodo próximo</label>
+                <select class="custom-select mr-sm-2"
+                      formControlName="isProximo">
+                <option value="">SELECCIONAR OPCIÓN</option>
+                <option [ngValue]="false">NO</option>
+                <option [ngValue]="true">SI</option>
+              </select>    
+            </div>
+
+            <hr>
+            
+            <div formGroupName="recepcion_solicitudes">
+
+                <h6>Recepción de Solicitudes de Servicio Social</h6>
+
+                <div class="form-group"> 
+                    <label>Fecha Inicio</label>
+                    <input type="date"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('fecha_inicio') }"
+                        formControlName="fecha_inicio">
+                    <div *ngIf="campoNoValido('fecha_inicio')" class="invalid-feedback">
+                        {{ mensajesError('fecha_inicio') }}
+                    </div>  
+                </div>
+                <div class="form-group"> 
+                    <label>Fecha Termino</label>
+                    <input type="date"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('fecha_termino') }"
+                        formControlName="fecha_termino">
+                    <div *ngIf="campoNoValido('fecha_termino')" class="invalid-feedback">
+                        {{ mensajesError('fecha_termino') }}
+                    </div>  
+                </div>
+            </div>
 
 
             <hr>

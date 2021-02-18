@@ -15,7 +15,7 @@
             <i class="fas fa-arrow-left mr-2"></i>Regresar
         </button>
     </div>
-</div>
+</div> 
 <!-- =====================
 == FIN BOTÓN REGRESAR
 ======================= -->   
@@ -119,6 +119,7 @@
               {{ mensajesError('nombre') }}
             </div>
           </div>
+
           <div class="form-group col-md-6">
             <label>Dependencia</label>
             <select class="custom-select mr-sm-2"
@@ -137,6 +138,9 @@
         </div>
 
 
+
+
+
         <div class="form-row">
           <div class="form-group col-md-6">
             <label>Objetivo</label>
@@ -150,6 +154,7 @@
               {{ mensajesError('objetivo') }}
             </div>
           </div>
+
           <div class="form-group col-md-6">
             <label>Actividades a desarrollar</label>
             <textarea
@@ -162,6 +167,45 @@
               {{ mensajesError('actividades') }}
             </div>
           </div>
+        </div>
+
+
+ 
+
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Tipo de Actividades a desarrollar</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('tipo_actividades') }"
+                   placeholder="Tipo de actividades"
+                   formControlName="tipo_actividades">
+            <div *ngIf="campoNoValido('tipo_actividades')" class="invalid-feedback">
+              {{ mensajesError('tipo_actividades') }}
+            </div>
+          </div>
+
+            <div class="form-group col-md-6">
+              <label>Tipo de proyecto</label>
+              <select class="custom-select mr-sm-2"
+                      [ngClass]="{'is-invalid': campoNoValido('tipo') }"
+                      formControlName="tipo">
+                <option value="">SELECCIONAR TIPO</option>
+                <option value="Actividades deportivas">Actividades deportivas</option>
+                <option value="Actividades cívicas">Actividades cívicas</option>
+                <option value="Actividades culturales">Actividades culturales</option>
+                <option value="Apoyo a la salud">Apoyo a la salud</option>
+                <option value="Desarrollo de comunidad">Desarrollo de comunidad</option>
+                <option value="Desarrollo sustentable">Desarrollo sustentable</option>
+                <option value="Educación para adultos">Educación para adultos</option>
+                <option value="Medio ambiente">Medio ambiente</option>
+                <option value="Otro">Otro</option>
+              </select>      
+              <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
+                {{ mensajesError('dependencia') }}
+              </div>    
+            </div> 
         </div>
 
 
@@ -192,6 +236,23 @@
               {{ mensajesError('lugar_desempeno') }}
             </div>
           </div>
+
+          <div class="form-group col-md-4"> 
+              <label>¿Dentro de las instalaciones?</label>
+              <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('instalacion') }"
+                    formControlName="instalacion">
+              <option value="">SELECCIONAR OPCIÓN</option>
+              <option [ngValue]="false">NO</option>
+              <option [ngValue]="true">SI</option>
+            </select>    
+          </div>
+        </div>
+
+       
+
+        <div class="form-row">
+
           <div class="form-group col-md-4">
             <label>Modalidad</label>
             <input type="text" 
@@ -199,31 +260,7 @@
                    placeholder="Modalidad"
                    formControlName="modalidad">
           </div>
-        </div>
-
-       
-
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label>Tipo</label>
-            <select class="custom-select mr-sm-2"
-                    [ngClass]="{'is-invalid': campoNoValido('tipo') }"
-                    formControlName="tipo">
-              <option value="">SELECCIONAR TIPO</option>
-              <option value="Actividades deportivas">Actividades deportivas</option>
-              <option value="Actividades cívicas">Actividades cívicas</option>
-              <option value="Actividades culturales">Actividades culturales</option>
-              <option value="Apoyo a la salud">Apoyo a la salud</option>
-              <option value="Desarrollo de comunidad">Desarrollo de comunidad</option>
-              <option value="Desarrollo sustentable">Desarrollo sustentable</option>
-              <option value="Educación para adultos">Educación para adultos</option>
-              <option value="Medio ambiente">Medio ambiente</option>
-              <option value="Otro">Otro</option>
-            </select>      
-            <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
-              {{ mensajesError('dependencia') }}
-            </div>    
-          </div>
+         
           <div class="form-group col-md-4">
             <label>Horario</label>
             <input type="text" 
@@ -236,16 +273,15 @@
             </div> 
           </div>
 
-          <div class="form-group col-md-4">
-            <div class="form-check">
-              <input class="form-check-input" 
-                    type="checkbox" 
-                    id="gridCheck"
+          <div class="form-group col-md-4"> 
+              <label>Apoyo económico</label>
+              <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('apoyo_economico') }"
                     formControlName="apoyo_economico">
-              <label class="form-check-label" for="gridCheck">
-                Apoyo económico
-              </label>
-            </div>
+              <option value="">SELECCIONAR OPCIÓN</option>
+              <option [ngValue]="false">NO</option>
+              <option [ngValue]="true">SI</option>
+            </select>    
           </div>
           
 
@@ -281,39 +317,6 @@
           </div>
 
 
-          <hr>
-
-          <h6>Disponibilidad</h6>
-          <br>
-
-          <div class="form-row"> 
-
-            <div class="form-group col-md-6">
-              <label>Fecha Inicial</label>
-              <input type="date" 
-                     class="form-control"
-                     [ngClass]="{'is-invalid': campoNoValido('fecha_inicial') }"
-                     formControlName="fecha_inicial">
-              <div *ngIf="campoNoValido('fecha_inicial')" class="invalid-feedback">
-                {{ mensajesError('fecha_inicial') }}
-              </div>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label>Fecha Limite</label>
-              <input type="date" 
-                     class="form-control"
-                     [ngClass]="{'is-invalid': campoNoValido('fecha_limite') }"
-                     placeholder="Puesto del responsable"
-                     formControlName="fecha_limite">
-              <div *ngIf="campoNoValido('fecha_limite')" class="invalid-feedback">
-                {{ mensajesError('fecha_limite') }}
-              </div>
-            </div>
-            
-          </div>
-
-          
           <hr>
 
           <div class="form-row"> 
@@ -373,6 +376,21 @@
             </tbody>
           </table>
 
+
+          <!-- =====================
+          == MENSAJE NO HAY CARRERAS
+          ======================= -->
+          <div class="row animated fadeIn faster mt-3" *ngIf="proyectoSeleccionado && itemCarreras.length == 0">
+            <div class="col-12">
+                <div class="alert alert-danger text-center">
+                    <h5 class="alert-heading">No hay carreras asignadas a este proyecto.</h5>
+                </div> 
+            </div>
+          </div>
+          <!-- =====================
+          == FIN MENSAJE NO HAY CARRERAS
+          ======================= -->
+          
           
 
         <br>

@@ -31,19 +31,31 @@
                           <th scope="col">Nombre</th>
                           <th scope="col">Fecha Inicio</th>
                           <th scope="col">Fecha Termino</th>
+                          <th scope="col">Descripción</th>
                           <th scope="col">Editar</th>
+                          <th scope="col">Apertura de Expedientes</th>
                         </tr>
                       </thead>
                       <tbody> 
-                        <tr *ngFor="let periodo of periodos" class="manita">
+                        <tr *ngFor="let periodo of periodos; let i = index" class="manita">
                           <td>{{ periodo.nombre }}</td>
                           <td>{{ periodo.fecha_inicio | date }}</td>
                           <td>{{ periodo.fecha_termino | date }}</td>
+                          <td>
+                            <span *ngIf="periodo.isProximo" class="badge badge-pill badge-secondary">Próximo</span>
+                            <span *ngIf="periodo.isActual" class="badge badge-pill badge-primary">Actual</span>
+                          </td>
                           <td class="text-center">
                               <a class="btn btn-info btn-sm" 
                                  [routerLink]="['/dashboard/ajustes/periodo', periodo._id ]">
                                   <i class="fa fa-pen"></i>
                               </a>
+                          </td>
+                          <td class="text-center">
+                            <button class="btn btn-success btn-sm" 
+                                  *ngIf="!periodo.apertura_expedientes"
+                                  (click)="aperturarExpedientes(periodo, i)">Aperturar</button>
+                            <p class="m-0" *ngIf="periodo.apertura_expedientes">Aperturados</p>
                           </td>
                         </tr>
                     
