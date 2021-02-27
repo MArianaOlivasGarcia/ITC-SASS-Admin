@@ -7,8 +7,8 @@ export class Expediente {
     constructor(
         public alumno?: Alumno,
         public items?: ItemExpediente[],
-        public fecha_inicio?: Date,
-        public fecha_termino?: Date,
+        public apertura?: Date,
+        public cierre?: Date,
         public _id?: string
     ){}
 

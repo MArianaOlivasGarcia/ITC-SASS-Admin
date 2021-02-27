@@ -95,8 +95,11 @@
                           <label>Fecha máxima entrega</label>
                           <input type="date"
                               class="form-control"
+                              #fecha
                               [ngClass]="{'is-invalid': campoNoValido('fecha_limite') }"
-                              formControlName="fecha_limite">
+                              formControlName="fecha_limite"
+                              (ngModelChange)="cambiarFecha( fecha.value )">
+
                             <div *ngIf="campoNoValido('fecha_limite')" class="invalid-feedback">
                                 {{ mensajesError('fecha_limite') }}
                             </div>  
@@ -105,7 +108,7 @@
 
                         <hr>
 
-                        <button class="btn btn-primary btn-block"
+                        <button class="btn btn-primary btn-block" *ngIf="!item?.aceptado"
                                 type="submit">
                         <i class="fas fa-save mr-2"></i>Guardar    
                         </button>

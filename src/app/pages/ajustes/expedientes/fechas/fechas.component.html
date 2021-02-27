@@ -1,0 +1,71 @@
+ 
+<div  class="fondo-modal" *ngIf="modalService.modal">
+    <div class="modal" tabindex="-1" role="dialog"  style="display:block;">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <!-- modal-dialog-centered  -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Editar Fechas <small>{{ periodo?.nombre }}</small></h4>
+            <button (click)="cerrarModal()" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+  
+            <div class="container"> 
+
+              <h5>{{ item.titulo }} <small>{{ item?.codigo }}</small></h5>
+
+              <div class="col-md-7 mt-3">
+        
+                <form [formGroup]="fechasForm"
+                        (submit)="guardar()"
+                        autocomplete="off">
+
+                    <div class="form-group">
+                        <label>Fecha inicial</label>
+                        <input type="date"
+                            class="form-control"
+                            [ngClass]="{'is-invalid': campoNoValido('fecha_inicial') }"
+                            formControlName="fecha_inicial">
+                          <div *ngIf="campoNoValido('fecha_inicial')" class="invalid-feedback">
+                              {{ mensajesError('fecha_inicial') }}
+                          </div>  
+                    </div>
+                    
+                    <div class="form-group">
+                      <label>Fecha máxima entrega</label>
+                      <input type="date"
+                          class="form-control"
+                          #fecha
+                          [ngClass]="{'is-invalid': campoNoValido('fecha_limite') }"
+                          formControlName="fecha_limite"
+                          (ngModelChange)="cambiarFecha( fecha.value )">
+                        <div *ngIf="campoNoValido('fecha_limite')" class="invalid-feedback">
+                           {{ mensajesError('fecha_limite') }}
+                        </div>  
+                  </div>
+
+
+                    <hr>
+
+                    <button class="btn btn-primary btn-block" *ngIf="!item?.aceptado"
+                            type="submit">
+                    <i class="fas fa-save mr-2"></i>Guardar    
+                    </button>
+
+                </form>
+
+              </div>
+
+
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

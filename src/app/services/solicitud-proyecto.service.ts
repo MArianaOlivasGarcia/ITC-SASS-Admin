@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CargarSolicitudes } from '../interfaces/cargar-solicitudes.interface';
+import { CargarTotalesSolicitudes } from '../interfaces/cargar-totales-solicitudes.interface';
 import { Solicitud } from '../models/solicitud-proyecto.model';
 
 const base_url = environment.base_url;
@@ -82,6 +83,19 @@ export class SolicitudProyectoService {
         Authorization: `Bearer ${ token }`
       }
     })
+  }
+
+
+  getTotalesAceptadoAndRechazado( idPeriodo: string ): Observable<any> {
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/solicitud/totales/${idPeriodo}`;
+
+    return this.http.get<CargarTotalesSolicitudes>(url,{
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    })
+
   }
 
 }

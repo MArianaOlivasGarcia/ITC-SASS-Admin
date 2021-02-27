@@ -47,7 +47,10 @@ import { environment } from 'src/environments/environment';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AlumnosProyectoComponent } from './proyectos/alumnos-proyecto/alumnos-proyecto.component';
 import { ItemExpedienteComponent } from './alumnos/expediente/item-expediente/item-expediente.component';
-
+import { AperturaExpedienteComponent } from './ajustes/expedientes/apertura-expediente/apertura-expediente.component';
+import { FechasComponent } from './ajustes/expedientes/fechas/fechas.component';
+import { EstructuraComponent } from './ajustes/expedientes/estructura/estructura.component';
+ 
 const token = localStorage.getItem('accessToken') || '';
 
 const config: SocketIoConfig = {
@@ -94,7 +97,10 @@ const config: SocketIoConfig = {
     CarrerasComponent,
     PeriodosComponent,
     AlumnosProyectoComponent,
-    ItemExpedienteComponent,],
+    ItemExpedienteComponent,
+    AperturaExpedienteComponent,
+    FechasComponent,
+    EstructuraComponent,],
   exports: [
     DashboardComponent,
     PagesComponent

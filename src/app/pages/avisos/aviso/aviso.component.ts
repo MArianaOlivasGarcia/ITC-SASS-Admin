@@ -52,11 +52,14 @@ export class AvisoComponent implements OnInit {
           // TODO: SI NO ENCUENTRA LA DEPENDENCIA O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/dependencias`);
 
-          const { titulo,
-                  /* enlace, */
+          let { titulo,
+                  enlace,
                   descripcion } = aviso;
           this.avisoSeleccionado = aviso;
-          this.avisoForm.setValue({titulo, enlace: 'Hola', descripcion});
+          if ( !enlace ) {
+            enlace = '';
+          }
+          this.avisoForm.setValue({titulo, enlace, descripcion});
         });
 
 
@@ -64,6 +67,39 @@ export class AvisoComponent implements OnInit {
 
 
   guardar() {
+    this.formSubmitted = true;
+    if ( this.avisoForm.invalid ) { return; }
+
+    const { titulo } = this.avisoForm.value;
+
+    if ( this.avisoSeleccionado ) {
+      // Actualizar
+      const data = {
+        ... this.avisoForm.value,
+        _id: this.avisoSeleccionado._id
+      };
+
+      this.avisoService.actualizarAviso( data )
+          .subscribe( () => {
+            Swal.fire({
+              title: 'Guardado',
+              text: `Aviso ${titulo} actualizado con éxito.`,
+              icon: 'success'
+            });
+          });
+
+    } else {
+      // Crear
+      this.avisoService.crearAviso( this.avisoForm.value )
+      .subscribe( resp => {
+        Swal.fire({
+          title: 'Creado',
+          text: `Aviso ${titulo} creado con éxito.`,
+          icon: 'success'
+        });
+        this.router.navigateByUrl(`/dashboard/aviso/${resp.aviso._id}`);
+      });
+    }
 
   }
 
@@ -76,7 +112,7 @@ export class AvisoComponent implements OnInit {
       return false;
     }
 
-  }
+  } 
 
 
   mensajesError( campo: string  ): string {

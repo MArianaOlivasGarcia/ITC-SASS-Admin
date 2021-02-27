@@ -37,10 +37,10 @@ export class PeriodoComponent implements OnInit {
       isActual: [false],
       isProximo: [false],
       recepcion_solicitudes: this.fb.group({
-        fecha_inicio: [''],
-        fecha_termino: [''],
+        inicio: [''],
+        termino: [''],
       })
-    });
+    }); 
 
   }
 
@@ -58,11 +58,14 @@ export class PeriodoComponent implements OnInit {
           console.log(recepcion_solicitudes)
           this.periodoSeleccionado = periodo;
           this.periodoForm.setValue({nombre,
-                                    fecha_inicio,
-                                    fecha_termino,
+                                    fecha_inicio: new Date(fecha_inicio).toISOString().slice(0,10),
+                                    fecha_termino: new Date(fecha_termino).toISOString().slice(0,10),
                                     isActual,
                                     isProximo,
-                                    recepcion_solicitudes
+                                    recepcion_solicitudes: {
+                                      inicio: new Date(recepcion_solicitudes.inicio).toISOString().slice(0,10),
+                                      termino: new Date(recepcion_solicitudes.termino).toISOString().slice(0,10),
+                                    }
                                     });
         });
 
@@ -71,7 +74,6 @@ export class PeriodoComponent implements OnInit {
 
 
   guardar(): void {
-    console.log(this.periodoForm.value);
     this.formSubmitted = true;
   
     if ( this.periodoForm.invalid ) { return; }
@@ -125,7 +127,7 @@ export class PeriodoComponent implements OnInit {
   campoNoValido( campo: string ): boolean {
 
 
-    if ( this.periodoForm.get(campo)?.invalid && this.formSubmitted ) {
+    if ( (this.periodoForm.get(campo)?.invalid ||  this.periodoForm.get('recepcion_solicitudes').get(campo)?.invalid ) && this.formSubmitted ) {
       return true;
     } else {
       return false;
@@ -136,7 +138,26 @@ export class PeriodoComponent implements OnInit {
 
   mensajesError( campo: string  ): string {
 
-    return this.periodoForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : '';
+    return this.periodoForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : 
+           this.periodoForm.get(campo)?.hasError('isMenor') ? `Esta fecha debe ser mayor o igual que la Fecha de inicio.` :
+           this.periodoForm.get('recepcion_solicitudes').get(campo)?.hasError('isMenor') ? `Esta fecha debe ser mayor o igual que la Fecha de inicio.` : ''
+
+  }
+
+
+  cambiarFecha( value: any ) {
+    const primeraFecha = new Date(this.periodoForm.get('fecha_inicio').value);
+    if ( primeraFecha.getTime() > new Date(value).getTime() ) {
+        this.periodoForm.get('fecha_termino').setErrors({isMenor: true});
+    } 
+  }
+
+
+  cambiarFechaSolicitud( value: any ) {
+    const primeraFecha = new Date(this.periodoForm.get('recepcion_solicitudes').get('inicio').value);
+    if ( primeraFecha.getTime() > new Date(value).getTime() ) {
+      this.periodoForm.get('recepcion_solicitudes').get('termino').setErrors({isMenor: true});
+    }
   }
 
 }

@@ -39,8 +39,6 @@ export class DependenciaService {
   }
 
 
-  // TODO: ESte es get dependencias paginadas
-  // Crear un Get detependecias TODAS
   getDependenciasPaginadas( desde: number = 0 ): Observable<any> {
 
     const url = `${ base_url }/dependencia/all/paginados?desde=${ desde }`;

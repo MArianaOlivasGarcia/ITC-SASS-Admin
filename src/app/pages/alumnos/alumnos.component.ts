@@ -23,7 +23,7 @@ export class AlumnosComponent implements OnInit {
                private modalService: ModalAlumnoService ) { }
 
   ngOnInit(): void {
-    this.cargarAlumnos();
+    this.cargarAlumnos(); 
   }
 
 

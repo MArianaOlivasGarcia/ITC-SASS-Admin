@@ -58,8 +58,10 @@
                 <label>Fecha Termino</label>
                 <input type="date"
                     class="form-control"
+                    #fecha
                     [ngClass]="{'is-invalid': campoNoValido('fecha_termino') }"
-                    formControlName="fecha_termino">
+                    formControlName="fecha_termino"
+                    (ngModelChange)="cambiarFecha( fecha.value )">
                 <div *ngIf="campoNoValido('fecha_termino')" class="invalid-feedback">
                     {{ mensajesError('fecha_termino') }}
                 </div>
@@ -95,20 +97,23 @@
                     <label>Fecha Inicio</label>
                     <input type="date"
                         class="form-control"
-                        [ngClass]="{'is-invalid': campoNoValido('fecha_inicio') }"
-                        formControlName="fecha_inicio">
-                    <div *ngIf="campoNoValido('fecha_inicio')" class="invalid-feedback">
-                        {{ mensajesError('fecha_inicio') }}
+                        [ngClass]="{'is-invalid': campoNoValido('inicio') }"
+                        formControlName="inicio">
+                    <div *ngIf="campoNoValido('inicio')" class="invalid-feedback">
+                        {{ mensajesError('inicio') }}
                     </div>  
                 </div>
                 <div class="form-group"> 
                     <label>Fecha Termino</label>
                     <input type="date"
                         class="form-control"
-                        [ngClass]="{'is-invalid': campoNoValido('fecha_termino') }"
-                        formControlName="fecha_termino">
-                    <div *ngIf="campoNoValido('fecha_termino')" class="invalid-feedback">
-                        {{ mensajesError('fecha_termino') }}
+                        #fecha2
+                        [ngClass]="{'is-invalid': campoNoValido('termino') }"
+                        formControlName="termino"
+                        (ngModelChange)="cambiarFechaSolicitud( fecha2.value )">
+
+                    <div *ngIf="campoNoValido('termino')" class="invalid-feedback">
+                        {{ mensajesError('termino') }}
                     </div>  
                 </div>
             </div>

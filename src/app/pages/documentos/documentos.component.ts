@@ -28,13 +28,13 @@ export class DocumentosComponent implements OnInit {
   ngOnInit(): void {
     this.cargarEstructuraExpediente();
     
-  }
+  } 
 
 
   cargarEstructuraExpediente(): void {
     this.expedienteService.getEstructuraExpediente()
-            .subscribe( resp => {
-              this.estructura = resp.estructura;
+            .subscribe( estructura => {
+              this.estructura = estructura;
               this.codigo = this.estructura[0].codigo;
               this.cargarItems(this.estado, this.codigo)
             });

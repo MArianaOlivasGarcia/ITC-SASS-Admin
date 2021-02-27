@@ -106,7 +106,7 @@ export class DependenciaComponent implements OnInit {
     if ( this.dependenciaForm.get(campo)?.invalid && this.formSubmitted ) {
       return true;
     } else {
-      return false;
+      return false; 
     }
 
   }

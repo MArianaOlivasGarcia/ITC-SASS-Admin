@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,6 +35,16 @@ export class ProyectoComponent implements OnInit {
   public dependencias: Dependencia[] = [];
   public periodos: Periodo[];
 
+  public optionsTipoActividades: {value: string, label: string}[] = [
+    { value: 'Administrativas', label: 'Administrativas'},
+    { value: 'Asesoria', label: 'Asesoria'},
+    { value: 'Docentes', label: 'Docentes'},
+    { value: 'Investigación', label: 'Investigación'},
+    { value: 'Técnicas', label: 'Técnicas'},
+    { value: 'Otro', label: 'Otro'},
+  ];
+
+
   constructor(  private fb: FormBuilder,
                 private proyectoService: ProyectoService,
                 private dependenciaService: DependenciaService,
@@ -63,7 +73,7 @@ export class ProyectoComponent implements OnInit {
       horario: ['', Validators.required ],
       instalacion: [false,  Validators.required],
       lugar_desempeno: ['', Validators.required ],
-      modalidad: [{value:'Público', disabled: true}],
+      modalidad: ['', Validators.required ],
       nombre: ['', Validators.required ],
       objetivo: ['', Validators.required ],
       periodo: ['', Validators.required ],
@@ -71,7 +81,7 @@ export class ProyectoComponent implements OnInit {
       responsable: ['', Validators.required ],
       tipo_actividades: ['', Validators.required ],
       tipo: ['', Validators.required ],
-    });
+    }); 
 
     this.carrerasFiltradas = this.carreraControl.valueChanges
       .pipe(
@@ -108,7 +118,7 @@ export class ProyectoComponent implements OnInit {
           // TODO: SI NO ENCUENTRA EL PROYECTO O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/proyectos`);
 
-          const { apoyo_economico,
+          let { apoyo_economico,
                   instalacion,
                   nombre,
                   dependencia: { _id },
@@ -124,20 +134,50 @@ export class ProyectoComponent implements OnInit {
                   puesto_responsable} = resp.proyecto;
           this.proyectoSeleccionado = resp.proyecto;
           this.itemCarreras = resp.itemsCarrera;
-          this.proyectoForm.setValue({ apoyo_economico,
-                                       instalacion,
-                                       nombre,
-                                       dependencia: _id,
-                                       objetivo,
-                                       actividades,
-                                       tipo_actividades,
-                                       periodo,
-                                       lugar_desempeno,
-                                       modalidad,
-                                       horario,
-                                       tipo,
-                                       responsable,
-                                       puesto_responsable});
+          
+          
+          let existe = false;
+          this.optionsTipoActividades.forEach((opt: {value: string, label: string}) => {
+            if( tipo_actividades === opt.value ){
+              existe = true;
+            }
+          })
+
+          if ( !existe ) {
+            this.proyectoForm.addControl('otro', new FormControl('', Validators.required));
+            this.proyectoForm.setValue({ apoyo_economico,
+              instalacion,
+              nombre,
+              dependencia: _id,
+              objetivo,
+              actividades,
+              tipo_actividades: 'Otro',
+              periodo,
+              lugar_desempeno,
+              modalidad,
+              horario,
+              tipo,
+              otro: tipo_actividades,
+              responsable,
+              puesto_responsable});
+          } else {
+            this.proyectoForm.setValue({ apoyo_economico,
+              instalacion,
+              nombre,
+              dependencia: _id,
+              objetivo,
+              actividades,
+              tipo_actividades,
+              periodo,
+              lugar_desempeno,
+              modalidad,
+              horario,
+              tipo,
+              responsable,
+              puesto_responsable});
+          }
+
+          
 
         });
 
@@ -147,18 +187,25 @@ export class ProyectoComponent implements OnInit {
 
   guardar(): void {
     this.formSubmitted = true;
-    
     if ( this.itemCarreras.length == 0 ){
       this.carreraControl.setErrors({'invalid': true})
     }
 
+    
     if ( this.proyectoSeleccionado?.publico ){
       if ( this.proyectoForm.invalid || this.carreraControl.invalid ) { return; }
     }
-   
+    
     if( this.proyectoForm.invalid ) { return; }
-
+    
     const { nombre } = this.proyectoForm.value;
+    
+    if ( this.proyectoForm.get('otro') ) {
+      this.proyectoForm.get('tipo_actividades').setValue(this.proyectoForm.get('otro').value)
+      this.proyectoForm.removeControl('otro');
+    }
+    console.log(this.proyectoForm.value)
+
 
     if ( this.proyectoSeleccionado ) {
       // Actualizar
@@ -290,6 +337,17 @@ export class ProyectoComponent implements OnInit {
   }
   
 
+
+
+  cambioTipoActividad( value: string ): void {
+    
+    if ( value !== 'Otro') {
+      this.proyectoForm.removeControl('otro');
+    } else {
+      this.proyectoForm.addControl('otro', new FormControl('', Validators.required));
+    }
+    
+  }
 
 }
 

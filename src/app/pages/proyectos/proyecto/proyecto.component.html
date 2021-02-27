@@ -147,8 +147,8 @@
             <textarea
                    class="form-control" 
                    [ngClass]="{'is-invalid': campoNoValido('objetivo') }"
-                   placeholder="Objetivo"
                    formControlName="objetivo"
+                   placeholder="Objetivo..."
                    rows="3"></textarea>
             <div *ngIf="campoNoValido('objetivo')" class="invalid-feedback">
               {{ mensajesError('objetivo') }}
@@ -160,8 +160,8 @@
             <textarea
                    class="form-control" 
                    [ngClass]="{'is-invalid': campoNoValido('actividades') }"
-                   placeholder="Actividades"
                    formControlName="actividades"
+                   placeholder="Actividades a desarrollar..."
                    rows="3"></textarea>
             <div *ngIf="campoNoValido('actividades')" class="invalid-feedback">
               {{ mensajesError('actividades') }}
@@ -174,19 +174,36 @@
 
 
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>Tipo de Actividades a desarrollar</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('tipo_actividades') }"
-                   placeholder="Tipo de actividades"
-                   formControlName="tipo_actividades">
-            <div *ngIf="campoNoValido('tipo_actividades')" class="invalid-feedback">
-              {{ mensajesError('tipo_actividades') }}
-            </div>
+          <div class="form-group col-md-4">
+            <label>Tipo de actividades</label>
+            <select class="custom-select mr-sm-2"
+                      [ngClass]="{'is-invalid': campoNoValido('tipo_actividades') }"
+                      formControlName="tipo_actividades"
+                      #tipoActividad
+                      (ngModelChange)="cambioTipoActividad( tipoActividad.value )">
+                <option value="">SELECCIONAR TIPO</option>
+                <option *ngFor="let option of optionsTipoActividades"
+                        [value]="option.value">
+                        {{ option.label }}
+                </option>
+              </select>       
+              <div *ngIf="campoNoValido('tipo_actividades')" class="invalid-feedback">
+                {{ mensajesError('tipo_actividades') }}
+              </div>
           </div>
 
-            <div class="form-group col-md-6">
+          <div class="form-group col-md-4" *ngIf="proyectoForm.get('otro')">
+            <label>Especifique tipo</label>
+            <input formControlName="otro"
+                  [ngClass]="{'is-invalid': campoNoValido('otro') }"
+                   class="form-control"
+                   placeholder="Tipo de actividad">
+              <div *ngIf="campoNoValido('otro')" class="invalid-feedback">
+                {{ mensajesError('otro') }}
+              </div>
+          </div>
+
+            <div class="form-group col-md-4">
               <label>Tipo de proyecto</label>
               <select class="custom-select mr-sm-2"
                       [ngClass]="{'is-invalid': campoNoValido('tipo') }"
@@ -202,8 +219,8 @@
                 <option value="Medio ambiente">Medio ambiente</option>
                 <option value="Otro">Otro</option>
               </select>      
-              <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
-                {{ mensajesError('dependencia') }}
+              <div *ngIf="campoNoValido('tipo')" class="invalid-feedback">
+                {{ mensajesError('tipo') }}
               </div>    
             </div> 
         </div>
@@ -255,10 +272,16 @@
 
           <div class="form-group col-md-4">
             <label>Modalidad</label>
-            <input type="text" 
-                   class="form-control" 
-                   placeholder="Modalidad"
-                   formControlName="modalidad">
+            <select class="custom-select mr-sm-2"
+                      [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
+                      formControlName="modalidad">
+                <option value="">SELECCIONAR MODALIDAD</option>
+                <option value="Público">Público</option>
+                <option value="Privado">Privado</option>
+              </select>      
+              <div *ngIf="campoNoValido('modalidad')" class="invalid-feedback">
+                {{ mensajesError('modalidad') }}
+              </div>
           </div>
          
           <div class="form-group col-md-4">

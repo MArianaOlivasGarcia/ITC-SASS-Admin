@@ -113,7 +113,7 @@ export class AlumnoComponent implements OnInit {
                                      apellido_paterno,
                                      apellido_materno,
                                      sexo,
-                                     fecha_nacimiento,
+                                     fecha_nacimiento: new Date(fecha_nacimiento).toISOString().slice(0,10),
                                      carrera: _id,
                                      semestre,
                                      creditos_acumulados,

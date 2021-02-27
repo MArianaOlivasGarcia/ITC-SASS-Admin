@@ -23,6 +23,7 @@ html, body{
 /* SIDEBAR */
 
 #sidebar-container {
+  height: 100%;
   min-height: 100vh;
   margin-left: -13rem;
   -webkit-transition: margin .25s ease-out;
@@ -41,7 +42,9 @@ html, body{
 }
 
 #content-wrapper.toggled #sidebar-container {
-  margin-left: 0;
+  margin-left: 0; 
+  height: 100%;
+  min-height: 100vh;
 }
 
 

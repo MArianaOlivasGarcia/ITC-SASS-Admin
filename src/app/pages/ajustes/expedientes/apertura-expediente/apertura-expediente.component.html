@@ -1,0 +1,50 @@
+
+
+<h4>Apertura de Expedientes <small>{{periodo?.nombre}}</small></h4>
+<hr>
+
+<div class="row animated fadeIn faster m-3">
+  <h5>Total de Solicitudes: </h5>
+  <h5><span class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendientes {{ totalPendiente }}</span></h5>
+  <h5><span class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazadas {{ totalRechazado }}</span></h5>
+  <h5><span class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptadas {{ totalAceptado }}</span></h5>
+</div>
+
+
+<!-- =====================
+== MENSAJE YA SE REALIZO APERTURA
+======================= -->
+<div class="row animated fadeIn faster m-3" *ngIf="periodo?.apertura_expedientes">
+  <div class="alert alert-success">
+      <p class="m-0">Ya se realizo la apertura de los expedientes.</p>
+  </div> 
+</div>
+<!-- =====================
+== FIN MENSAJE YA SE REALIZO APERTURA
+======================= -->
+
+<!-- =====================
+== MENSAJE NO SE PUEDE REALIZAR
+======================= -->
+<div class="row animated fadeIn faster m-3" *ngIf="totalPendiente">
+  <div class="alert alert-warning"> 
+      <p class="m-0">No se puede realizar la apertura de Expedientes ya que aun hay solicitudes <strong>Pendientes</strong> por revisar.</p>
+  </div> 
+</div>
+<!-- =====================
+== FIN MENSAJE NO SE PUEDE REALIZAR
+======================= -->
+
+<button class="btn btn-success" (click)="aperturarExpedientes()" [disabled]="periodo?.apertura_expedientes" *ngIf="!periodo?.apertura_expedientes">
+    Aperturar Expedientes
+</button>
+
+
+
+
+
+
+<hr>
+
+
+<app-estructura [periodo]="periodo" *ngIf="periodo?.apertura_expedientes"></app-estructura>

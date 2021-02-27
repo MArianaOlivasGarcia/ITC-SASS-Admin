@@ -1,5 +1,8 @@
 
-<app-item-expediente *ngIf="itemSeleccionado" [item]="itemSeleccionado" ></app-item-expediente>
+<app-item-expediente *ngIf="showModal"
+                      (emitirCerrar)="addCerrar($event)"
+                      (emitirNewItem)="addItem($event)"
+                    [item]="itemSeleccionado" ></app-item-expediente>
 
 <h4>Expediente <small>de {{expediente?.alumno.nombre}}</small></h4>
 
@@ -10,7 +13,7 @@
 ======================= --> 
 <div class="row animated fadeIn m-3" *ngIf="!cargando && expediente">
     <div class="col-lg-8 col-md-6 col-sm-12">
-      <p class="m-0">Fecha de apertura: {{ expediente.fecha_inicio | date: 'dd MMMM yyyy' }}</p>
+      <p class="m-0">Fecha de apertura: {{ expediente.apertura | date: 'dd MMMM yyyy' }}</p>
     </div>
     <!-- <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="progress">

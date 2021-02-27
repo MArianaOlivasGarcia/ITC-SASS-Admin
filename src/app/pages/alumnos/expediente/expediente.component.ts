@@ -11,12 +11,14 @@ import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
   styleUrls: ['./expediente.component.css']
 })
 export class ExpedienteComponent implements OnInit {
-
   
   public expediente: Expediente;
   public cargando: boolean = true;
 
   public itemSeleccionado: ItemExpediente;
+
+  public showModal: boolean = false;
+
 
   constructor( private expedienteService: ExpedienteService,
                private modalService: ModalAlumnoService,
@@ -40,9 +42,33 @@ export class ExpedienteComponent implements OnInit {
 
 
   abrirModal( item: ItemExpediente ): void {
+    this.showModal = true;
     this.itemSeleccionado = item;
     this.modalService.abrirModal()
   }
+
+  addItem( item: ItemExpediente ){
+     /* const { items } = this.expediente;
+     const newItems = items.map( (i, index) => {
+        if ( i._id == item._id) {
+          i = item;
+        }
+        return i;
+     })
+     this.expediente.items = newItems; */
+     const { items } = this.expediente;
+     items.map( (i, index) => {
+        if ( i._id == item._id) {
+          this.expediente.items[index] = item;
+        }
+        return i;
+     })
+  }
+
+  addCerrar(){
+    this.showModal = false;
+  }
+
 
 }
  

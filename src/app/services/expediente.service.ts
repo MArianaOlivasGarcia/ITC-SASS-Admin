@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CargarItems } from '../interfaces/cargar-items.interface';
+import { FechasItemForm } from '../interfaces/fechas-item-form.interface';
 import { Expediente } from '../models/expediente.model';
 import { ItemExpediente } from '../models/item-expediente.model';
 import { Periodo } from '../models/periodo.model';
@@ -114,7 +115,10 @@ export class ExpedienteService {
     
     const url = `${ base_url }/expediente/estructura`;
 
-    return this.http.get(url);
+    return this.http.get(url)
+      .pipe(
+        map( ( resp: {status: boolean, estructura: any}) => resp.estructura )
+       );
 
   }
 
@@ -127,6 +131,37 @@ export class ExpedienteService {
         Authorization: `Bearer ${ token }`
       } 
     });
+
+  }
+
+
+  cambiarFechasPorItem( id: String, form: FechasItemForm ): Observable<any> {
+
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/item/fechas/${id}`;
+
+    return this.http.put(url, form, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    }).pipe(
+      map( ( resp: { status: boolean, item: ItemExpediente } ) => resp.item )
+    )
+
+  }
+
+  cambiarFechasGeneral( codigo: String, idPeriodo: string, form: FechasItemForm ): Observable<any> {
+
+    const token = localStorage.getItem('accessToken') || '';
+    const url = `${ base_url }/item/fechas/all/${idPeriodo}/${codigo}`;
+
+    return this.http.put(url, form, {
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    }).pipe(
+      map( ( resp: { status: boolean, item: ItemExpediente } ) => resp.item )
+    )
 
   }
 

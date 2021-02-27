@@ -25,6 +25,7 @@ import { CarreraComponent } from './ajustes/carreras/carrera/carrera.component';
 import { PeriodoComponent } from './ajustes/periodos/periodo/periodo.component';
 import { AdminGuard } from '../guards/admin.guard';
 import { AlumnosProyectoComponent } from './proyectos/alumnos-proyecto/alumnos-proyecto.component';
+import { AperturaExpedienteComponent } from './ajustes/expedientes/apertura-expediente/apertura-expediente.component';
 
 const routes: Routes = [
   { path: 'alumno/:id',          canActivate: [ AdminGuard ], component: AlumnoComponent,       data: { titulo: 'Alumno' } },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'proyectos',           canActivate: [ AdminGuard ], component: ProyectosComponent,    data: { titulo: 'Banco de Proyectos' } },
   { path: 'ajustes/carrera/:id', canActivate: [ AdminGuard ], component: CarreraComponent,      data: { titulo: 'Carrera' } },
   { path: 'ajustes/periodo/:id', canActivate: [ AdminGuard ], component: PeriodoComponent,      data: { titulo: 'Solicitud' } },
+  { path: 'ajustes/apertura-expediente/:periodo', canActivate: [ AdminGuard ], component: AperturaExpedienteComponent, data: { titulo: 'Solicitud' } },
   { path: 'ajustes',             component: AjustesComponent,     data: { titulo: 'Ajustes' } },
   { path: 'avisos',              component: AvisosComponent,      data: { titulo: 'Avisos' } },
   { path: 'aviso/:id',           component: AvisoComponent,       data: { titulo: 'Aviso' } },
