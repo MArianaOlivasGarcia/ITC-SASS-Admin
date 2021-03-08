@@ -70,6 +70,7 @@ export class ProyectoComponent implements OnInit {
       actividades: ['', Validators.required ],
       apoyo_economico: [false,  Validators.required],
       dependencia: ['', Validators.required ],
+      email_responsable: ['', Validators.required ],
       horario: ['', Validators.required ],
       instalacion: [false,  Validators.required],
       lugar_desempeno: ['', Validators.required ],
@@ -79,6 +80,7 @@ export class ProyectoComponent implements OnInit {
       periodo: ['', Validators.required ],
       puesto_responsable: ['', Validators.required ],
       responsable: ['', Validators.required ],
+      telefono_responsable: ['', Validators.required ],
       tipo_actividades: ['', Validators.required ],
       tipo: ['', Validators.required ],
     }); 
@@ -131,7 +133,10 @@ export class ProyectoComponent implements OnInit {
                   horario,
                   tipo,
                   responsable,
-                  puesto_responsable} = resp.proyecto;
+                  puesto_responsable,
+                  email_responsable,
+                  telefono_responsable,
+                } = resp.proyecto;
           this.proyectoSeleccionado = resp.proyecto;
           this.itemCarreras = resp.itemsCarrera;
           
@@ -159,7 +164,9 @@ export class ProyectoComponent implements OnInit {
               tipo,
               otro: tipo_actividades,
               responsable,
-              puesto_responsable});
+              puesto_responsable,
+              email_responsable,
+              telefono_responsable});
           } else {
             this.proyectoForm.setValue({ apoyo_economico,
               instalacion,
@@ -174,7 +181,9 @@ export class ProyectoComponent implements OnInit {
               horario,
               tipo,
               responsable,
-              puesto_responsable});
+              puesto_responsable,
+              email_responsable,
+              telefono_responsable});
           }
 
           
@@ -191,21 +200,18 @@ export class ProyectoComponent implements OnInit {
       this.carreraControl.setErrors({'invalid': true})
     }
 
-    
     if ( this.proyectoSeleccionado?.publico ){
       if ( this.proyectoForm.invalid || this.carreraControl.invalid ) { return; }
     }
     
     if( this.proyectoForm.invalid ) { return; }
-    
+     
     const { nombre } = this.proyectoForm.value;
     
     if ( this.proyectoForm.get('otro') ) {
       this.proyectoForm.get('tipo_actividades').setValue(this.proyectoForm.get('otro').value)
       this.proyectoForm.removeControl('otro');
     }
-    console.log(this.proyectoForm.value)
-
 
     if ( this.proyectoSeleccionado ) {
       // Actualizar
@@ -283,7 +289,7 @@ export class ProyectoComponent implements OnInit {
     if ( this.existeItem(carrera._id) ) {
       this.incrementarCantidad( carrera._id );
     } else {
-      let nuevoItemCarreraProyecto = new ItemCarreraProyecto(1, carrera);
+      let nuevoItemCarreraProyecto = new ItemCarreraProyecto(1, 1, carrera);
       this.itemCarreras.push( nuevoItemCarreraProyecto );
     }
 
@@ -305,6 +311,7 @@ export class ProyectoComponent implements OnInit {
                   .map( (item: ItemCarreraProyecto) => {
                     if( id === item.carrera._id ) {
                       item.cantidad = cantidad
+                      item.disponibilidad = cantidad
                     }
                     return item;
                   })
@@ -347,6 +354,30 @@ export class ProyectoComponent implements OnInit {
       this.proyectoForm.addControl('otro', new FormControl('', Validators.required));
     }
     
+  }
+
+ 
+
+  cambioDisponibilidad( id: string, event: any) {
+    let disponibilidad: number = event.target.value as number;
+
+    this.itemCarreras = this.itemCarreras
+                  .map( (item: ItemCarreraProyecto) => {
+                    if( id === item.carrera._id ) {
+
+                      if ( item.cantidad < disponibilidad ) {
+                        this.carreraControl.setErrors({'dispoMayor': true})
+                      } else {
+                        this.carreraControl.setErrors(null);
+                        item.disponibilidad = disponibilidad
+                      }
+
+                      console.log(this.carreraControl.valid)
+
+                    }
+                    return item;
+                  })
+
   }
 
 }

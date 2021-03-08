@@ -83,34 +83,6 @@
             </form>
     
         </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-
-            <div class="card border-0">
-            
-                <h5>Imagen</h5>
-                
-                <div class="d-flex justify-content-center">
-                    <img *ngIf="!fotoTemporal" [src]="avisoSeleccionado?.foto | imagen:'avisos'" [alt]="avisoSeleccionado?.titulo" class="w-50 h-50" >
-                    <img *ngIf="fotoTemporal" [src]="fotoTemporal" [alt]="avisoSeleccionado.titulo" class="w-50 h-50" >
-                </div>
-      
-                <br>
-             
-                <input type="file"
-                    (change)="changeFoto( $event?.target?.files[0] )">
-      
-                <hr>
-
-                <button class="btn btn-success btn-block"
-                    [disabled]="!fotoSubir"
-                    (click)="uploadFoto()">
-                    Subir fotografía
-                </button>
-      
-            
-        </div>
-
-        </div>
     </div>
 <!-- =====================
 == FIN FORMULARIO DEPENDENCIA

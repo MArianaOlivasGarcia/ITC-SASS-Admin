@@ -17,38 +17,31 @@ export class SolicitudProyectoService {
   constructor( private http: HttpClient ) { }
  
   getSolicitudesByStatus( status: 'pendiente' | 'rechazado' | 'aceptado' ,desde: number = 0 ): Observable<any> {
-
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/solicitud/all/${status}?desde=${ desde }`;
-
-    return this.http.get<CargarSolicitudes>( url, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    })
-        .pipe(
-          map( resp => { 
-            const solicitudes = resp.solicitudes.map(
-                                    solicitud => new Solicitud(
-                                      solicitud.alumno,
-                                      solicitud.proyecto,
-                                      solicitud.usuario_valido,
-                                      solicitud.inicio_servicio,
-                                      solicitud.termino_servicio,
-                                      solicitud.pendiente,
-                                      solicitud.aceptado,
-                                      solicitud.rechazado,
-                                      solicitud.fecha_solicitud,
-                                      solicitud.error,
-                                      solicitud.fecha_validacion,
-                                      solicitud._id
-                                    )
-                                  );
-            return {
-              total: resp.total,
-              solicitudes,
-            };
-          })
+    return this.http.get<CargarSolicitudes>( url )
+      .pipe(
+        map( resp => { 
+          const solicitudes = resp.solicitudes.map(
+                                  solicitud => new Solicitud(
+                                    solicitud.alumno,
+                                    solicitud.proyecto,
+                                    solicitud.usuario_valido,
+                                    solicitud.inicio_servicio,
+                                    solicitud.termino_servicio,
+                                    solicitud.pendiente,
+                                    solicitud.aceptado,
+                                    solicitud.rechazado,
+                                    solicitud.fecha_solicitud,
+                                    solicitud.error,
+                                    solicitud.fecha_validacion,
+                                    solicitud._id
+                                  )
+                                );
+          return {
+            total: resp.total,
+            solicitudes,
+          };
+        })
         );
 
   }
@@ -64,37 +57,19 @@ export class SolicitudProyectoService {
 
 
   aceptarSolicitud( solicitud: Solicitud ): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/solicitud/aceptar/${solicitud._id}`;
-
-    return this.http.put(url, solicitud, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    })
+    return this.http.put(url, solicitud)
   }
 
   rechazarSolicitud( id: String, error: {motivo: string, observacion: string}): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/solicitud/rechazar/${id}`;
-
-    return this.http.put(url, error, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    })
+    return this.http.put(url, error)
   }
 
 
   getTotalesAceptadoAndRechazado( idPeriodo: string ): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/solicitud/totales/${idPeriodo}`;
-
-    return this.http.get<CargarTotalesSolicitudes>(url,{
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    })
+    return this.http.get<CargarTotalesSolicitudes>(url)
 
   }
 

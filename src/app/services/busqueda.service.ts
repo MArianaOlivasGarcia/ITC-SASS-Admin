@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Alumno } from '../models/alumno.model';
+import { Aviso } from '../models/aviso.model';
 import { Carrera } from '../models/carrera.model';
 import { Dependencia } from '../models/dependencia.model';
 import { Proyecto } from '../models/proyecto.models';
@@ -25,7 +26,19 @@ export class BusquedaService {
                               dep.representante_legal,
                               dep.domicilio,
                               dep.email,
+                              dep.telefono,
                               dep.id ));
+  } 
+
+  private transformarAvisos( resultados: any[] ): Aviso[] {
+    return resultados.map(
+      aviso => new Aviso( aviso.titulo,
+                          aviso.descripcion,
+                          aviso.foto,
+                          aviso.disponible,
+                          aviso.fecha_publicacion,
+                          aviso.enlace,
+                          aviso._id ));
   }
 
 
@@ -84,6 +97,8 @@ export class BusquedaService {
                                 proyecto.tipo,
                                 proyecto.responsable,
                                 proyecto.puesto_responsable,
+                                proyecto.email_responsable,
+                                proyecto.telefono_responsable,
                                 proyecto.carreras,
                                 proyecto.publico,
                                 proyecto.alumno,
@@ -98,38 +113,40 @@ export class BusquedaService {
   }
 
 
-  busqueda( tipo: 'usuarios' | 'alumnos' | 'dependencias' | 'proyectos' | 'carreras',
+  busqueda( tipo: 'usuarios' | 'alumnos' | 'avisos' | 'dependencias' | 'proyectos' | 'carreras',
             termino: string ): Observable<any> {
-
     const url = `${ base_url }/busqueda/coleccion/${ tipo }/${ termino }`;
-
     return this.http.get( url )
-                .pipe(
-                  map( (resp: any) => {
+      .pipe(
+        map( (resp: any) => {
 
-                    switch ( tipo ) {
+          switch ( tipo ) {
 
-                      case 'usuarios':
-                        return this.transformarUsuarios( resp.respuesta );
+            case 'usuarios':
+              return this.transformarUsuarios( resp.respuesta );
 
-                      case 'dependencias':
-                        return this.transformarDependencias( resp.respuesta );
+            case 'dependencias':
+              return this.transformarDependencias( resp.respuesta );
 
-                      case 'alumnos':
-                        return this.transformarAlumnos( resp.respuesta );
+            case 'alumnos':
+              return this.transformarAlumnos( resp.respuesta );
 
-                      case 'proyectos':
-                        return this.transformarProyectos( resp.respuesta );
+            case 'avisos':
+              return this.transformarAvisos( resp.respuesta );
 
-                      case 'carreras':
-                        return this.transformarCarreras( resp.respuesta );
 
-                      default:
-                        return [];
-                    }
+            case 'proyectos':
+              return this.transformarProyectos( resp.respuesta );
 
-                  })
-                );
+            case 'carreras':
+              return this.transformarCarreras( resp.respuesta );
+
+            default:
+              return [];
+          }
+
+        })
+      );
   }
 
 

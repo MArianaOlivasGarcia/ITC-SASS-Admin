@@ -31,6 +31,7 @@ export class DependenciaService {
                                     dependencia.representante_legal,
                                     dependencia.domicilio,
                                     dependencia.email,
+                                    dependencia.telefono,
                                     dependencia._id ) );
           return dependencias;
         })
@@ -44,34 +45,33 @@ export class DependenciaService {
     const url = `${ base_url }/dependencia/all/paginados?desde=${ desde }`;
 
     return this.http.get<CargarDependencias>( url )
-        .pipe(
-          map( resp => {
-            const dependencias = resp.dependencias.map(
-                                    dependencia => new Dependencia(
-                                    dependencia.nombre,
-                                    dependencia.representante_legal,
-                                    dependencia.domicilio,
-                                    dependencia.email,
-                                    dependencia._id )
-                                  );
-            return {
-              total: resp.total,
-              dependencias,
-            };
-          })
-        );
+      .pipe(
+        map( resp => {
+          const dependencias = resp.dependencias.map(
+                                  dependencia => new Dependencia(
+                                  dependencia.nombre,
+                                  dependencia.representante_legal,
+                                  dependencia.domicilio,
+                                  dependencia.email,
+                                  dependencia.telefono,
+                                  dependencia._id )
+                                );
+          return {
+            total: resp.total,
+            dependencias,
+          };
+        })
+      );
 
   }
 
 
   getDependencia( id: string ): Observable<any> {
-
     const url = `${ base_url }/dependencia/${ id }`;
     return this.http.get( url )
         .pipe(
           map( (resp: { status: boolean, dependencia: Dependencia } ) => resp.dependencia )
         );
-
   }
 
 

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemExpediente } from 'src/app/models/item-expediente.model';
 import { ExpedienteService } from 'src/app/services/expediente.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,7 +19,7 @@ export class ItemExpedienteComponent implements OnInit {
   public formSubmitted: boolean = false;
   public fechasForm: FormGroup;
 
-  constructor( public modalService: ModalAlumnoService,
+  constructor( public modalService: ModalService,
                public fb: FormBuilder,
                private expedienteService: ExpedienteService ) { }
  

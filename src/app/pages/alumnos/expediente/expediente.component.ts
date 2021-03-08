@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Expediente } from 'src/app/models/expediente.model';
 import { ItemExpediente } from 'src/app/models/item-expediente.model';
 import { ExpedienteService } from 'src/app/services/expediente.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 
 @Component({
   selector: 'app-expediente',
@@ -21,7 +21,7 @@ export class ExpedienteComponent implements OnInit {
 
 
   constructor( private expedienteService: ExpedienteService,
-               private modalService: ModalAlumnoService,
+               private modalService: ModalService,
                private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void { 

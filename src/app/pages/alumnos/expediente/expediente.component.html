@@ -8,13 +8,31 @@
 
 <hr>
 
+
+<!-- =====================
+== EXPEDIENTE CONCLUSIO
+======================= -->
+<div class="row animated fadeIn mt-3" *ngIf="!cargando && expediente?.finalizado">
+  <div class="col-12">
+      <div class="alert alert-success">
+          <p class="m-0"><strong>¡Felicidades!</strong> has concluido tu expediente con éxito.</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN EXPEDIENTE CONCLUSIO
+======================= -->
+
+
+
 <!-- =====================
 == DATOS DEL EXPEDIENTE
 ======================= --> 
 <div class="row animated fadeIn m-3" *ngIf="!cargando && expediente">
     <div class="col-lg-8 col-md-6 col-sm-12">
-      <p class="m-0">Fecha de apertura: {{ expediente.apertura | date: 'dd MMMM yyyy' }}</p>
-    </div>
+      <p class="m-0">Fecha de apertura: <strong>{{ expediente.apertura | date: 'dd MMMM yyyy' }}</strong></p>
+      <p class="m-0" *ngIf="expediente.finalizado">Fecha de finalización: <strong>{{ expediente.cierre | date: 'dd MMMM yyyy' }}</strong></p>
+  </div>
     <!-- <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="progress">
         <div class="progress-bar progress-bar-striped  progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>

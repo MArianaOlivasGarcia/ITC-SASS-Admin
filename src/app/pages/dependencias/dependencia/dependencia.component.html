@@ -82,6 +82,18 @@
                         {{ mensajesError('email') }}
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': campoNoValido('telefono') }"
+                        placeholder="teléfono"
+                        formControlName="Teléfono">
+                    <div *ngIf="campoNoValido('telefono')" class="invalid-feedback">
+                        {{ mensajesError('telefono') }}
+                    </div>
+                </div>
     
                 <hr>
     

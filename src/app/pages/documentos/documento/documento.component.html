@@ -1,106 +1,76 @@
-<h5>{{item?.titulo}} de <small>{{item?.alumno.nombre}}</small>
+<h4 class="animated fadeIn fast"
+    *ngIf="item">{{item.titulo}} de <small>{{item.alumno.nombre}}</small>
   <small>
-          <span *ngIf="item?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
-          <span *ngIf="item?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
-          <span *ngIf="item?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+          <span *ngIf="item.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+          <span *ngIf="item.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+          <span *ngIf="item.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
   </small>
-</h5>
+</h4>
 
 <hr>
   
-<!-- =====================
+<!-- ===================== 
 == BOTÓN REGRESAR
 ======================= -->
 <div class="row text-right">
   <div class="col">
       <button class="btn btn-danger"
-          routerLink="/dashboard/solicitudes">
+          routerLink="/dashboard/documentos">
           <i class="fas fa-arrow-left mr-2"></i>Regresar
       </button>
   </div>
 </div>
 <!-- =====================
 == FIN BOTÓN REGRESAR
-======================= -->   
+======================= -->  
 
-  <div class="row animated fadeIn fast m-3" *ngIf="item">
-  
-      <div class="col-12">
-          <div class="row">
-              <div class="col-md-8">
-  
-                  <ul class="list-group text-dark mb-3">
-                    
-                    <li class="list-group-item active"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
-                    
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-5 text-bold">
-                            <strong>No. de Control:</strong>
-                        </div>
-                        <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ item.alumno.numero_control }}</p>
-                        </div>
-                      </div>
-                    </li>
-            
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-5 text-bold">
-                              <strong>Nombre:</strong>
-                          </div>
-                          <div class="col-md-7 mt-md-0 mt-1">
-                            <p class="m-0">{{ item.alumno.nombre }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-            
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-5 text-bold">
-                              <strong>Apellidos:</strong>
-                          </div>
-                          <div class="col-md-7 mt-md-0 mt-1">
-                            <p class="m-0">{{ item.alumno.apellido_paterno }} {{ item.alumno.apellido_materno }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-5 text-bold">
-                              <strong>Carrera:</strong>
-                          </div>
-                          <div class="col-md-7 mt-md-0 mt-1">
-                            <p class="m-0">{{ item.alumno.carrera.nombre }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-                  </ul>
-            
-                </div>
-          </div>
-      </div>
-      
-      
-  
-      <!-- <div class="col-12">
-          <div class="row">
-              <div class="col-md-12">
-  
 
-                  <app-pdf-viewer pdfSrc="https://www.colorquimica.com.co/wp-content/uploads/2017/09/test.pdf"></app-pdf-viewer>
-            
-              </div>
-          </div>
-      </div> -->
-  
+<!-- =====================
+== DATOS DEL ALUMNO
+======================= --> 
+<div class="row animated fadeIn  m-md-3 m-2" *ngIf="item">
+  <div class="col-md-6 card m-2 p-0 shadow-sm">
+    <div class="card-body">
+      <h6 class="card-title">Datos del Alumno</h6>
+      <hr>
+      
+        <p class="m-0"><strong>Nombre</strong></p>
+        <p class="m-0 mb-1">{{item.alumno.nombre}}</p>
+
+        <p class="m-0"><strong>Apellido</strong></p>
+        <p class="m-0 mb-1">{{item.alumno.apellido_paterno}} {{item.alumno.apellido_materno}}</p>
+
+        <p class="m-0"><strong>No. de Control</strong></p>
+        <p class="m-0 mb-1">{{item.alumno.numero_control}}</p>
+
+        <p class="m-0"><strong>Carrera</strong></p>
+        <p class="m-0 mb-1">{{item.alumno.carrera.nombre}}</p>
+    
+    </div>
   </div>
-  
-  
-  <div class="row animated fadeIn fast m-3">
+
+</div>
+<!-- =====================
+== FIN DATOS DEL ALUMNO
+======================= --> 
+
+
+<!-- =====================
+== VISTA ARCHIVO
+======================= --> 
+<div class="row animated fadeIn  m-3">
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="item?.archivoTemp" [src]="item.archivoTemp | archivo: 'temp' " useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="item?.archivo" [src]="item.archivo | archivo: item.alumno.numero_control " useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+</div>
+<!-- =====================
+== FIN VISTA ARCHIVO
+======================= -->
+
+
+<!-- =====================
+== FORM
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf="item">
   
       <div class="col-md-6">
   
@@ -157,4 +127,23 @@
   
       </div>
   
-  </div>
+</div>
+<!-- =====================
+== FIN FORM
+======================= --> 
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->

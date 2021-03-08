@@ -13,8 +13,9 @@ import Swal from 'sweetalert2';
 export class DocumentoComponent implements OnInit {
 
   public item: ItemExpediente;
+  public cargando: boolean = true;
 
-  public formSubmitted: boolean = false;
+  public formSubmitted: boolean = false; 
   public itemForm: FormGroup;
 
   public isAceptado: boolean = true;
@@ -42,6 +43,7 @@ export class DocumentoComponent implements OnInit {
 
     this.expedienteService.getItemExpediente( id )
           .subscribe( item => {
+            this.cargando = false
             this.item = item;
             this.isAceptado = item.aceptado;
             this.isPendiente = item.pendiente;
@@ -84,12 +86,28 @@ export class DocumentoComponent implements OnInit {
 
       if ( this.itemForm.invalid ) { return; }
 
-      const error = {
-          observacion,
-          motivo
-      }
-      
-      this.expedienteService.rechazarDocumento( this.item._id, error )
+   
+
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: `¿Estas seguro que deseas rechazar el archivo ${this.item.titulo}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          const error = {
+              observacion,
+              motivo
+          }
+
+          Swal.showLoading();
+          
+          this.expedienteService.rechazarDocumento( this.item._id, error )
               .subscribe( resp => {
                 this.item = resp.item;
                 Swal.fire({
@@ -104,6 +122,11 @@ export class DocumentoComponent implements OnInit {
                   icon: 'error' 
                 })
               })
+              
+        }
+      })
+      
+      
 
     } else {
       // ACEPTADO **.
@@ -112,7 +135,7 @@ export class DocumentoComponent implements OnInit {
 
                 Swal.fire({
                   title: '¿Estas seguro?',
-                  text: '¿Estas seguro que deseas aceptar el archivo?',
+                  text: `¿Estas seguro que deseas aceptar el archivo ${this.item.titulo}?`,
                   icon: 'question',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',

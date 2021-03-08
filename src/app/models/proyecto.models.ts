@@ -23,6 +23,8 @@ export class Proyecto {
         public tipo: string,
         public responsable: string,
         public puesto_responsable: string,
+        public email_responsable: string,
+        public telefono_responsable: string,
         public carreras: ItemCarreraProyecto[] = [],
         public publico?: boolean,
         public alumno?: Alumno,

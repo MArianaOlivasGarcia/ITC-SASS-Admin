@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Periodo } from 'src/app/models/periodo.model';
 import { Proyecto } from 'src/app/models/proyecto.models';
 import { BusquedaService } from 'src/app/services/busqueda.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
 import { PeriodoService } from 'src/app/services/periodo.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
 import Swal from 'sweetalert2';
@@ -21,8 +20,8 @@ export class ProyectosComponent implements OnInit {
   public desde = 0;
   public cargando = true;
 
-  public tipo: 'publico' | 'privado' = 'publico';
-  public tipoTemp: 'publico' | 'privado';
+  public tipo: 'publico' | 'personal' = 'publico';
+  public tipoTemp: 'publico' | 'personal';
 
   public periodos: Periodo[] = [];
   public periodoSeleccionado: string;
@@ -46,7 +45,7 @@ export class ProyectosComponent implements OnInit {
           })
   }
 
-  cargarProyectos( tipo: 'publico' | 'privado', periodo: string): void {
+  cargarProyectos( tipo: 'publico' | 'personal', periodo: string): void {
 
     this.cargando = true;
 
@@ -59,7 +58,7 @@ export class ProyectosComponent implements OnInit {
           this.tipo = tipo;
           this.tipoTemp = tipo;
         });
-
+ 
   }
 
   
@@ -80,7 +79,7 @@ export class ProyectosComponent implements OnInit {
 
 
 
-  cambioCodigo( tipo: 'publico' | 'privado' ): void {
+  cambioCodigo( tipo: 'publico' | 'personal' ): void {
     this.tipo = tipo;
     this.cargarProyectos( this.tipo, this.periodoSeleccionado );
   }

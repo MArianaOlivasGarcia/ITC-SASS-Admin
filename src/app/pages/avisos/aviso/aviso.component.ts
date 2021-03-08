@@ -15,15 +15,11 @@ export class AvisoComponent implements OnInit {
 
   public formSubmitted = false;
 
-  public fotoSubir: File;
-  public fotoTemporal: any;
-  
   public avisoForm: FormGroup;
   public avisoSeleccionado: Aviso;
 
   constructor( private fb: FormBuilder,
                private avisoService: AvisoService,
-               private fileUploadService: FileUploadService,
                private router: Router,
                private activatedRoute: ActivatedRoute ) { }
 
@@ -119,48 +115,7 @@ export class AvisoComponent implements OnInit {
 
     return this.avisoForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : '';
   }
-
-
-  changeFoto( foto: File ): void{
-    this.fotoSubir = foto;
-
-    if ( !foto ) {
-      this.fotoTemporal = null;
-      return;
-    }
-
-    // Pasar la foto a base 64
-    const reader = new FileReader();
-    reader.readAsDataURL( foto );
-
-    // Mostrar el url
-    reader.onloadend = () => {
-      this.fotoTemporal = reader.result;
-    };
-
-  }
-
-
-  uploadFoto(): void {
-
-    // TODO: EDITAR PORQUE ESE ES PARA USUARIOS
-    this.fileUploadService.actualizarFoto( 'avisos', this.fotoSubir, this.avisoSeleccionado._id )
-        .subscribe( resp => {
-          this.avisoSeleccionado.foto = resp.nombreFoto;
-          Swal.fire({
-            title: 'Guardado',
-            text: resp.message,
-            icon: 'success'
-          });
-        }, err => {
-          Swal.fire({
-            title: 'Error',
-            text: err.error.message,
-            icon: 'error'
-          });
-        });
-
-    }
+  
 
     
 }

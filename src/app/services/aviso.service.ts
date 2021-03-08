@@ -18,36 +18,33 @@ export class AvisoService {
 
   getAvisosPaginados( desde: number = 0  ): Observable<any> {
     const url = `${ base_url }/aviso/all?desde=${ desde }`;
-
     return this.http.get<CargarAvisos>( url )
-        .pipe(
-          map( resp => {
-            const avisos = resp.avisos.map(
-                                    aviso => new Aviso(
-                                    aviso.titulo,
-                                    aviso.descripcion,
-                                    aviso.foto,
-                                    aviso.disponible,
-                                    aviso.fecha_publicacion,
-                                    aviso.enlace,
-                                    aviso._id)
-                                  );
-            return {
-              total: resp.total,
-              avisos,
-            };
-          })
-        );
-
+      .pipe(
+        map( resp => {
+          const avisos = resp.avisos.map(
+                                  aviso => new Aviso(
+                                  aviso.titulo,
+                                  aviso.descripcion,
+                                  aviso.foto,
+                                  aviso.disponible,
+                                  aviso.fecha_publicacion,
+                                  aviso.enlace,
+                                  aviso._id)
+                                );
+          return {
+            total: resp.total,
+            avisos,
+          };
+        })
+      );
   }
 
   getAviso( id: string ): Observable<any> {
-
     const url = `${ base_url }/aviso/${ id }`;
     return this.http.get( url )
-        .pipe(
-          map( (resp: { status: boolean, aviso: Aviso } ) => resp.aviso )
-        );
+      .pipe(
+        map( (resp: { status: boolean, aviso: Aviso } ) => resp.aviso )
+      );
 
   }
 

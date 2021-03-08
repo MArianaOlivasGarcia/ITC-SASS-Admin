@@ -18,7 +18,6 @@ export class CarreraService {
   constructor( private http: HttpClient ) { }
 
   getCarreras(): Observable<any> {
-
     return this.http.get(`${base_url}/carrera/all`)
       .pipe(
         map( (resp: { status: boolean, carreras: Carrera[] } ) => {
@@ -35,21 +34,20 @@ export class CarreraService {
 
   getCarrerasPaginadas( desde: number = 0  ): Observable<any> {
     const url = `${ base_url }/carrera/all/paginados?desde=${ desde }`;
-
     return this.http.get<CargarCarreras>( url )
-        .pipe(
-          map( resp => {
-            const carreras = resp.carreras.map(
-                                    carrera => new Carrera(
-                                   carrera.nombre,
-                                    carrera._id )
-                                  );
-            return {
-              total: resp.total,
-              carreras,
-            };
-          })
-        );
+      .pipe(
+        map( resp => {
+          const carreras = resp.carreras.map(
+                                  carrera => new Carrera(
+                                 carrera.nombre,
+                                  carrera._id )
+                                );
+          return {
+            total: resp.total,
+            carreras,
+          };
+        })
+      );
   }
 
 
@@ -57,9 +55,9 @@ export class CarreraService {
 
     const url = `${ base_url }/carrera/${ id }`;
     return this.http.get( url )
-        .pipe(
-          map( (resp: { status: boolean, carrera: Carrera } ) => resp.carrera )
-        );
+      .pipe(
+        map( (resp: { status: boolean, carrera: Carrera } ) => resp.carrera )
+      );
 
   }
 

@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   base_url: 'http://localhost:3000/api',
   ws_url: 'http://localhost:3000',
+  public_url: 'http://localhost:3000/uploads/expedientes',
 };
 
 /*

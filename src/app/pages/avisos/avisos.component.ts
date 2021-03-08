@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Aviso } from 'src/app/models/aviso.model';
 import { AvisoService } from 'src/app/services/aviso.service';
+import { BusquedaService } from 'src/app/services/busqueda.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 
 @Component({
   selector: 'app-avisos',
@@ -15,7 +17,12 @@ export class AvisosComponent implements OnInit {
   public desde = 0;
   public cargando = true;
 
-  constructor( private avisoService: AvisoService ) { }
+  public avisoSeleccionado: Aviso;
+
+
+  constructor( private avisoService: AvisoService,
+               private modalService: ModalService,
+               private busquedaService: BusquedaService ) { }
 
   ngOnInit(): void {
     this.cargarAvisos();
@@ -58,9 +65,17 @@ export class AvisosComponent implements OnInit {
       return;
     }
 
-    /* this.busquedaService.busqueda( 'avisos', termino )
-        .subscribe( resp => this.avisos = resp ); */
+    this.busquedaService.busqueda( 'avisos', termino )
+        .subscribe( resp => this.avisos = resp );
 
+  }
+
+
+
+
+  abrirModal( aviso: Aviso ): void {
+    this.avisoSeleccionado = aviso;
+    this.modalService.abrirModal()
   }
 
 }

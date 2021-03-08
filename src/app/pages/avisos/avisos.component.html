@@ -1,3 +1,6 @@
+
+<app-aviso-detalle *ngIf="avisoSeleccionado" [aviso]="avisoSeleccionado"></app-aviso-detalle>
+
 <h4>Avisos</h4>
 <hr>
 
@@ -44,10 +47,12 @@
     <div class="card-columns" *ngIf="!cargando && avisos.length > 0">
 
         <div class="card" *ngFor="let aviso of avisos">
-            <img [src]="aviso.foto | imagen: 'avisos'" class="card-img-top" [alt]="aviso.titulo" *ngIf="aviso.foto">
+            <img [src]="aviso.foto | imagen: 'avisos'" 
+                class="card-img-top manita" [alt]="aviso.titulo"
+                (click)="abrirModal( aviso )">
             <div class="card-body">
               <h5 class="card-title">{{aviso.titulo}}</h5>
-              <p class="card-text">{{aviso.descripcion}}</p>
+              <p class="card-text">{{ (aviso.descripcion.length>200)? (aviso.descripcion | slice:0:200)+'... ':(aviso.descripcion) }}</p>
               <p class="card-text"><small class="text-muted">{{aviso.fecha_publicacion | date}}</small></p>
             </div>
             <div class="card-footer bg-white text-right">

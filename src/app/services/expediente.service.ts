@@ -29,14 +29,8 @@ export class ExpedienteService {
   }
 
   getExpediente( id: string ): Observable<any> {
-    
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/expediente/${ id }`;
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      } 
-    })
+    return this.http.get( url )
     .pipe(
       map( (resp: {status: boolean, expediente: Expediente }) => resp.expediente )
     );
@@ -44,15 +38,8 @@ export class ExpedienteService {
   }
 
   getAllByStatusAndCodigo( status: string, codigo: string, desde: number = 0): Observable<any> {
-
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/item/all/${status}/${codigo}?desde=${ desde }`;
-
-    return this.http.get<CargarItems>( url,{
-      headers: {
-        Authorization: `Bearer ${ token }`
-      } 
-    }).pipe(
+    return this.http.get<CargarItems>( url ).pipe(
           map( resp => {
             const items = resp.items.map(
                                     item => new ItemExpediente(
@@ -89,80 +76,44 @@ export class ExpedienteService {
   }
 
   aceptarDocumento( id: String): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/item/aceptar/${id}`;
-
-    return this.http.put(url, null, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    })
+    return this.http.put(url, null );
   }
 
   rechazarDocumento( id: String, error: {motivo: string, observacion: string}): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/item/rechazar/${id}`;
-
-    return this.http.put(url, error, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    })
+    return this.http.put(url, error );
   }
 
   // TODO: En un futuro pasaremos codigo/plan/version y obtenemos la estructura
   getEstructuraExpediente(): Observable<any> {
-    
     const url = `${ base_url }/expediente/estructura`;
-
     return this.http.get(url)
       .pipe(
         map( ( resp: {status: boolean, estructura: any}) => resp.estructura )
-       );
+      );
 
   }
 
   aperturarExpedientesByPeriodo( periodo: Periodo ): Observable<any> {
-
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/expediente/create/all/${ periodo._id }`;
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      } 
-    });
+    return this.http.get( url );
 
   }
 
 
   cambiarFechasPorItem( id: String, form: FechasItemForm ): Observable<any> {
-
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/item/fechas/${id}`;
-
-    return this.http.put(url, form, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    }).pipe(
+    return this.http.put(url, form ).pipe(
       map( ( resp: { status: boolean, item: ItemExpediente } ) => resp.item )
-    )
-
+    );
   }
 
   cambiarFechasGeneral( codigo: String, idPeriodo: string, form: FechasItemForm ): Observable<any> {
-
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/item/fechas/all/${idPeriodo}/${codigo}`;
-
-    return this.http.put(url, form, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    }).pipe(
+    return this.http.put(url, form ).pipe(
       map( ( resp: { status: boolean, item: ItemExpediente } ) => resp.item )
-    )
-
+    );
   }
 
 }

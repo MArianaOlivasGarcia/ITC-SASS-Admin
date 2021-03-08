@@ -19,46 +19,36 @@ export class UsuarioService {
   constructor(private http: HttpClient ) { }
 
   getUsuarios( desde: number = 0 ): Observable<any> {
-
-    const token = localStorage.getItem('accessToken') || '';
     const url = `${ base_url }/usuario/all?desde=${ desde }`;
-
-    return this.http.get<CargarUsuarios>( url, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    }).pipe(
-          map( resp => {
-            const usuarios = resp.usuarios.map(
-                                    usuario => new Usuario(
-                                    usuario.nombre,
-                                    usuario.username,
-                                    usuario.foto,
-                                    usuario.role,
-                                    usuario._id,
-                                    usuario.gestion,
-                                    '',
-                                    usuario.online )
-                                  );
-            return {
-              total: resp.total,
-              usuarios,
-            };
-          })
-        );
-
+    return this.http.get<CargarUsuarios>( url ).pipe(
+      map( resp => {
+        const usuarios = resp.usuarios.map(
+                                usuario => new Usuario(
+                                usuario.nombre,
+                                usuario.username,
+                                usuario.foto,
+                                usuario.role,
+                                usuario._id,
+                                usuario.gestion,
+                                '',
+                                usuario.online )
+                              );
+        return {
+          total: resp.total,
+          usuarios,
+        };
+      })
+    );
   }
 
 
 
   getUsuario( id: string ): Observable<any> {
-
     const url = `${ base_url }/usuario/${ id }`;
     return this.http.get( url )
         .pipe(
           map( (resp: { status: boolean, usuario: Usuario } ) => resp.usuario )
         );
-
   }
 
 

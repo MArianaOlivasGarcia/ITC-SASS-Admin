@@ -1,4 +1,10 @@
-<h4>Periodo <small *ngIf="periodoSeleccionado">{{ periodoSeleccionado.nombre }}</small></h4>
+<h4>Periodo <small>{{ periodoSeleccionado?.nombre }}</small>
+    <small>
+        <span *ngIf="periodoSeleccionado?.isProximo" class="badge badge-pill badge-secondary text-white text-capitalize p-1 ml-1">Próximo</span>
+        <span *ngIf="periodoSeleccionado?.isActual"class="badge badge-pill badge-primary text-white text-capitalize p-1 ml-1">Actual</span>
+    </small>
+</h4>
+
 
 
 <hr>
@@ -66,7 +72,7 @@
                     {{ mensajesError('fecha_termino') }}
                 </div>
             </div>
-
+<!-- 
             <div class="form-group"> 
                 <label>Asignar como periodo actual</label>
                 <select class="custom-select mr-sm-2"
@@ -86,7 +92,7 @@
                 <option [ngValue]="true">SI</option>
               </select>    
             </div>
-
+ -->
             <hr>
             
             <div formGroupName="recepcion_solicitudes">

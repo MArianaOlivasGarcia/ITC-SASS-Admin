@@ -34,6 +34,7 @@ export class DependenciaComponent implements OnInit {
       representante_legal: ['', Validators.required ],
       domicilio: ['', Validators.required ],
       email: ['', [Validators.required, Validators.email] ],
+      telefono: ['', Validators.required ],
     });
 
   }
@@ -50,9 +51,13 @@ export class DependenciaComponent implements OnInit {
           // TODO: SI NO ENCUENTRA LA DEPENDENCIA O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/dependencias`);
 
-          const { nombre, representante_legal, domicilio, email } = dependencia;
+          const { nombre, representante_legal, domicilio, email, telefono } = dependencia;
           this.dependenciaSeleccionada = dependencia;
-          this.dependenciaForm.setValue({nombre, representante_legal, domicilio, email});
+          this.dependenciaForm.setValue({nombre, 
+                    representante_legal,
+                    domicilio, 
+                    email,
+                    telefono});
         });
 
   }

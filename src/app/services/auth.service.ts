@@ -35,27 +35,20 @@ export class AuthService {
   }
 
 
-  get id(): string {
+  /* get id(): string {
     return this.usuario._id || '';
-  }
+  } */
 
   validarToken(): Observable<boolean> {
 
-    const token = localStorage.getItem('accessToken') || '';
-
-    return this.http.get(`${ base_url }/auth/renovar`, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    }).pipe(
+    return this.http.get(`${ base_url }/auth/renovar`)
+    .pipe(
       tap( (resp: any) => {
-
         localStorage.setItem('accessToken', resp.accessToken );
         localStorage.setItem('menu', JSON.stringify(resp.menu) );
         localStorage.setItem('submenu', JSON.stringify(resp.submenu) );
         const { nombre, username, foto, role, _id, gestion, online } = resp.user;
         this.usuario = new Usuario( nombre, username, foto, role, _id, gestion, '', online );
-        console.log(resp);
       }),
       map( resp => true ), // of permite crear un observable
       catchError( error => of(false) )
@@ -80,12 +73,7 @@ export class AuthService {
 
 
   register( formData: RegisterForm ): Observable<any>{
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.post(`${ base_url }/auth/register`, formData, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    });
+    return this.http.post(`${ base_url }/auth/register`, formData );
   }
 
 
@@ -102,12 +90,7 @@ export class AuthService {
 
 
   changePassword( formData: ChangePasswordForm ): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.put(`${ base_url }/auth/password`, formData, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    });
+    return this.http.put(`${ base_url }/auth/password`, formData );
   }
 
 

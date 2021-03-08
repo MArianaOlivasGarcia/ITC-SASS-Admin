@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Alumno } from 'src/app/models/alumno.model';
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,9 +11,9 @@ import Swal from 'sweetalert2';
 })
 export class DetalleAlumnoComponent implements OnInit {
   
-  @Input() alumno: Alumno;
+  @Input() alumno: Alumno; 
 
-  constructor( public modalService: ModalAlumnoService,
+  constructor( public modalService: ModalService,
                private uploadService: FileUploadService ) { }
 
   ngOnInit(): void {

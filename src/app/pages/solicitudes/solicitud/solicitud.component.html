@@ -40,241 +40,153 @@
 
 
 
+<!-- =====================
+== INFORMACIÓN
+======================= -->
+<ng-container *ngIf="solicitud">
+  
 
-<div class="row animated fadeIn fast m-3" *ngIf="solicitud">
-
-
+  <div class="row animated fadeIn fast m-3">
     <div class="col-12">
+  
+      <h6>Fecha de Servicio Social</h6>
+  
+      <p class="m-0"><strong>Inicio: </strong>{{ solicitud.inicio_servicio | date }}</p>
+      <p class="m-0"><strong>Termino: </strong>{{ solicitud.termino_servicio | date }}</p>
+  
+    </div>
+  </div>
+  
+  
+  <div class="row animated fadeIn fast m-3">
+    <div class="col-sm-12 col-md card m-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Datos del alumno</h6>
+
         <div class="row">
-          <div class="col-md-4">
-            <h6>Fotografía</h6>
-                
+          <div class="col-md-6">
             <div class="d-flex justify-content-center">
-                <img  [src]="alumno.foto | imagen:'alumnos'" [alt]="alumno.nombre" style="width: 200px; height: 200px;" >
+              <img  [src]="alumno.foto | imagen:'alumnos'" [alt]="alumno.nombre" style="width: 200px; height: 200px;" >
             </div>
           </div>
+  
+          <div class="col-md-6 mt-3 mt-md-0">
+            <p class="m-0"><strong>Nombre</strong></p>
+            <p class="m-0 mb-1">{{alumno.nombre}}</p>
 
-          <div class="col-md-8 mt-md-0 mt-3">
-
-                <ul class="list-group text-dark mb-3">
-                  
-                  <li class="list-group-item active"><p class="m-0"><strong>Datos del Alumno</strong></p></li>
-                  
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-md-5 text-bold">
-                          <strong>No. de Control:</strong>
-                      </div>
-                      <div class="col-md-7 mt-md-0 mt-1">
-                        <p class="m-0">{{ alumno.numero_control }}</p>
-                      </div>
-                    </div>
-                  </li>
-          
-                  <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-5 text-bold">
-                            <strong>Nombre:</strong>
-                        </div>
-                        <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ alumno.nombre }}</p>
-                        </div>
-                      </div>
-                    </li>
-          
-          
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-5 text-bold">
-                            <strong>Apellidos:</strong>
-                        </div>
-                        <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}</p>
-                        </div>
-                      </div>
-                    </li> 
-          
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-5 text-bold">
-                            <strong>Carrera:</strong>
-                        </div>
-                        <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ alumno.carrera.nombre }}</p>
-                        </div>
-                      </div>
-                    </li>
-          
-                </ul>
-          
-          </div>  
+            <p class="m-0"><strong>Apellidos</strong></p>
+            <p class="m-0 mb-1">{{alumno.apellido_paterno}} {{alumno.apellido_materno}}</p>
+            
+            <p class="m-0"><strong>Carrera</strong></p>
+            <p class="m-0 mb-1">{{alumno.carrera.nombre}}</p>
+            
+            <p class="m-0"><strong>No. Control</strong></p>
+            <p class="m-0 mb-1">{{alumno.numero_control}}</p>
+          </div>
         </div>
+      
+      </div>
     </div>
-    
-    
+  
+  </div>
+  
 
-    <div class="col-12">
-        <div class="row">
-            <div class="col-md-12">
-
-                <ul class="list-group text-dark mb-3">
-                  
-                  <li class="list-group-item active"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
-                  
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-md-4 text-bold">
-                          <strong>Nombre:</strong>
-                      </div>
-                      <div class="col-md-8 mt-md-0 mt-1">
-                        <p class="m-0">{{ solicitud.proyecto.nombre }}</p>
-                      </div>
-                    </div>
-                  </li>
-          
-                  <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Dependencia:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.dependencia.nombre }}</p>
-                        </div>
-                      </div>
-                    </li>
-          
-          
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Responsable:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.responsable }}</p>
-                        </div>
-                      </div>
-                    </li>
-          
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Puesto del responsable:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.puesto_responsable }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-4 text-bold">
-                              <strong>Objetivo:</strong>
-                          </div>
-                          <div class="col-md-8 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.objetivo }}</p>
-                          </div>
-                        </div>
-                      </li>
-
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Actividades a desarrollar:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.actividades }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Tipo de actividades:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.tipo_actividades }}</p>
-                        </div>
-                      </div>
-                  </li>
-
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-4 text-bold">
-                              <strong>Periodo:</strong>
-                          </div>
-                          <div class="col-md-8 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.periodo.nombre }}</p>
-                          </div>
-                        </div>
-                    </li>
-
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Lugar de desempeño:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.lugar_desempeno }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Modalidad:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.modalidad }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-4 text-bold">
-                              <strong>Tipo de proyecto:</strong>
-                          </div>
-                          <div class="col-md-8 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.tipo }}</p>
-                          </div>
-                        </div>
-                    </li>
-
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-4 text-bold">
-                            <strong>Horario:</strong>
-                        </div>
-                        <div class="col-md-8 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.horario }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-4 text-bold">
-                              <strong>Apoyo Económico:</strong>
-                          </div>
-                          <div class="col-md-8 mt-md-0 mt-1">
-                            <p class="m-0" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
-                            <p class="m-0" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
-                          </div>
-                        </div>
-                      </li>
-          
-                </ul>
-          
-              </div>
-        </div>
+  <div class="row animated fadeIn fast m-3">
+    <div class="col-sm-12 col-md card m-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Datos de la Dependencia</h6>
+        
+          <p class="m-0"><strong>Nombre</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.nombre}}</p>
+  
+          <p class="m-0"><strong>Representante legal</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.representante_legal}}</p>
+  
+          <p class="m-0"><strong>Domicilio</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.domicilio}}</p>
+  
+          <p class="m-0"><strong>Correo electrónico</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.email}}</p>
+      
+      </div>
     </div>
+  
+    <div class="col-sm-12 col-md card m-2 mt-3 mt-md-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Datos del Responsable del Programa</h6>
+        
+        <p class="m-0"><strong>Nombre</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.responsable}}</p>
+  
+        <p class="m-0"><strong>Puesto</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.puesto_responsable}}</p>
 
-</div>
+        <p class="m-0"><strong>Correo electrónico</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.email_responsable}}</p>
+
+        <p class="m-0"><strong>Teléfono</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.telefono_responsable}}</p>
+  
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="row animated fadeIn fast m-3">
+  
+    <div class="col card m-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Descripción del Programa</h6>
+  
+          
+          <p class="m-0"><strong>Objetivo</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.objetivo}}</p>
+  
+          <p class="m-0"><strong>Actividades</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.actividades}}</p>
+  
+          <p class="m-0"><strong>Tipo de actividades</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.tipo_actividades}}</p>
+  
+          <p class="m-0"><strong>Periodo de realización</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.periodo.nombre}}</p>
+  
+          <p class="m-0"><strong>Modalidad</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.modalidad}}</p>
+  
+          <p class="m-0"><strong>Tipo de programa</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.tipo}}</p>
+  
+          <p class="m-0"><strong>Lugar de desempeño</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.lugar_desempeno}}</p>
+  
+          <p class="m-0"><strong>¿Dentro de las instalaciones?</strong></p>
+          <p class="m-0 mb-1" *ngIf="solicitud.proyecto.instalacion else instalacion">SI</p>
+          <ng-template #instalacion>
+            <p class="m-0 mb-1">NO</p>
+          </ng-template>
+          
+  
+      
+          <p class="m-0"><strong>Horario</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.horario}}</p>
+  
+          <p class="m-0"><strong>¿Incluye apoco economico?</strong></p>
+          <p class="m-0 mb-1" *ngIf="solicitud.proyecto.apoyo_economico else apoyoEconomico">SI</p>
+          <ng-template #apoyoEconomico>
+            <p class="m-0 mb-1">NO</p>
+          </ng-template>
+          
+      </div>
+    </div>
+  
+  </div>
+
+</ng-container>
+<!-- =====================
+== FIN INFORMACIÓN
+======================= -->
+
 
 
 
@@ -290,7 +202,7 @@
               (submit)="guardar()"
               autocomplete="off">
 
-            <h6>Fecha Servicio Social</h6>
+            <!-- <h6>Fecha Servicio Social</h6> 
 
             <div class="form-row">
               <div class="col-md-6">
@@ -310,9 +222,9 @@
                        class="form-control"
                        formControlName="termino_servicio">
               </div>
-            </div> 
+            </div>  
 
-            <br>
+            <br> -->
 
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Estado</label>

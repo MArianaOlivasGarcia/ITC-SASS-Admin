@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemExpediente } from 'src/app/models/item-expediente.model';
 import { Periodo } from 'src/app/models/periodo.model';
 import { ExpedienteService } from 'src/app/services/expediente.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 
 @Component({
   selector: 'app-estructura',
@@ -20,7 +20,7 @@ export class EstructuraComponent implements OnInit {
   @Input() periodo: Periodo;
 
   constructor( private expedienteService: ExpedienteService,
-               private modalService: ModalAlumnoService ) { }
+               private modalService: ModalService ) { }
 
   ngOnInit(): void {
     this.cargarEstructuraExpediente();

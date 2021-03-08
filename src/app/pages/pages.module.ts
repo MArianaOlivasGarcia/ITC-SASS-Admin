@@ -37,6 +37,7 @@ import { CarrerasComponent } from './ajustes/carreras/carreras.component';
 import { PeriodosComponent } from './ajustes/periodos/periodos.component';
 
 import { ImagenPipe } from '../pipes/imagen.pipe';
+import { ArchivoPipe } from '../pipes/archivo.pipe';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -50,6 +51,7 @@ import { ItemExpedienteComponent } from './alumnos/expediente/item-expediente/it
 import { AperturaExpedienteComponent } from './ajustes/expedientes/apertura-expediente/apertura-expediente.component';
 import { FechasComponent } from './ajustes/expedientes/fechas/fechas.component';
 import { EstructuraComponent } from './ajustes/expedientes/estructura/estructura.component';
+import { AvisoDetalleComponent } from './avisos/aviso-detalle/aviso-detalle.component';
  
 const token = localStorage.getItem('accessToken') || '';
 
@@ -66,6 +68,7 @@ const config: SocketIoConfig = {
 @NgModule({
   declarations: [
     ImagenPipe,
+    ArchivoPipe,
     AlumnosComponent,
     AlumnoComponent,
     DetalleAlumnoComponent,
@@ -100,7 +103,8 @@ const config: SocketIoConfig = {
     ItemExpedienteComponent,
     AperturaExpedienteComponent,
     FechasComponent,
-    EstructuraComponent,],
+    EstructuraComponent,
+    AvisoDetalleComponent,],
   exports: [
     DashboardComponent,
     PagesComponent

@@ -37,8 +37,8 @@ export class SolicitudComponent implements OnInit {
       status: [ this.isAceptado , Validators.required ],
       motivo: '',
       observacion: '',
-      inicio_servicio: ['', Validators.required],
-      termino_servicio: [{value: '', disabled: true}],
+     /*  inicio_servicio: ['', Validators.required],
+      termino_servicio: [{value: '', disabled: true}], */
     });
 
 
@@ -62,30 +62,27 @@ export class SolicitudComponent implements OnInit {
               const { error: {
                         motivo,
                         observacion,
-                      },
+                      }/* ,
                       inicio_servicio,
-                      termino_servicio} = solicitud;
+                      termino_servicio */} = solicitud;
               this.solicitudForm.setValue({
-                inicio_servicio,
-                termino_servicio,
+                /* inicio_servicio,
+                termino_servicio, */
                 status: this.isAceptado,
                 motivo,
                 observacion
               })
             } else {
-              const { inicio_servicio,
-                      termino_servicio} = solicitud;
+              /* const { inicio_servicio,
+                      termino_servicio} = solicitud; */
               this.solicitudForm.setValue({
-                inicio_servicio,
-                termino_servicio,
+                /* inicio_servicio,
+                termino_servicio, */
                 status: this.isAceptado,
                 motivo: '',
                 observacion: ''
               })
             }
-
-            console.log(this.solicitud)
-  
           })
   }
 
@@ -108,12 +105,29 @@ export class SolicitudComponent implements OnInit {
 
       if ( this.solicitudForm.invalid ) { return; }
 
-      const error = {
-          observacion,
-          motivo
-      }
       
-      this.solicitudService.rechazarSolicitud( this.solicitud._id, error )
+
+
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Se rechazara esta Solicitud de Servicio Social.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          const error = {
+              observacion,
+              motivo
+          }
+
+          Swal.showLoading();
+          
+          this.solicitudService.rechazarSolicitud( this.solicitud._id, error )
               .subscribe( resp => {
                 this.solicitud = resp.solicitud;
                 Swal.fire({
@@ -128,6 +142,11 @@ export class SolicitudComponent implements OnInit {
                   icon: 'error' 
                 })
               })
+              
+        }
+      })
+      
+      
 
     } else {
       // ACEPTADO **.
@@ -136,7 +155,7 @@ export class SolicitudComponent implements OnInit {
 
       Swal.fire({
         title: '¿Estás seguro?',
-        text: 'Al aceptar la Solicitud de Servicio Social se abrira el expediente del alumno.',
+        text: 'Se aceptara esta Solicitud de Servicio Social..',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -146,13 +165,13 @@ export class SolicitudComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
 
-          const { inicio_servicio, termino_servicio } = this.solicitudForm.getRawValue();
-          this.solicitud.inicio_servicio = inicio_servicio;
-
+/*           const { inicio_servicio, termino_servicio } = this.solicitudForm.getRawValue();
+             this.solicitud.inicio_servicio = inicio_servicio;
+ */
           const data = {
             ...this.solicitud,
-            inicio_servicio,
-            termino_servicio
+            /* inicio_servicio,
+            termino_servicio */
           }
 
           Swal.showLoading();

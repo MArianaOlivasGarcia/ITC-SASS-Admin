@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Alumno } from 'src/app/models/alumno.model';
 import { AlumnoService } from 'src/app/services/alumno.service';
 import { BusquedaService } from 'src/app/services/busqueda.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 
 @Component({
   selector: 'app-alumnos', 
@@ -15,12 +15,12 @@ export class AlumnosComponent implements OnInit {
   public alumnos: Alumno[] = [];
   public alumnosTemp: Alumno[] = [];
   public desde = 0;
-  public cargando = true;
+  public cargando = true; 
   public alumnoSeleccionado: Alumno;
 
   constructor( private alumnoService: AlumnoService,
                private busquedaService: BusquedaService,
-               private modalService: ModalAlumnoService ) { }
+               private modalService: ModalService ) { }
 
   ngOnInit(): void {
     this.cargarAlumnos(); 

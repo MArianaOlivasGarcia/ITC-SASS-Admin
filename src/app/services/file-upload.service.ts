@@ -16,12 +16,9 @@ export class FileUploadService {
   constructor( private http: HttpClient ) { }
 
   actualizarFoto( tipo: 'usuarios'|'avisos'|'alumnos', archivo: File,  id: string  ): Observable<any>{
-
     const url = `${ base_url }/upload/${tipo}/${ id }`;
-
     const formData: FormData = new FormData();
     formData.append('imagen', archivo, archivo.name );
-
     return this.http.put( url, formData, { reportProgress: true } )
               .pipe(
                 catchError( error => of(false) )
@@ -35,5 +32,15 @@ export class FileUploadService {
     return this.http.delete( url );
   }
 
+
+  aceptarArchivo( idItem: string ): Observable<any>{
+    const url = `${ base_url }/file/aceptar/${ idItem }`;
+    return this.http.get( url );
+  }
+
+  rechazarArchivo( idItem: string ): Observable<any>{
+    const url = `${ base_url }/file/rechazar/${ idItem }`;
+    return this.http.get( url );
+  }
 
 }

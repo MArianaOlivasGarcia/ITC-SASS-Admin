@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemExpediente } from 'src/app/models/item-expediente.model';
 import { Periodo } from 'src/app/models/periodo.model';
 import { ExpedienteService } from 'src/app/services/expediente.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
+import { ModalService } from 'src/app/services/modal-alumno.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +20,7 @@ export class FechasComponent implements OnInit {
   public fechasForm: FormGroup;
 
 
-  constructor( public modalService: ModalAlumnoService,
+  constructor( public modalService: ModalService,
                public fb: FormBuilder,
                private expedienteService: ExpedienteService ) { }
 

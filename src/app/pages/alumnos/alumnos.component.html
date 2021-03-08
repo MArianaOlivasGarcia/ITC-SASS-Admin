@@ -59,13 +59,13 @@
                             <th scope="col">Expediente</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr *ngFor="let alumno of alumnos" class="manita" >
+                        <tbody> 
+                          <tr *ngFor="let alumno of alumnos">
                             <td>
                                 <img [src]="alumno.fotoUrl" 
                                     [alt]="alumno.nombre"
                                     style="height: 70px; width: 70px;"
-                                    class="img-thumbnail" 
+                                    class="img-thumbnail manita" 
                                     (click)="abrirModal(alumno)">
                             </td>
                             <td>{{ alumno.numero_control }}</td>

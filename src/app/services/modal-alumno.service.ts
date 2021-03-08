@@ -4,7 +4,7 @@ import { Injectable,EventEmitter } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ModalAlumnoService {
+export class ModalService {
 
   public modal: boolean = false;
 

@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Alumno } from 'src/app/models/alumno.model';
 import { Proyecto } from 'src/app/models/proyecto.models';
 import { AlumnoService } from 'src/app/services/alumno.service';
-import { ModalAlumnoService } from 'src/app/services/modal-alumno.service';
 
 @Component({
   selector: 'app-alumnos-proyecto',

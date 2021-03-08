@@ -97,7 +97,7 @@
 ======================= --> 
 
 <div class="row animated fadeIn faster m-3">
-    <div class="col">
+    <div class="col-md-10">
 
       <h5>Información del Proyecto</h5>
 
@@ -311,10 +311,17 @@
         </div>
 
 
+        <br>
+
+
+        <h6>Datos del Responsable</h6>
+
+
         <div class="form-row">
+
             
             <div class="form-group col-md-6">
-              <label>Nombre del responsable</label>
+              <label>Nombre</label>
               <input type="text" 
                      class="form-control" 
                      [ngClass]="{'is-invalid': campoNoValido('responsable') }"
@@ -325,7 +332,7 @@
               </div> 
             </div>
             <div class="form-group col-md-6">
-              <label>Puesto del responsable</label>
+              <label>Puesto</label>
               <input type="text" 
                      class="form-control"
                      [ngClass]="{'is-invalid': campoNoValido('puesto_responsable') }"
@@ -339,8 +346,36 @@
 
           </div>
 
+          <div class="form-row">
+              
+              <div class="form-group col-md-6">
+                <label>Correo eléctronico</label>
+                <input type="text" 
+                       class="form-control" 
+                       [ngClass]="{'is-invalid': campoNoValido('email_responsable') }"
+                       placeholder="ejemplo@ejemplo.com"
+                       formControlName="email_responsable">
+                <div *ngIf="campoNoValido('email_responsable')" class="invalid-feedback">
+                  {{ mensajesError('email_responsable') }}
+                </div> 
+              </div>
+              <div class="form-group col-md-6">
+                <label>Teléfono</label>
+                <input type="text" 
+                       class="form-control"
+                       [ngClass]="{'is-invalid': campoNoValido('telefono_responsable') }"
+                       placeholder="Teléfono del responsable"
+                       formControlName="telefono_responsable">
+                <div *ngIf="campoNoValido('telefono_responsable')" class="invalid-feedback">
+                  {{ mensajesError('telefono_responsable') }}
+                </div>
+              </div>
+    
+  
+            </div>
 
-          <hr>
+
+          <br>
 
           <div class="form-row"> 
 
@@ -362,9 +397,12 @@
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
-              <div class="text-danger" *ngIf="carreraControl.invalid">
+              <div class="text-danger" *ngIf="carreraControl.errors?.invalid">
                 Debe seleccionar almenos una carrera.
-              </div> 
+              </div>
+              <div class="text-danger" *ngIf="carreraControl.errors?.dispoMayor">
+                La disponibilidad no puede ser mayor a la cantidad.
+              </div>
             </div>
 
             
@@ -376,6 +414,7 @@
               <tr>
                 <th>Carrera</th>
                 <th>Cantidad</th>
+                <th>Disponible</th>
                 <th>Borrar</th>
               </tr>
             </thead>
@@ -388,6 +427,12 @@
                          class="form-control col-sm-4"
                          min="1"
                          (change)="actualizarCantidad( itemCarrera.carrera._id, $event )">
+                </td>
+                <td>
+                  <input type="number"
+                         value="{{itemCarrera.disponibilidad}}"
+                         class="form-control col-sm-4"
+                         (change)="cambioDisponibilidad( itemCarrera.carrera._id, $event )">
                 </td>
                 <td>
                   <button class="btn btn-outline-danger"

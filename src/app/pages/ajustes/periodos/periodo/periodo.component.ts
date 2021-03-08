@@ -34,8 +34,8 @@ export class PeriodoComponent implements OnInit {
       nombre: [{value:'', disabled: true}],
       fecha_inicio: ['', Validators.required ],
       fecha_termino: ['', Validators.required ],
-      isActual: [false],
-      isProximo: [false],
+   /*    isActual: [false],
+      isProximo: [false], */
       recepcion_solicitudes: this.fb.group({
         inicio: [''],
         termino: [''],
@@ -55,16 +55,15 @@ export class PeriodoComponent implements OnInit {
           // TODO: SI NO ENCUENTRA LA DEPENDENCIA O EL ENLACE ES INVENTADO
           //  return this.router.navigateByUrl(`/dashboard/dependencias`);
           const { nombre, fecha_inicio, fecha_termino, isActual, isProximo, recepcion_solicitudes } = periodo;
-          console.log(recepcion_solicitudes)
           this.periodoSeleccionado = periodo;
           this.periodoForm.setValue({nombre,
-                                    fecha_inicio: new Date(fecha_inicio).toISOString().slice(0,10),
-                                    fecha_termino: new Date(fecha_termino).toISOString().slice(0,10),
-                                    isActual,
-                                    isProximo,
+                                    fecha_inicio: fecha_inicio,
+                                    fecha_termino: fecha_termino,
+                                   /*  isActual,
+                                    isProximo, */
                                     recepcion_solicitudes: {
-                                      inicio: new Date(recepcion_solicitudes.inicio).toISOString().slice(0,10),
-                                      termino: new Date(recepcion_solicitudes.termino).toISOString().slice(0,10),
+                                      inicio: recepcion_solicitudes.inicio,
+                                      termino: recepcion_solicitudes.termino,
                                     }
                                     });
         });
